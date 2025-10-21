@@ -1,14 +1,14 @@
-import * as React from "react";
+import * as React from "react"
 import {
   StyleSheet,
   GestureResponderEvent,
   Text,
-  Pressable,
-} from "react-native";
+  Pressable
+} from "react-native"
 
 export interface ButtonProps {
-  text: string;
-  onClick?: (event: GestureResponderEvent) => void;
+  text: string
+  onClick?: (event: GestureResponderEvent) => void
 }
 
 export function Button({ text, onClick }: ButtonProps) {
@@ -16,7 +16,7 @@ export function Button({ text, onClick }: ButtonProps) {
     <Pressable style={styles.button} onPress={onClick}>
       <Text style={styles.text}>{text}</Text>
     </Pressable>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     fontSize: 15,
-    backgroundColor: "#2f80ed",
+    backgroundColor: "#2f80ed"
   },
   text: {
-    color: "white",
-  },
-});
+    color: "white"
+  }
+})

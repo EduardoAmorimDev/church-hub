@@ -1,9 +1,6 @@
 {
+  "name": "church-hub",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
@@ -12,12 +9,15 @@
   },
   "devDependencies": {
     "@types/minimatch": "^6.0.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.6.2",
     "turbo": "^2.5.8"
   },
   "packageManager": "yarn@1.22.19",
   "engines": {
     "node": ">=18"
   },
-  "name": "with-react-native-web"
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

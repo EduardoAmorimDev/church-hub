@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
 
-import { Button } from "@repo/ui";
-import "@repo/ui/globals.css";
+import { Button } from '@repo/ui'
+import '@repo/ui/globals.css'
 
 export default function Native() {
   return (
@@ -10,26 +10,26 @@ export default function Native() {
       <Text style={styles.header}>Native</Text>
       <Button
         onClick={() => {
-          console.log("Pressed!");
-          alert("Pressed!");
+          console.log('Pressed!')
+          alert('Pressed!')
         }}
         text="Boop"
       />
       <StatusBar style="auto" />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   header: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 20,
-    fontSize: 36,
-  },
-});
+    fontSize: 36
+  }
+})
