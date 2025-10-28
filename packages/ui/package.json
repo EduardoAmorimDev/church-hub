@@ -6,16 +6,10 @@
     "./styles": "./dist/index.css"
   },
   "scripts": {
-    "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "build:styles": "npx @tailwindcss/cli -i ./src/styles.css -o ./dist/index.css",
     "build:components": "tsup",
-    "dev:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
-    "dev:components": "tsup --watch",
-    "clean": "rm -rf dist",
-    "---": "---",
-    "build1": "tsup",
-    "dev1": "tsup --watch",
-    "dev2": "concurrently \"npx @tailwindcss/cli -i ./src/globals.css --watch -o ./dist/index.css\" \"tsup --watch\"",
-    "clean1": "rm -rf dist"
+    "dev:styles": "npx @tailwindcss/cli -i ./src/styles.css -o ./dist/index.css --watch",
+    "dev:components": "tsup --watch"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -30,7 +24,6 @@
     "@repo/typescript-config": "*",
     "@tailwindcss/cli": "^4.1.16",
     "@types/react": "^18.2.14",
-    "concurrently": "^9.2.1",
     "tailwindcss": "^4.1.15",
     "tsup": "^8.0.1",
     "typescript": "5.5.4"

@@ -10,7 +10,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next.config.js",
-    "postcss.config.mjs"
+    "eslint.config.js"
   ],
   "exclude": ["node_modules"]
 }

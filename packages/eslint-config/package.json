@@ -5,7 +5,10 @@
   "private": true,
   "exports": {
     "./expo": "./expo.js",
-    "./next-js": "./next.js"
+    "./next-js": {
+      "types": "./next.d.ts",
+      "default": "./next.js"
+    }
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",
