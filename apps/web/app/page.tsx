@@ -1,14 +1,12 @@
 'use client'
 
-import { Button } from '@repo/ui'
-
-import styles from '../styles/index.module.css'
+import { Button } from '@repo/ui/components'
 
 export default function Web() {
   return (
-    <div className={styles.container}>
-      <h1>Web</h1>
-      <Button onClick={() => console.log('Pressed!')} text="Boop" />
+    <div>
+      <div className="bg-red-900 p-8">teste</div>
+      <Button label="Boop" />
     </div>
   )
 }

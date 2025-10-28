@@ -1,0 +1,3 @@
+@import '@repo/ui/styles';
+@import '@repo/tailwind-config/styles';
+@import 'tailwindcss';
