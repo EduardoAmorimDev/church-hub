@@ -10,9 +10,6 @@
     "build:components": {
       "outputs": ["dist/**"]
     },
-    "dev": {
-      "with": ["dev:styles", "dev:components"]
-    },
     "dev:styles": {
       "cache": false,
       "persistent": true

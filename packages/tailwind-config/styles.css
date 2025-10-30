@@ -1,5 +1,1323 @@
 @import 'tailwindcss';
 
-html {
-  background-color: red;
+:root {
+  /* light colors */
+
+  --color-accent-light-red-100: #f23518;
+  --color-accent-light-red-50: #f2351880;
+  --color-accent-light-red-25: #f2351840;
+  --color-accent-light-red-12: #f235181f;
+
+  --color-accent-light-orange-100: #f27130;
+  --color-accent-light-orange-50: #f2713080;
+  --color-accent-light-orange-25: #f2713040;
+  --color-accent-light-orange-12: #f271301f;
+
+  --color-accent-light-yellow-100: #e5ac00;
+  --color-accent-light-yellow-50: #e5ac0080;
+  --color-accent-light-yellow-25: #e5ac0040;
+  --color-accent-light-yellow-12: #e5ac001f;
+
+  --color-accent-light-lime-100: #9cb812;
+  --color-accent-light-lime-50: #9cb81280;
+  --color-accent-light-lime-25: #9cb81240;
+  --color-accent-light-lime-12: #9cb8121f;
+
+  --color-accent-light-green-100: #34c759;
+  --color-accent-light-green-50: #34c75980;
+  --color-accent-light-green-25: #34c75940;
+  --color-accent-light-green-12: #34c7591f;
+
+  --color-accent-light-cyan-100: #00bba8;
+  --color-accent-light-cyan-50: #00bba880;
+  --color-accent-light-cyan-25: #00bba840;
+  --color-accent-light-cyan-12: #00bba81f;
+
+  --color-accent-light-blue-100: #3b8cff;
+  --color-accent-light-blue-50: #3b8cff80;
+  --color-accent-light-blue-25: #3b8cff40;
+  --color-accent-light-blue-12: #3b8cff1f;
+
+  --color-accent-light-indigo-100: #3835d6;
+  --color-accent-light-indigo-50: #3835d680;
+  --color-accent-light-indigo-25: #3835d640;
+  --color-accent-light-indigo-12: #3835d61f;
+
+  --color-accent-light-purple-100: #af52de;
+  --color-accent-light-purple-50: #af52de80;
+  --color-accent-light-purple-25: #af52de40;
+  --color-accent-light-purple-12: #af52de1f;
+
+  --color-accent-light-pink-100: #f53d60;
+  --color-accent-light-pink-50: #f53d6080;
+  --color-accent-light-pink-25: #f53d6040;
+  --color-accent-light-pink-12: #f53d601f;
+
+  --color-neutral-solid-dark-950: #ffffff;
+  --color-neutral-solid-dark-900: #f0f0f2;
+  --color-neutral-solid-dark-800: #dcdcdf;
+  --color-neutral-solid-dark-700: #bebec4;
+  --color-neutral-solid-dark-600: #a3a3ac;
+  --color-neutral-solid-dark-500: #8b8b96;
+  --color-neutral-solid-dark-400: #7c7c89;
+  --color-neutral-solid-dark-300: #696976;
+  --color-neutral-solid-dark-200: #535361;
+  --color-neutral-solid-dark-100: #3d3d49;
+  --color-neutral-solid-dark-50: #27272f;
+  --color-neutral-solid-dark-25: #101015;
+
+  --color-neutral-transparent-black-100: #27272f;
+  --color-neutral-transparent-black-60: #27272f99;
+  --color-neutral-transparent-black-30: #27272f4d;
+  --color-neutral-transparent-black-25: #27272f40;
+  --color-neutral-transparent-black-12: #27272f1f;
+  --color-neutral-transparent-black-8: #27272f14;
+
+  /* dark colors */
+
+  --color-accent-dark-red-100: #ff4747;
+  --color-accent-dark-red-50: #ff474780;
+  --color-accent-dark-red-25: #ff474740;
+  --color-accent-dark-red-12: #ff47471f;
+
+  --color-accent-dark-orange-100: #f08843;
+  --color-accent-dark-orange-50: #f0884380;
+  --color-accent-dark-orange-25: #f0884340;
+  --color-accent-dark-orange-12: #f088431f;
+
+  --color-accent-dark-yellow-100: #ffbb0f;
+  --color-accent-dark-yellow-50: #ffbb0f80;
+  --color-accent-dark-yellow-25: #ffbb0f40;
+  --color-accent-dark-yellow-12: #ffbb0f1f;
+
+  --color-accent-dark-lime-100: #bce009;
+  --color-accent-dark-lime-50: #bce00980;
+  --color-accent-dark-lime-25: #bce00940;
+  --color-accent-dark-lime-12: #bce0091f;
+
+  --color-accent-dark-green-100: #30d159;
+  --color-accent-dark-green-50: #30d15980;
+  --color-accent-dark-green-25: #30d15940;
+  --color-accent-dark-green-12: #30d1591f;
+
+  --color-accent-dark-cyan-100: #6ee5c6;
+  --color-accent-dark-cyan-50: #6ee5c680;
+  --color-accent-dark-cyan-25: #6ee5c640;
+  --color-accent-dark-cyan-12: #6ee5c61f;
+
+  --color-accent-dark-blue-100: #338bff;
+  --color-accent-dark-blue-50: #338bff80;
+  --color-accent-dark-blue-25: #338bff40;
+  --color-accent-dark-blue-12: #338bff1f;
+
+  --color-accent-dark-indigo-100: #7c5cff;
+  --color-accent-dark-indigo-50: #7c5cff80;
+  --color-accent-dark-indigo-25: #7c5cff40;
+  --color-accent-dark-indigo-12: #7c5cff1f;
+
+  --color-accent-dark-purple-100: #df5eff;
+  --color-accent-dark-purple-50: #df5eff80;
+  --color-accent-dark-purple-25: #df5eff40;
+  --color-accent-dark-purple-12: #df5eff1f;
+
+  --color-accent-dark-pink-100: #ff6b89;
+  --color-accent-dark-pink-50: #ff6b8980;
+  --color-accent-dark-pink-25: #ff6b8940;
+  --color-accent-dark-pink-12: #ff6b891f;
+
+  --color-neutral-solid-light-950: #101015;
+  --color-neutral-solid-light-900: #27272f;
+  --color-neutral-solid-light-800: #3d3d49;
+  --color-neutral-solid-light-700: #535361;
+  --color-neutral-solid-light-600: #696976;
+  --color-neutral-solid-light-500: #7c7c89;
+  --color-neutral-solid-light-400: #8b8b96;
+  --color-neutral-solid-light-300: #a3a3ac;
+  --color-neutral-solid-light-200: #bebec4;
+  --color-neutral-solid-light-100: #dcdcdf;
+  --color-neutral-solid-light-50: #f0f0f2;
+  --color-neutral-solid-light-25: #ffffff;
+
+  --color-neutral-transparent-white-100: #ffffff;
+  --color-neutral-transparent-white-60: #ffffff99;
+  --color-neutral-transparent-white-30: #ffffff4d;
+  --color-neutral-transparent-white-25: #ffffff40;
+  --color-neutral-transparent-white-12: #ffffff1f;
+  --color-neutral-transparent-white-8: #ffffff14;
+}
+
+html.light {
+  --color-background-fill-neutral-primary: var(
+    --color-neutral-transparent-black-8
+  );
+  --color-background-fill-neutral-secondary: var(
+    --color-neutral-transparent-black-12
+  );
+  --color-background-fill-neutral-tertiary: var(
+    --color-neutral-transparent-black-25
+  );
+  --color-background-fill-neutral-quaternary: var(
+    --color-neutral-transparent-black-30
+  );
+  --color-background-fill-neutral-solid: var(--color-neutral-solid-dark-25);
+
+  --color-background-surface-primary: var(--color-neutral-solid-dark-950);
+  --color-background-surface-secondary: var(--color-neutral-solid-dark-900);
+
+  --color-text-neutral-primary: var(--color-neutral-solid-dark-25);
+  --color-text-neutral-secondary: var(--color-neutral-solid-dark-100);
+  --color-text-neutral-tertiary: var(--color-neutral-solid-dark-200);
+  --color-text-neutral-quaternary: var(--color-neutral-solid-dark-500);
+  --color-text-neutral-contrast: var(--color-neutral-solid-dark-950);
+
+  --color-border-neutral-primary: var(--color-neutral-solid-dark-800);
+  --color-border-neutral-secondary: var(--color-neutral-solid-dark-25);
+}
+
+html.dark {
+  --color-neutral-primary: var(--color-neutral-transparent-white-8);
+  --color-neutral-secondary: var(--color-neutral-transparent-white-12);
+  --color-neutral-tertiary: var(--color-neutral-transparent-white-25);
+  --color-neutral-quaternary: var(--color-neutral-transparent-white-30);
+  --color-neutral-solid: var(--color-neutral-solid-light-25);
+
+  --color-surface-primary: var(--color-neutral-solid-light-950);
+  --color-surface-secondary: var(--color-neutral-solid-light-900);
+
+  --color-text-primary: var(--color-neutral-solid-light-25);
+  --color-text-secondary: var(--color-neutral-solid-light-100);
+  --color-text-tertiary: var(--color-neutral-solid-light-200);
+  --color-text-quaternary: var(--color-neutral-solid-light-500);
+  --color-text-contrast: var(--color-neutral-solid-light-950);
+
+  --color-border-neutral-primary: var(--color-neutral-solid-light-800);
+  --color-border-neutral-secondary: var(--color-neutral-solid-light-25);
+}
+
+html.light.red {
+  --color-background-fill-accent-primary: var(--color-accent-light-red-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-red-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-red-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-light-red-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-orange-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-orange-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-orange-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-orange-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-red-100);
+  --color-text-feedback-negative: var(--color-accent-light-orange-100)
+    --color-text-feedback-positive: var(--color-accent-light-green-100)
+    --color-text-feedback-attention: var(--color-accent-light-yellow-100)
+    --color-border-accent-primary: var(--color-accent-light-red-100);
+
+  --color-border-feedback-negative: var(--color-accent-light-orange-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.red {
+  --color-background-fill-accent-primary: var(--color-accent-dark-red-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-red-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-red-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-red-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-orange-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-orange-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-orange-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-orange-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-red-100);
+  --color-text-feedback-negative: var(--color-accent-dark-orange-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-red-100);
+  --color-border-feedback-negative: var(--color-accent-dark-orange-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
+}
+
+html.light.orange {
+  --color-background-fill-accent-primary: var(--color-accent-light-orange-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-orange-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-orange-25);
+  --color-background-fill-accent-quaternary: var(
+    --color-accent-light-orange-12
+  );
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-orange-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-green-100);
+  --color-text-feedback-attention: var(--color-accent-light-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-light-orange-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.orange {
+  --color-background-fill-accent-primary: var(--color-accent-dark-orange-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-orange-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-orange-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-orange-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-orange-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-orange-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
+}
+
+html.light.yellow {
+  --color-background-fill-accent-primary: var(--color-accent-light-yellow-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-yellow-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-yellow-25);
+  --color-background-fill-accent-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-orange-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-orange-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-orange-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-orange-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-yellow-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-green-100);
+  --color-text-feedback-attention: var(--color-accent-light-orange-100);
+
+  --color-border-accent-primary: var(--color-accent-light-yellow-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-orange-100);
+}
+
+html.dark.yellow {
+  --color-background-fill-accent-primary: var(--color-accent-dark-yellow-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-yellow-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-yellow-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-yellow-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-yellow-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-orange-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-yellow-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-orange-100);
+}
+
+html.light.lime {
+  --color-background-fill-accent-primary: var(--color-accent-light-lime-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-lime-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-lime-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-light-lime-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-lime-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-green-100);
+  --color-text-feedback-attention: var(--color-accent-light-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-light-lime-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.lime {
+  --color-background-fill-accent-primary: var(--color-accent-dark-lime-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-lime-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-lime-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-lime-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-lime-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-lime-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
+}
+
+html.light.green {
+  --color-background-fill-accent-primary: var(--color-accent-light-green-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-green-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-green-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-light-green-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-cyan-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-cyan-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-cyan-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-cyan-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-green-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-cyan-100);
+  --color-text-feedback-attention: var(--color-accent-light-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-light-green-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-cyan-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.green {
+  --color-background-fill-accent-primary: var(--color-accent-dark-green-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-green-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-green-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-green-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-cyan-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-cyan-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-cyan-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-cyan-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-green-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-cyan-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-green-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-cyan-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
+}
+
+html.light.cyan {
+  --color-background-fill-accent-primary: var(--color-accent-light-cyan-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-cyan-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-cyan-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-light-cyan-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-cyan-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-green-100);
+  --color-text-feedback-attention: var(--color-accent-light-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-light-cyan-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.cyan {
+  --color-background-fill-accent-primary: var(--color-accent-dark-cyan-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-cyan-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-cyan-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-cyan-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-cyan-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-cyan-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
+}
+
+html.light.blue {
+  --color-background-fill-accent-primary: var(--color-accent-light-blue-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-blue-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-blue-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-light-blue-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-blue-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-green-100);
+  --color-text-feedback-attention: var(--color-accent-light-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-light-blue-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.blue {
+  --color-background-fill-accent-primary: var(--color-accent-dark-blue-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-blue-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-blue-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-blue-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-blue-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-blue-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
+}
+
+html.light.indigo {
+  --color-background-fill-accent-primary: var(--color-accent-light-indigo-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-indigo-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-indigo-25);
+  --color-background-fill-accent-quaternary: var(
+    --color-accent-light-indigo-12
+  );
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-indigo-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-green-100);
+  --color-text-feedback-attention: var(--color-accent-light-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-light-indigo-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.indigo {
+  --color-background-fill-accent-primary: var(--color-accent-dark-indigo-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-indigo-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-indigo-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-indigo-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-indigo-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-indigo-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
+}
+
+html.light.purple {
+  --color-background-fill-accent-primary: var(--color-accent-light-purple-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-purple-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-purple-25);
+  --color-background-fill-accent-quaternary: var(
+    --color-accent-light-purple-12
+  );
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-purple-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-green-100);
+  --color-text-feedback-attention: var(--color-accent-light-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-light-purple-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.purple {
+  --color-background-fill-accent-primary: var(--color-accent-dark-purple-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-purple-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-purple-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-purple-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-purple-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-purple-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
+}
+
+html.light.pink {
+  --color-background-fill-accent-primary: var(--color-accent-light-pink-100);
+  --color-background-fill-accent-secondary: var(--color-accent-light-pink-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-light-pink-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-light-pink-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-light-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-light-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-light-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-light-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-light-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-light-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-light-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-light-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-light-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-light-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-light-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-light-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-light-pink-100);
+  --color-text-feedback-negative: var(--color-accent-light-red-100);
+  --color-text-feedback-positive: var(--color-accent-light-green-100);
+  --color-text-feedback-attention: var(--color-accent-light-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-light-pink-100);
+  --color-border-feedback-negative: var(--color-accent-light-red-100);
+  --color-border-feedback-positive: var(--color-accent-light-green-100);
+  --color-border-feedback-attention: var(--color-accent-light-yellow-100);
+}
+
+html.dark.pink {
+  --color-background-fill-accent-primary: var(--color-accent-dark-pink-100);
+  --color-background-fill-accent-secondary: var(--color-accent-dark-pink-50);
+  --color-background-fill-accent-tertiary: var(--color-accent-dark-pink-25);
+  --color-background-fill-accent-quaternary: var(--color-accent-dark-pink-12);
+
+  --color-background-fill-feedback-negative-primary: var(
+    --color-accent-dark-red-100
+  );
+  --color-background-fill-feedback-negative-secondary: var(
+    --color-accent-dark-red-50
+  );
+  --color-background-fill-feedback-negative-tertiary: var(
+    --color-accent-dark-red-25
+  );
+  --color-background-fill-feedback-negative-quaternary: var(
+    --color-accent-dark-red-12
+  );
+
+  --color-background-fill-feedback-positive-primary: var(
+    --color-accent-dark-green-100
+  );
+  --color-background-fill-feedback-positive-secondary: var(
+    --color-accent-dark-green-50
+  );
+  --color-background-fill-feedback-positive-tertiary: var(
+    --color-accent-dark-green-25
+  );
+  --color-background-fill-feedback-positive-quaternary: var(
+    --color-accent-dark-green-12
+  );
+
+  --color-background-fill-feedback-attention-primary: var(
+    --color-accent-dark-yellow-100
+  );
+  --color-background-fill-feedback-attention-secondary: var(
+    --color-accent-dark-yellow-50
+  );
+  --color-background-fill-feedback-attention-tertiary: var(
+    --color-accent-dark-yellow-25
+  );
+  --color-background-fill-feedback-attention-quaternary: var(
+    --color-accent-dark-yellow-12
+  );
+
+  --color-text-accent-primary: var(--color-accent-dark-pink-100);
+  --color-text-feedback-negative: var(--color-accent-dark-red-100);
+  --color-text-feedback-positive: var(--color-accent-dark-green-100);
+  --color-text-feedback-attention: var(--color-accent-dark-yellow-100);
+
+  --color-border-accent-primary: var(--color-accent-dark-pink-100);
+  --color-border-feedback-negative: var(--color-accent-dark-red-100);
+  --color-border-feedback-positive: var(--color-accent-dark-green-100);
+  --color-border-feedback-attention: var(--color-accent-dark-yellow-100);
 }
