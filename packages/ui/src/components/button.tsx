@@ -4,5 +4,7 @@ type ButtonProps = {
 }
 
 export const Button = ({ label }: ButtonProps) => {
-  return <button className="bg-amber-100 p-8">{`${label} teste`}</button>
+  return (
+    <button className="bg-background-fill-neutral-secondary m-10 border-8 border-amber-600 p-8">{`${label} teste`}</button>
+  )
 }

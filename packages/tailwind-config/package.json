@@ -5,10 +5,10 @@
   "private": true,
   "exports": {
     "./styles": "./styles.css",
-    "./postcss": "./postcss.config.ts"
+    "./postcss": "./postcss.config.js"
   },
   "devDependencies": {
-    "postcss": "^8.5.6",
+    "@tailwindcss/postcss": "^4.1.16",
     "tailwindcss": "^4.1.15"
   }
 }
