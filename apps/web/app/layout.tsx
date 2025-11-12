@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="red">
+    <html lang="en" className="light pink">
       <body>{children}</body>
     </html>
   )
