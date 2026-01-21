@@ -26,3 +26,5 @@ yarn-error.log*
 
 # turbo
 .turbo
+*storybook.log
+storybook-static
