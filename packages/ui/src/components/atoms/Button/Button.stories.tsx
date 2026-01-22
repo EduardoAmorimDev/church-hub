@@ -14,13 +14,13 @@ const meta = {
     },
     docs: { description: { component: 'The Lamb `Button` component' } }
   },
-  decorators: [
-    (Story: any) => (
-      <View style={{ flex: 1, alignItems: 'flex-start' }}>
-        <Story />
-      </View>
-    )
-  ],
+  // decorators: [
+  //   (Story: any) => (
+  //     <View style={{ flex: 1, alignItems: 'flex-start' }}>
+  //       <Story />
+  //     </View>
+  //   )
+  // ],
   argTypes: {},
   args: {},
   tags: ['autodocs']
@@ -30,8 +30,8 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-    label: 'Button'
+    children: 'teste button'
   }
 }
