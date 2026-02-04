@@ -7,11 +7,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_5c13b987f9c20ba"
   },
   "dependencies": {
-    "@repo/ui": "*",
-    "next": "^14.0.4",
+    "material-symbols": "^0.40.2",
+    "next": "^16.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -19,9 +22,18 @@
     "@repo/eslint-config": "*",
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
+    "@storybook/addon-a11y": "^10.2.4",
+    "@storybook/addon-designs": "^11.1.1",
+    "@storybook/addon-docs": "^10.2.4",
+    "@storybook/addon-themes": "^10.2.6",
+    "@storybook/nextjs": "^10.2.4",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.18",
-    "typescript": "5.5.4"
+    "chromatic": "^15.0.0",
+    "eslint-plugin-storybook": "^10.2.4",
+    "storybook": "^10.2.4",
+    "typescript": "5.5.4",
+    "vite": "^7.3.1"
   }
 }

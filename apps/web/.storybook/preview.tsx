@@ -1,0 +1,50 @@
+import type { Preview } from '@storybook/nextjs'
+import '../app/styles.css'
+import '../models/enums'
+import { AccentColorsEnum, ThemesEnum } from '../models/enums'
+import { ThemeDecorator } from './decorators'
+import { CustomDocsContainer } from './containers'
+
+const preview: Preview = {
+  initialGlobals: {
+    theme: ThemesEnum.LIGHT,
+    color: AccentColorsEnum.BLUE
+  },
+  globalTypes: {
+    theme: {
+      name: 'Theme',
+      description: 'Global theme',
+      toolbar: {
+        icon: 'sun',
+        items: Object.values(ThemesEnum),
+        dynamicTitle: true
+      }
+    },
+    color: {
+      name: 'Color',
+      description: 'Accent color',
+      toolbar: {
+        icon: 'paintbrush',
+        items: Object.values(AccentColorsEnum),
+        dynamicTitle: true
+      }
+    }
+  },
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i
+      },
+      expanded: true
+    },
+    docs: {
+      container: CustomDocsContainer
+    },
+    layout: 'centered'
+  },
+  decorators: [ThemeDecorator]
+}
+
+export default preview

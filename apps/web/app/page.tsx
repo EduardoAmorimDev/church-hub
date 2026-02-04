@@ -1,4 +1,4 @@
-import { Button } from '@repo/ui/components'
+import { Button } from '../components'
 
 export default function Web() {
   return (
