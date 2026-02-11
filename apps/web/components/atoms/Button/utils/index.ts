@@ -1,6 +1,6 @@
 import { cloneElement } from 'react'
-import { IconElement } from '../../Icon'
 import { iconSizes } from '../data'
+import { IconElement } from '../../Icon'
 
 export const getClonedIcon = (
   icon?: IconElement,

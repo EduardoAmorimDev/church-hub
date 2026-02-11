@@ -86,3 +86,16 @@ export const Default: Story = {
     startIcon: <Icon name="brightness_1" />
   }
 }
+
+export const IconButton: Story = {
+  args: {
+    icon: <Icon name="brightness_1" />
+  },
+  render: args => (
+    <div className="flex items-center gap-4">
+      <Button {...args} size="small" />
+      <Button {...args} size="medium" />
+      <Button {...args} size="large" />
+    </div>
+  )
+}

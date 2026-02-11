@@ -1,4 +1,5 @@
 import { IconProps } from './Icon.types'
+import { twMerge } from 'tailwind-merge'
 
 export function Icon({
   name,
@@ -11,7 +12,7 @@ export function Icon({
 }: IconProps) {
   return (
     <span
-      className={`material-symbols-${variant} ${className}`}
+      className={twMerge(`material-symbols-${variant}`, className)}
       style={{
         fontVariationSettings: `'FILL' ${fill}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${size}`,
         fontSize: size

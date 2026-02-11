@@ -1,5 +1,5 @@
 import { tv, VariantProps } from 'tailwind-variants'
-import { ButtonProps } from './Button.types'
+import { BaseButtonProps } from './Button.types'
 import { getClonedIcon } from './utils'
 
 const button = tv({
@@ -36,6 +36,10 @@ const button = tv({
         'enabled:hover:text-text-feedback-negative',
         'enabled:active:border-border-feedback-negative'
       ]
+    },
+    iconOnly: {
+      true: '',
+      false: ''
     },
     size: {
       small: 'text-xs p-2 rounded-xl h-8 gap-0.5',
@@ -103,25 +107,67 @@ const button = tv({
       color: 'negative',
       variant: 'secondary',
       className: 'bg-background-fill-feedback-negative-quaternary'
+    },
+    {
+      size: 'small',
+      iconOnly: false,
+      className: 'px-2 py-2'
+    },
+    {
+      size: 'medium',
+      iconOnly: false,
+      className: 'px-4 py-2.5'
+    },
+    {
+      size: 'large',
+      iconOnly: false,
+      className: 'px-4 py-3'
+    },
+    {
+      size: 'small',
+      iconOnly: true,
+      className: 'p-2'
+    },
+    {
+      size: 'medium',
+      iconOnly: true,
+      className: 'p-2.5'
+    },
+    {
+      size: 'large',
+      iconOnly: true,
+      className: 'p-3'
     }
   ]
 })
+
+export type ButtonProps = BaseButtonProps & VariantProps<typeof button>
 
 export const Button = ({
   children,
   className,
   color,
   endIcon,
+  icon,
   size = 'medium',
   startIcon,
   variant,
   ...props
-}: ButtonProps & VariantProps<typeof button>) => {
+}: ButtonProps) => {
   return (
-    <button className={button({ className, color, size, variant })} {...props}>
-      {getClonedIcon(startIcon, size)}
-      {children}
-      {getClonedIcon(endIcon, size)}
+    <button
+      className={button({ className, color, size, variant, iconOnly: !!icon })}
+      {...props}
+    >
+      {icon ? (
+        getClonedIcon(icon, size)
+      ) : (
+        <>
+          {getClonedIcon(startIcon, size)}
+          {children}
+          {getClonedIcon(endIcon, size)}
+        </>
+      )}
     </button>
   )
 }
