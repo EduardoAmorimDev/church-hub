@@ -10,5 +10,9 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.16",
     "tailwindcss": "^4.1.15"
+  },
+  "dependencies": {
+    "tailwind-merge": "^3.4.0",
+    "tailwind-variants": "^3.2.2"
   }
 }

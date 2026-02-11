@@ -2,6 +2,7 @@ import { IconProps } from './Icon.types'
 
 export function Icon({
   name,
+  className,
   fill = 0,
   grade = 0,
   size = 20,
@@ -10,7 +11,7 @@ export function Icon({
 }: IconProps) {
   return (
     <span
-      className={`material-symbols-${variant}`}
+      className={`material-symbols-${variant} ${className}`}
       style={{
         fontVariationSettings: `'FILL' ${fill}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${size}`,
         fontSize: size
