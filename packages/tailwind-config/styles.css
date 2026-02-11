@@ -172,7 +172,7 @@
   --color-text-neutral-contrast: var(--color-neutral-solid-dark-950);
 
   --color-border-neutral-primary: var(--color-neutral-solid-dark-800);
-  --color-border-neutral-secondary: var(--color-neutral-solid-dark-25);
+  --color-border-neutral-contrast: var(--color-neutral-solid-dark-25);
 
   /* accent color tokens (default: blue) */
 
@@ -259,7 +259,7 @@ html.dark {
   --color-text-neutral-contrast: var(--color-neutral-solid-light-950);
 
   --color-border-neutral-primary: var(--color-neutral-solid-light-800);
-  --color-border-neutral-secondary: var(--color-neutral-solid-light-25);
+  --color-border-neutral-contrast: var(--color-neutral-solid-light-25);
 }
 
 html.dark.blue {

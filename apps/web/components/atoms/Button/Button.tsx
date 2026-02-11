@@ -1,19 +1,41 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 import { tv, VariantProps } from 'tailwind-variants'
-import { Icon } from '../Icon'
-import { iconSizes } from './data'
+import { ButtonProps } from './Button.types'
+import { getClonedIcon } from './utils'
 
 const button = tv({
-  base: 'flex items-center font-medium cursor-pointer disabled:cursor-default hover:bg-transparent transition-colors duration-300 hover:border-border-neutral-primary border',
+  base: [
+    'flex items-center font-medium',
+    'transition-colors duration-300',
+    'border border-transparent',
+
+    'enabled:cursor-pointer',
+    'enabled:hover:border-border-neutral-primary',
+    'enabled:hover:bg-transparent',
+
+    'disabled:cursor-default'
+  ],
   variants: {
     color: {
-      accent:
-        'text-text-accent-primary hover:text-text-accent-primary active:border-border-accent-primary',
-      positive:
-        'text-text-feedback-positive hover:text-text-feedback-positive active:border-border-feedback-positive',
-      neutral:
-        'text-text-neutral-primary hover:text-text-neutral-primary active:border-border-neutral-contra',
-      negative: 'text-text-feedback-negative hover:text-text-feedback-negative'
+      accent: [
+        'text-text-accent-primary',
+        'enabled:hover:text-text-accent-primary',
+        'enabled:active:border-border-accent-primary'
+      ],
+      positive: [
+        'text-text-feedback-positive',
+        'enabled:hover:text-text-feedback-positive',
+        'enabled:active:border-border-feedback-positive'
+      ],
+      neutral: [
+        'text-text-neutral-primary',
+        'enabled:hover:text-text-neutral-primary',
+        'enabled:active:border-border-neutral-contrast'
+      ],
+      negative: [
+        'text-text-feedback-negative',
+        'enabled:hover:text-text-feedback-negative',
+        'enabled:active:border-border-feedback-negative'
+      ]
     },
     size: {
       small: 'text-xs p-2 rounded-xl h-8 gap-0.5',
@@ -21,10 +43,25 @@ const button = tv({
       large: 'text-base px-4 py-3 rounded-2xl h-12 gap-2'
     },
     variant: {
-      primary: 'text-text-neutral-contrast',
-      secondary: '',
-      tertiary: 'bg-transparent'
+      primary: [
+        'text-text-neutral-contrast',
+        'disabled:bg-background-fill-neutral-secondary'
+      ],
+      secondary: [
+        'border-transparent',
+        'disabled:text-text-neutral-contrast',
+        'disabled:bg-background-fill-neutral-secondary'
+      ],
+      tertiary: [
+        'bg-transparent border-transparent',
+        'disabled:text-text-neutral-quaternary'
+      ]
     }
+  },
+  defaultVariants: {
+    color: 'neutral',
+    size: 'medium',
+    variant: 'primary'
   },
   compoundVariants: [
     {
@@ -33,14 +70,24 @@ const button = tv({
       className: 'bg-background-fill-accent-primary'
     },
     {
-      color: 'accent',
-      variant: 'secondary',
-      className: 'bg-background-fill-accent-quaternary'
-    },
-    {
       color: 'positive',
       variant: 'primary',
       className: 'bg-background-fill-feedback-positive-primary'
+    },
+    {
+      color: 'neutral',
+      variant: 'primary',
+      className: 'bg-background-fill-neutral-solid'
+    },
+    {
+      color: 'negative',
+      variant: 'primary',
+      className: 'bg-background-fill-feedback-negative-primary'
+    },
+    {
+      color: 'accent',
+      variant: 'secondary',
+      className: 'bg-background-fill-accent-quaternary'
     },
     {
       color: 'positive',
@@ -49,18 +96,8 @@ const button = tv({
     },
     {
       color: 'neutral',
-      variant: 'primary',
-      className: 'bg-background-fill-neutral-solid'
-    },
-    {
-      color: 'neutral',
       variant: 'secondary',
       className: 'bg-background-fill-neutral-primary'
-    },
-    {
-      color: 'negative',
-      variant: 'primary',
-      className: 'bg-background-fill-feedback-negative-primary'
     },
     {
       color: 'negative',
@@ -70,24 +107,21 @@ const button = tv({
   ]
 })
 
-type ButtonProps = DetailedHTMLProps<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
-> &
-  VariantProps<typeof button>
-
 export const Button = ({
   children,
   className,
-  color = 'neutral',
+  color,
+  endIcon,
   size = 'medium',
-  variant = 'primary',
+  startIcon,
+  variant,
   ...props
-}: ButtonProps) => {
+}: ButtonProps & VariantProps<typeof button>) => {
   return (
     <button className={button({ className, color, size, variant })} {...props}>
-      <Icon name="13mp" size={iconSizes[size]} />
+      {getClonedIcon(startIcon, size)}
       {children}
+      {getClonedIcon(endIcon, size)}
     </button>
   )
 }

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
+import { Icon } from '../Icon'
 import { Button } from './Button'
 import { colors, sizes, variants } from './data'
 
@@ -19,28 +20,50 @@ const meta = {
       table: { type: { summary: 'ReactNode' } },
       control: 'text'
     },
-    disabled: {
-      description: 'If true, the file uploader will be disabled',
-      table: { type: { summary: 'boolean' } },
-      control: 'boolean'
-    },
     color: {
       description: 'The color of the button',
-      table: { type: { summary: 'string' } },
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'neutral' }
+      },
       control: 'select',
       options: colors
     },
+    disabled: {
+      description: 'If true, the file uploader will be disabled',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' }
+      },
+      control: 'boolean'
+    },
     size: {
       description: 'The size of the button',
-      table: { type: { summary: 'string' } },
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'medium' }
+      },
       control: 'select',
       options: sizes
     },
     variant: {
       description: 'The variant of the button',
-      table: { type: { summary: 'string' } },
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'primary' }
+      },
       control: 'select',
       options: variants
+    },
+    endIcon: {
+      description: 'The icon to display at the end of the button',
+      table: { type: { summary: 'IconElement' } },
+      control: false
+    },
+    startIcon: {
+      description: 'The icon to display at the start of the button',
+      table: { type: { summary: 'IconElement' } },
+      control: false
     }
   },
   args: {
@@ -59,6 +82,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     children: 'Default Button',
-    color: 'accent'
+    endIcon: <Icon name="brightness_1" />,
+    startIcon: <Icon name="brightness_1" />
   }
 }
