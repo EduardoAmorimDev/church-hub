@@ -1,10 +1,10 @@
 import { Decorator } from '@storybook/nextjs'
-import { AccentColorsEnum, ThemesEnum } from '../models/enums'
 import { useEffect } from 'react'
+import { AccentColorEnum, ThemeEnum } from '../models/enums'
 
 export const ThemeDecorator: Decorator = (Story, context) => {
-  const theme = context.globals?.theme ?? ThemesEnum.LIGHT
-  const color = context.globals?.color ?? AccentColorsEnum.BLUE
+  const theme = context.globals?.theme ?? ThemeEnum.LIGHT
+  const color = context.globals?.color ?? AccentColorEnum.BLUE
 
   useEffect(() => {
     const html = document.documentElement

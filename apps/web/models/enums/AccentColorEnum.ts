@@ -1,4 +1,4 @@
-export enum AccentColorsEnum {
+export enum AccentColorEnum {
   'BLUE' = 'blue',
   'RED' = 'red',
   'ORANGE' = 'orange',

@@ -162,8 +162,8 @@
   );
   --color-background-fill-neutral-solid: var(--color-neutral-solid-dark-25);
 
-  --color-background-surface-primary: var(--color-neutral-solid-dark-950);
-  --color-background-surface-secondary: var(--color-neutral-solid-dark-900);
+  --color-background-surface-primary: var(--color-neutral-solid-dark-900);
+  --color-background-surface-secondary: var(--color-neutral-solid-dark-950);
 
   --color-text-neutral-primary: var(--color-neutral-solid-dark-25);
   --color-text-neutral-secondary: var(--color-neutral-solid-dark-100);

@@ -1,14 +1,14 @@
 import { themes } from 'storybook/theming'
 import { ExtendedDocsContainerProps } from './types'
-import { ThemesEnum } from '../models/enums'
 import { DocsContainer } from '@storybook/addon-docs/blocks'
+import { ThemeEnum } from '../models/enums'
 
 export const CustomDocsContainer = ({
   context,
   children
 }: ExtendedDocsContainerProps) => {
   const currentTheme =
-    context.store.userGlobals.globals.theme ?? ThemesEnum.LIGHT
+    context.store.userGlobals.globals.theme ?? ThemeEnum.LIGHT
   const theme = themes[currentTheme] ?? themes.light
 
   return (

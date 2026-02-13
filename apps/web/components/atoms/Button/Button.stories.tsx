@@ -10,9 +10,9 @@ const meta = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/design/Doh7KjbYN0XDwDixZ7wy2v/%5BDS%5D-Components?node-id=7349-1871'
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13352-328&m=dev'
     },
-    docs: { description: { component: 'The Lamb `Button` component' } }
+    docs: { description: { component: 'The Lamb DS `Button` component' } }
   },
   argTypes: {
     children: {
@@ -23,14 +23,14 @@ const meta = {
     color: {
       description: 'The color of the button',
       table: {
-        type: { summary: 'string' },
+        type: { summary: colors.join(' | ') },
         defaultValue: { summary: 'neutral' }
       },
       control: 'select',
       options: colors
     },
     disabled: {
-      description: 'If true, the file uploader will be disabled',
+      description: 'If true, the button will be disabled',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' }
@@ -40,7 +40,7 @@ const meta = {
     size: {
       description: 'The size of the button',
       table: {
-        type: { summary: 'string' },
+        type: { summary: sizes.join(' | ') },
         defaultValue: { summary: 'medium' }
       },
       control: 'select',
@@ -49,7 +49,7 @@ const meta = {
     variant: {
       description: 'The variant of the button',
       table: {
-        type: { summary: 'string' },
+        type: { summary: variants.join(' | ') },
         defaultValue: { summary: 'primary' }
       },
       control: 'select',

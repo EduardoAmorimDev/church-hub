@@ -1,11 +1,19 @@
-export const reactStrictMode = true
-export function webpack(config) {
-  config.resolve.extensions = [
-    '.web.js',
-    '.web.jsx',
-    '.web.ts',
-    '.web.tsx',
-    ...config.resolve.extensions
-  ]
-  return config
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  turbopack: {
+    resolveExtensions: [
+      '.web.js',
+      '.web.jsx',
+      '.web.ts',
+      '.web.tsx',
+      '.js',
+      '.jsx',
+      '.ts',
+      '.tsx',
+      '.json'
+    ]
+  }
 }
+
+export default nextConfig

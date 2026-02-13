@@ -1,13 +1,13 @@
 import { themes } from 'storybook/theming'
-import { AccentColorsEnum, ThemesEnum } from '../models/enums'
 import type { DocsContainerProps } from '@storybook/addon-docs/blocks'
+import { AccentColorEnum, ThemeEnum } from '../models/enums'
 
 export type ThemeKey = keyof typeof themes
 
 export type DecoratorProps = {
   theme: ThemeKey
   children: React.ReactNode
-  color?: AccentColorsEnum
+  color?: AccentColorEnum
 }
 
 export type ExtendedDocsContainerProps = DocsContainerProps & {
@@ -16,8 +16,8 @@ export type ExtendedDocsContainerProps = DocsContainerProps & {
     store: {
       userGlobals: {
         globals: {
-          theme?: ThemesEnum
-          color?: AccentColorsEnum
+          theme?: ThemeEnum
+          color?: AccentColorEnum
         }
       }
     }
