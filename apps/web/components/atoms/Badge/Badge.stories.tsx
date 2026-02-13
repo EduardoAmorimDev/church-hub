@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 import { Badge } from './Badge'
-import { variants } from './data'
+
+const variants = ['attention', 'negative', 'neutral', 'positive'] as const
 
 const meta = {
   title: 'Atoms/Badge',
@@ -10,7 +11,7 @@ const meta = {
       type: 'figma',
       url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13354-6107&m=dev'
     },
-    docs: { description: { component: 'The Lamb Badge component' } }
+    docs: { description: { component: 'The Lamb DS `Badge` component' } }
   },
   argTypes: {
     children: {

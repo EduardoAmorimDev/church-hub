@@ -1,10 +1,29 @@
-import { cloneElement } from 'react'
-import { iconSizes } from '../data'
-import { IconElement } from '../../Icon'
+import { Children, cloneElement, isValidElement, ReactNode } from 'react'
+import { Icon } from '../../Icon'
 
-export const getClonedIcon = (
-  icon?: IconElement,
-  size?: keyof typeof iconSizes
-) => {
-  return icon ? cloneElement(icon, { size: iconSizes[size || 'medium'] }) : null
+export const renderButtonChildren = (
+  children: ReactNode,
+  size: number
+): ReactNode => {
+  return Children.map(children, child => {
+    if (!isValidElement(child)) {
+      return child
+    }
+
+    if (child.type === Icon) {
+      return cloneElement(child, {
+        ...child.props,
+        size: child.props.size || size
+      })
+    }
+
+    if (child.props?.children) {
+      return cloneElement(child, {
+        ...child.props,
+        children: renderButtonChildren(child.props.children, size)
+      })
+    }
+
+    return child
+  })
 }

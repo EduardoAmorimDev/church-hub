@@ -1,6 +1,9 @@
+import { isValidElement } from 'react'
 import { tv, VariantProps } from 'tailwind-variants'
+import { Icon } from '../Icon'
 import { BaseButtonProps } from './Button.types'
-import { getClonedIcon } from './utils'
+import { iconSizes } from './data'
+import { renderButtonChildren } from './utils'
 
 const button = tv({
   base: [
@@ -42,9 +45,9 @@ const button = tv({
       false: ''
     },
     size: {
-      small: 'text-xs p-2 rounded-xl h-8 gap-0.5',
-      medium: 'text-sm px-4 py-2.5 rounded-1xl h-10 gap-1',
-      large: 'text-base px-4 py-3 rounded-2xl h-12 gap-2'
+      small: 'text-xs p-2 rounded-xl h-8 gap-0.5 ',
+      medium: 'text-sm px-4 py-2.5 rounded-1xl h-10 gap-1 ',
+      large: 'text-base px-4 py-3 rounded-2xl h-12 gap-2 '
     },
     variant: {
       primary: [
@@ -110,21 +113,6 @@ const button = tv({
     },
     {
       size: 'small',
-      iconOnly: false,
-      className: 'px-2 py-2'
-    },
-    {
-      size: 'medium',
-      iconOnly: false,
-      className: 'px-4 py-2.5'
-    },
-    {
-      size: 'large',
-      iconOnly: false,
-      className: 'px-4 py-3'
-    },
-    {
-      size: 'small',
       iconOnly: true,
       className: 'p-2'
     },
@@ -141,33 +129,25 @@ const button = tv({
   ]
 })
 
-export type ButtonProps = BaseButtonProps & VariantProps<typeof button>
+export type ButtonProps = BaseButtonProps &
+  Omit<VariantProps<typeof button>, 'iconOnly'>
 
 export const Button = ({
   children,
   className,
   color,
-  endIcon,
-  icon,
   size = 'medium',
-  startIcon,
   variant,
   ...props
 }: ButtonProps) => {
+  const iconOnly = isValidElement(children) && children.type === Icon
+
   return (
     <button
-      className={button({ className, color, size, variant, iconOnly: !!icon })}
+      className={button({ className, color, size, variant, iconOnly })}
       {...props}
     >
-      {icon ? (
-        getClonedIcon(icon, size)
-      ) : (
-        <>
-          {getClonedIcon(startIcon, size)}
-          {children}
-          {getClonedIcon(endIcon, size)}
-        </>
-      )}
+      {renderButtonChildren(children, iconSizes[size])}
     </button>
   )
 }

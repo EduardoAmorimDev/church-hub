@@ -1,13 +1,33 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 
 import { Icon } from './Icon'
-import { IconNames } from './data'
+import { MaterialSymbol } from 'material-symbols'
+
+const IconNames: MaterialSymbol[] = [
+  'account_circle',
+  'add',
+  'brightness_1',
+  'check_circle',
+  'close',
+  'error',
+  'favorite',
+  'help',
+  'home',
+  'info',
+  'logout',
+  'menu',
+  'search',
+  'settings',
+  'visibility_off',
+  'visibility',
+  'warning'
+]
 
 const meta = {
   title: 'Atoms/Icon',
   component: Icon,
   parameters: {
-    docs: { description: { component: 'The Lamb `Icon` component' } }
+    docs: { description: { component: 'The Lamb DS `Icon` component' } }
   },
   argTypes: {
     name: {

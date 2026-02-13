@@ -2,7 +2,10 @@ import type { Meta, StoryObj } from '@storybook/nextjs'
 
 import { Icon } from '../Icon'
 import { Button } from './Button'
-import { colors, sizes, variants } from './data'
+
+const colors = ['accent', 'negative', 'neutral', 'positive'] as const
+const sizes = ['small', 'medium', 'large'] as const
+const variants = ['primary', 'secondary', 'tertiary'] as const
 
 const meta = {
   title: 'Atoms/Button',
@@ -18,7 +21,7 @@ const meta = {
     children: {
       description: 'The content of the button',
       table: { type: { summary: 'ReactNode' } },
-      control: 'text'
+      control: false
     },
     color: {
       description: 'The color of the button',
@@ -54,16 +57,6 @@ const meta = {
       },
       control: 'select',
       options: variants
-    },
-    endIcon: {
-      description: 'The icon to display at the end of the button',
-      table: { type: { summary: 'IconElement' } },
-      control: false
-    },
-    startIcon: {
-      description: 'The icon to display at the start of the button',
-      table: { type: { summary: 'IconElement' } },
-      control: false
     }
   },
   args: {
@@ -81,15 +74,19 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: 'Default Button',
-    endIcon: <Icon name="brightness_1" />,
-    startIcon: <Icon name="brightness_1" />
+    children: (
+      <>
+        <Icon name="brightness_1" />
+        Default Button
+        <Icon name="brightness_1" />
+      </>
+    )
   }
 }
 
 export const IconButton: Story = {
   args: {
-    icon: <Icon name="brightness_1" />
+    children: <Icon name="brightness_1" />
   },
   render: args => (
     <div className="flex items-center gap-4">
