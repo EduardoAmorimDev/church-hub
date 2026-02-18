@@ -1,7 +1,7 @@
 export default function Web() {
   return (
     <div>
-      <div>teste tailwind</div>
+      <button className="bg-red-50">Teste colors</button>
     </div>
   )
 }
