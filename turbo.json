@@ -9,6 +9,11 @@
     },
     "dev": {
       "cache": false,
+      "persistent": true,
+      "dependsOn": ["^build"]
+    },
+    "storybook": {
+      "cache": false,
       "persistent": true
     },
     "lint": {},

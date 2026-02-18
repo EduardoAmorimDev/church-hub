@@ -1,32 +1,35 @@
-# Turborepo react-native starter
+# Church Hub
 
-This is a community-maintained example. If you experience a problem, please submit a pull request with a fix. GitHub Issues will be closed.
+<p align="center">A monorepo containing web and native applications for a web-based church back office system and a mobile app for the average user to access information from their church.</p>
 
-## Using this example
+---
 
-Run the following command:
+## Installation
 
-```sh
-npx create-turbo@latest -e with-react-native-web
+```bash
+# Clone github repo
+git clone git@github.com:EduardoAmorimDev/church-hub.git
+
+# Install dependencies
+npm install
+
+# Currently runs web app dev and build storybook and tokens package
+npm run dev
 ```
 
-## What's inside?
+## Project Structure
 
-This Turborepo includes the following packages/apps:
+```
+├── apps/
+│   ├── native/             # React Native (Expo) app
+│   └── web/                # Next.js app with Storybook
+└── packages/
+    ├── docs/                # Documentation
+    ├── eslint-config/       # Global ESLint config
+    ├── tokens/              # Design tokens (colors, font, sizes, etc...)
+    └── typescript-config/   # Global Typescript config
+```
 
-### Apps and Packages
+## Documentation
 
-- `native`: a [react-native](https://reactnative.dev/) app built with [expo](https://docs.expo.dev/)
-- `web`: a [Next.js](https://nextjs.org/) app built with [react-native-web](https://necolas.github.io/react-native-web/)
-- `@repo/ui`: a stub [react-native](https://reactnative.dev/) component library shared by both `web` and `native` applications
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [Expo](https://docs.expo.dev/) for native development
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [Prettier](https://prettier.io) for code formatting
+- [Color System](./packages/docs/color-system.md)

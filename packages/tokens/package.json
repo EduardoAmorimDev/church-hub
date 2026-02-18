@@ -1,0 +1,24 @@
+{
+  "name": "@church/tokens",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles/colors.css": "./dist/styles/colors.css"
+  },
+  "scripts": {
+    "build": "npx tsup src/index.ts --target esnext --format esm,cjs --dts --sourcemap --clean --out-dir dist && npm run build:css",
+    "build:css": "npx tsx src/scripts/generate-css-file-colors.ts"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "tsup": "^8.5.1"
+  }
+}
