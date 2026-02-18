@@ -33,7 +33,6 @@
     "chromatic": "^15.0.0",
     "eslint-plugin-storybook": "^10.2.8",
     "storybook": "^10.2.8",
-    "typescript": "5.5.4",
     "vite": "^7.3.1"
   }
 }
