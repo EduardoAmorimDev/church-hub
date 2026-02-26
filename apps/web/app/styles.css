@@ -83,6 +83,7 @@
   --color-yellow-100: var(--yellow-100);
   --color-yellow-alpha: var(--yellow-alpha);
 
+  --text-*: initial;
   --text-size-25: var(--typography-size-25);
   --text-size-25--line-height: var(--typography-line-height-25);
   --text-size-50: var(--typography-size-50);
@@ -188,6 +189,10 @@
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
 }
 
 .material-symbols-outlined {
