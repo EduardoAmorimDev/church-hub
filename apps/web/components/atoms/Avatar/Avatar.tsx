@@ -11,8 +11,8 @@ const avatar = tv({
     size: {
       small: 'w-6 h-6 text-[11px]',
       medium: 'w-9 h-9',
-      large: 'w-16 h-16 text-3xl',
-      xLarge: 'w-20 h-20 text-4xl'
+      large: 'w-16 h-16 text-size-400',
+      xLarge: 'w-20 h-20 text-size-500'
     },
     defaultVariants: {
       size: 'medium'
