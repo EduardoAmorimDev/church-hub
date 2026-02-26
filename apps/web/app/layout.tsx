@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-br"
-      className={`${noto_sans.variable} ${oswald.variable} "antialiased text"`}
+      className={`${noto_sans.variable} ${oswald.variable} text antialiased`}
     >
       <body>{children}</body>
     </html>
