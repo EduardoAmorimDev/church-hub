@@ -1,12 +1,19 @@
-import { IconProps } from './Icon.types'
+import { MaterialSymbol } from 'material-symbols'
 import { twJoin } from 'tailwind-merge'
+
+export type IconProps = React.ComponentProps<'span'> & {
+  name: MaterialSymbol
+  fill?: 0 | 1
+  grade?: -25 | 0 | 200
+  variant?: 'outlined' | 'rounded' | 'sharp'
+  weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700
+}
 
 export function Icon({
   name,
   className,
   fill = 0,
   grade = 0,
-  size,
   variant = 'outlined',
   weight = 400
 }: IconProps) {
@@ -17,8 +24,8 @@ export function Icon({
         className
       )}
       style={{
-        fontVariationSettings: `'FILL' ${fill}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${size}`,
-        fontSize: size
+        fontVariationSettings: `'FILL' ${fill}, 'wght' ${weight}, 'GRAD' ${grade}`,
+        fontSize: 'inherit'
       }}
     >
       {name}
