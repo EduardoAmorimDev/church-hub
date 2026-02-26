@@ -1,11 +1,39 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
-import { Badge } from './Badge'
 
-const variants = ['attention', 'negative', 'neutral', 'positive'] as const
+import { Badge, BadgeProps } from './Badge'
 
-const meta = {
+const colors = [
+  'neutral',
+  'red',
+  'orange',
+  'yellow',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'indigo',
+  'purple',
+  'pink'
+] as const
+
+export default {
   title: 'Atoms/Badge',
   component: Badge,
+  args: {
+    children: 'Label',
+    color: 'neutral',
+    type: 'high'
+  },
+  argTypes: {
+    color: {
+      control: 'select',
+      options: colors
+    },
+    type: {
+      control: 'select',
+      options: ['low', 'high']
+    }
+  },
   parameters: {
     design: {
       type: 'figma',
@@ -13,31 +41,13 @@ const meta = {
     },
     docs: { description: { component: 'The Lamb DS `Badge` component' } }
   },
-  argTypes: {
-    children: {
-      description: 'the badge text',
-      table: { type: { summary: 'string' } },
-      control: 'text'
-    },
-    variant: {
-      description: 'Badge variant',
-      table: {
-        type: { summary: variants.join(' | ') },
-        defaultValue: { summary: 'Neutral' }
-      },
-      control: 'select',
-      options: variants
-    }
-  },
-  args: {
-    children: 'Label',
-    variant: 'neutral'
-  },
   tags: ['autodocs']
-} satisfies Meta<typeof Badge>
+} as Meta<BadgeProps>
 
-export default meta
+export const Default: StoryObj<BadgeProps> = {}
 
-type Story = StoryObj<typeof meta>
-
-export const Neutral: Story = {}
+export const Low: StoryObj<BadgeProps> = {
+  args: {
+    type: 'low'
+  }
+}

@@ -1,6 +1,19 @@
 import { Decorator } from '@storybook/nextjs'
+import { Noto_Sans, Oswald } from 'next/font/google'
 import { useEffect } from 'react'
 import { AccentColorEnum, ThemeEnum } from '../models/enums'
+
+const notoSans = Noto_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-sans'
+})
+
+const oswald = Oswald({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-oswald'
+})
 
 export const ThemeDecorator: Decorator = (Story, context) => {
   const theme = context.globals?.theme ?? ThemeEnum.LIGHT
@@ -10,7 +23,7 @@ export const ThemeDecorator: Decorator = (Story, context) => {
     const html = document.documentElement
 
     html.className = ''
-    html.classList.add(theme, color || '')
+    html.classList.add(theme, color || '', notoSans.variable, oswald.variable)
   }, [theme, color])
 
   useEffect(() => {
