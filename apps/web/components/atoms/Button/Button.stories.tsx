@@ -1,15 +1,58 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 
+import { Button, ButtonProps } from './Button'
 import { Icon } from '../Icon'
-import { Button } from './Button'
 
-const colors = ['accent', 'negative', 'neutral', 'positive'] as const
-const sizes = ['small', 'medium', 'large'] as const
-const variants = ['primary', 'secondary', 'tertiary'] as const
+const colors: Array<ButtonProps['color']> = [
+  'destructive',
+  'neutral',
+  'positive'
+]
+const sizes: Array<ButtonProps['size']> = ['large', 'medium', 'small']
+const variants: Array<ButtonProps['variant']> = [
+  'filled',
+  'ghost',
+  'transparent'
+]
 
-const meta = {
+export default {
   title: 'Atoms/Button',
   component: Button,
+  args: {
+    children: 'Button text',
+    color: 'neutral',
+    size: 'large',
+    variant: 'filled'
+  },
+  argTypes: {
+    children: {
+      control: false,
+      description: 'The content of the button:',
+      table: { type: { summary: 'ReactNode | string' } }
+    },
+    color: {
+      control: 'select',
+      description: 'The color of the button:',
+      options: colors,
+      table: { type: { summary: colors.join('|') } }
+    },
+    size: {
+      control: 'select',
+      description: 'The size of the button:',
+      options: sizes,
+      table: {
+        type: { summary: sizes.join(' | ') }
+      }
+    },
+    variant: {
+      control: 'select',
+      description: 'The variant of the button',
+      options: variants,
+      table: {
+        type: { summary: variants.join(' | ') }
+      }
+    }
+  },
   parameters: {
     design: {
       type: 'figma',
@@ -17,82 +60,29 @@ const meta = {
     },
     docs: { description: { component: 'The Lamb DS `Button` component' } }
   },
-  argTypes: {
-    children: {
-      description: 'The content of the button',
-      table: { type: { summary: 'ReactNode' } },
-      control: false
-    },
-    color: {
-      description: 'The color of the button',
-      table: {
-        type: { summary: colors.join(' | ') },
-        defaultValue: { summary: 'neutral' }
-      },
-      control: 'select',
-      options: colors
-    },
-    disabled: {
-      description: 'If true, the button will be disabled',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' }
-      },
-      control: 'boolean'
-    },
-    size: {
-      description: 'The size of the button',
-      table: {
-        type: { summary: sizes.join(' | ') },
-        defaultValue: { summary: 'medium' }
-      },
-      control: 'select',
-      options: sizes
-    },
-    variant: {
-      description: 'The variant of the button',
-      table: {
-        type: { summary: variants.join(' | ') },
-        defaultValue: { summary: 'primary' }
-      },
-      control: 'select',
-      options: variants
-    }
-  },
-  args: {
-    size: 'medium',
-    color: 'neutral',
-    variant: 'primary',
-    disabled: false
-  },
   tags: ['autodocs']
-} satisfies Meta<typeof Button>
+} as Meta<ButtonProps>
 
-export default meta
+export const Default: StoryObj<ButtonProps> = {}
 
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const WithIcon: StoryObj<ButtonProps> = {
   args: {
     children: (
       <>
-        <Icon name="brightness_1" />
-        Default Button
+        Button text with Icon
         <Icon name="brightness_1" />
       </>
     )
   }
 }
 
-export const IconButton: Story = {
+export const IconButton: StoryObj<ButtonProps> = {
   args: {
-    children: <Icon name="brightness_1" />
-  },
-  render: args => (
-    <div className="flex items-center gap-4">
-      <Button {...args} size="small" />
-      <Button {...args} size="medium" />
-      <Button {...args} size="large" />
-    </div>
-  )
+    children: (
+      <>
+        <Icon name="brightness_1" />
+      </>
+    ),
+    icon: true
+  }
 }

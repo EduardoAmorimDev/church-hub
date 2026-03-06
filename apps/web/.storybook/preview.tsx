@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/nextjs'
+import 'material-symbols'
 import '../app/styles.css'
 import '../models/enums'
 import { ThemeDecorator } from './decorators'
