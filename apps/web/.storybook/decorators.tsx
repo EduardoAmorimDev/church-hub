@@ -23,7 +23,8 @@ export const ThemeDecorator: Decorator = (Story, context) => {
     const html = document.documentElement
 
     html.className = ''
-    html.classList.add(theme, color || '', notoSans.variable, oswald.variable)
+    html.classList.add(color || '', notoSans.variable, oswald.variable)
+    html.setAttribute('data-theme', theme || '')
   }, [theme, color])
 
   useEffect(() => {
