@@ -8,13 +8,13 @@ function getAbsolutePath(value: string) {
   return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)))
 }
 const config: StorybookConfig = {
-  stories: ['../components/**/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('@storybook/addon-designs'),
     getAbsolutePath('@storybook/addon-docs'),
     getAbsolutePath('@storybook/addon-themes')
   ],
-  framework: getAbsolutePath('@storybook/nextjs')
+  framework: getAbsolutePath('@storybook/nextjs'),
+  stories: ['../components/**/**/*.stories.@(js|jsx|mjs|ts|tsx)']
 }
 export default config

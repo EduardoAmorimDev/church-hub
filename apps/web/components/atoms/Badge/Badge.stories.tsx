@@ -19,6 +19,13 @@ const colors = [
 export default {
   title: 'Atoms/Badge',
   component: Badge,
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13354-6107&m=dev'
+    },
+    docs: { description: { component: 'The Lamb DS `Badge` component' } }
+  },
   args: {
     children: 'Label',
     color: 'neutral',
@@ -33,15 +40,7 @@ export default {
       control: 'select',
       options: ['low', 'high']
     }
-  },
-  parameters: {
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13354-6107&m=dev'
-    },
-    docs: { description: { component: 'The Lamb DS `Badge` component' } }
-  },
-  tags: ['autodocs']
+  }
 } as Meta<BadgeProps>
 
 export const Default: StoryObj<BadgeProps> = {}

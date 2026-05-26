@@ -6,6 +6,13 @@ const sizes = ['small', 'medium', 'large', 'xlarge']
 export default {
   title: 'Atoms/Avatar',
   component: Avatar,
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=47-342&p=f&t=w0AKf7PLXcGNgESX-0'
+    },
+    docs: { description: { component: 'The Lamb DS `Avatar` component' } }
+  },
   args: {
     alt: 'Lucas Fernandes Vieira',
     size: 'medium',
@@ -31,15 +38,7 @@ export default {
       table: { type: { summary: 'string' } },
       control: 'text'
     }
-  },
-  parameters: {
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=47-342&p=f&t=w0AKf7PLXcGNgESX-0'
-    },
-    docs: { description: { component: 'The Lamb DS `Avatar` component' } }
-  },
-  tags: ['autodocs']
+  }
 } as Meta<AvatarProps>
 
 export const Default: StoryObj<AvatarProps> = {}
