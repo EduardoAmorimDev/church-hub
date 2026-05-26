@@ -2,14 +2,14 @@ import type { Preview } from '@storybook/nextjs'
 import 'material-symbols'
 import '../app/styles.css'
 import '../models/enums'
-import { ThemeDecorator } from './decorators'
+import { ThemeEnum } from '../models/enums'
 import { CustomDocsContainer } from './containers'
-import { AccentColorEnum, ThemeEnum } from '../models/enums'
+import { ThemeDecorator } from './decorators'
 
 const preview: Preview = {
+  decorators: [ThemeDecorator],
   initialGlobals: {
-    theme: ThemeEnum.LIGHT,
-    color: AccentColorEnum.BLUE
+    theme: ThemeEnum.LIGHT
   },
   globalTypes: {
     theme: {
@@ -18,15 +18,6 @@ const preview: Preview = {
       toolbar: {
         icon: 'sun',
         items: Object.values(ThemeEnum),
-        dynamicTitle: true
-      }
-    },
-    color: {
-      name: 'Color',
-      description: 'Accent color',
-      toolbar: {
-        icon: 'paintbrush',
-        items: Object.values(AccentColorEnum),
         dynamicTitle: true
       }
     }
@@ -45,7 +36,7 @@ const preview: Preview = {
     },
     layout: 'centered'
   },
-  decorators: [ThemeDecorator]
+  tags: ['autodocs']
 }
 
 export default preview

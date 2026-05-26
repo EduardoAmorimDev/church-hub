@@ -8,6 +8,13 @@ export default {
   parameters: {
     docs: { description: { component: 'The Lamb DS `Icon` component' } }
   },
+  args: {
+    name: 'brightness_1',
+    fill: 0,
+    grade: 0,
+    variant: 'outlined',
+    weight: 400
+  },
   argTypes: {
     name: {
       control: false,
@@ -47,15 +54,7 @@ export default {
         defaultValue: { summary: '400' }
       }
     }
-  },
-  args: {
-    name: 'brightness_1',
-    fill: 0,
-    grade: 0,
-    variant: 'outlined',
-    weight: 400
-  },
-  tags: ['autodocs']
+  }
 } as Meta<IconProps>
 
 export const Default: StoryObj<IconProps> = {}

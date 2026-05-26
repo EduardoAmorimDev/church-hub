@@ -18,6 +18,13 @@ const variants: Array<ButtonProps['variant']> = [
 export default {
   title: 'Atoms/Button',
   component: Button,
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13352-328&m=dev'
+    },
+    docs: { description: { component: 'The Lamb DS `Button` component' } }
+  },
   args: {
     children: 'Button text',
     color: 'neutral',
@@ -52,15 +59,7 @@ export default {
         type: { summary: variants.join(' | ') }
       }
     }
-  },
-  parameters: {
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13352-328&m=dev'
-    },
-    docs: { description: { component: 'The Lamb DS `Button` component' } }
-  },
-  tags: ['autodocs']
+  }
 } as Meta<ButtonProps>
 
 export const Default: StoryObj<ButtonProps> = {}
