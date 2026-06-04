@@ -17,7 +17,7 @@ const colors = [
 ] as const
 
 export default {
-  title: 'Atoms/Badge',
+  title: 'atoms/Badge',
   component: Badge,
   parameters: {
     design: {

@@ -3,17 +3,13 @@ import type { Meta, StoryObj } from '@storybook/nextjs'
 import { Icon, IconProps } from './Icon'
 
 export default {
-  title: 'Atoms/Icon',
+  title: 'atoms/Icon',
   component: Icon,
   parameters: {
     docs: { description: { component: 'The Lamb DS `Icon` component' } }
   },
   args: {
-    name: 'brightness_1',
-    fill: 0,
-    grade: 0,
-    variant: 'outlined',
-    weight: 400
+    name: 'brightness_1'
   },
   argTypes: {
     name: {
@@ -34,6 +30,23 @@ export default {
       table: {
         type: { summary: '-25 | 0 | 200' },
         defaultValue: { summary: '0' }
+      }
+    },
+    responsive: {
+      control: 'boolean',
+      description: 'Whether the icon should be responsive',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' }
+      }
+    },
+    size: {
+      control: 'select',
+      description: 'Size of the icon',
+      options: ['small', 'medium', 'large'],
+      table: {
+        type: { summary: 'small | medium | large' },
+        defaultValue: { summary: 'medium' }
       }
     },
     variant: {

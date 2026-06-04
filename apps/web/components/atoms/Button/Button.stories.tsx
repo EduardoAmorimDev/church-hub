@@ -8,6 +8,11 @@ const colors: Array<ButtonProps['color']> = [
   'neutral',
   'positive'
 ]
+const iconPositions: Array<ButtonProps['iconPosition']> = [
+  'start',
+  'end',
+  'both'
+]
 const sizes: Array<ButtonProps['size']> = ['large', 'medium', 'small']
 const variants: Array<ButtonProps['variant']> = [
   'filled',
@@ -16,7 +21,7 @@ const variants: Array<ButtonProps['variant']> = [
 ]
 
 export default {
-  title: 'Atoms/Button',
+  title: 'atoms/Button',
   component: Button,
   parameters: {
     design: {
@@ -26,29 +31,50 @@ export default {
     docs: { description: { component: 'The Lamb DS `Button` component' } }
   },
   args: {
-    children: 'Button text',
-    color: 'neutral',
-    size: 'large',
-    variant: 'filled'
+    children: 'Button Text',
+    icon: <Icon name="brightness_1" />
   },
   argTypes: {
     children: {
-      control: false,
-      description: 'The content of the button:',
-      table: { type: { summary: 'ReactNode | string' } }
+      control: 'text',
+      description: 'The content of the button',
+      table: {
+        type: { summary: 'ReactNode | string' }
+      }
     },
     color: {
       control: 'select',
-      description: 'The color of the button:',
+      description: 'The color of the button',
       options: colors,
-      table: { type: { summary: colors.join('|') } }
+      table: {
+        type: { summary: colors.join('|') },
+        defaultValue: { summary: 'neutral' }
+      }
+    },
+    icon: {
+      description:
+        'An optional icon to be rendered inside the button. The size of the icon will be automatically adjusted based on the button size',
+      control: false,
+      table: {
+        type: { summary: 'ReactElement<IconProps>' }
+      }
+    },
+    iconPosition: {
+      control: 'select',
+      description: 'The position of the icon inside the button',
+      options: iconPositions,
+      table: {
+        type: { summary: iconPositions.join(' | ') },
+        defaultValue: { summary: 'start' }
+      }
     },
     size: {
       control: 'select',
       description: 'The size of the button:',
       options: sizes,
       table: {
-        type: { summary: sizes.join(' | ') }
+        type: { summary: sizes.join(' | ') },
+        defaultValue: { summary: 'medium' }
       }
     },
     variant: {
@@ -56,7 +82,8 @@ export default {
       description: 'The variant of the button',
       options: variants,
       table: {
-        type: { summary: variants.join(' | ') }
+        type: { summary: variants.join(' | ') },
+        defaultValue: { summary: 'filled' }
       }
     }
   }
@@ -64,24 +91,9 @@ export default {
 
 export const Default: StoryObj<ButtonProps> = {}
 
-export const WithIcon: StoryObj<ButtonProps> = {
-  args: {
-    children: (
-      <>
-        Button text with Icon
-        <Icon name="brightness_1" />
-      </>
-    )
-  }
-}
-
 export const IconButton: StoryObj<ButtonProps> = {
   args: {
-    children: (
-      <>
-        <Icon name="brightness_1" />
-      </>
-    ),
-    icon: true
+    children: undefined,
+    icon: <Icon name="brightness_1" />
   }
 }
