@@ -4,7 +4,7 @@ import { Avatar, AvatarProps } from './Avatar'
 const sizes = ['small', 'medium', 'large', 'xlarge']
 
 export default {
-  title: 'Atoms/Avatar',
+  title: 'atoms/Avatar',
   component: Avatar,
   parameters: {
     design: {

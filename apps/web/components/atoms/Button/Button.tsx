@@ -1,12 +1,13 @@
-import React from 'react'
 import { twJoin } from 'tailwind-merge'
 import { tv, VariantProps } from 'tailwind-variants'
+import { IconProps } from '../Icon'
+import { cloneElement, ComponentProps, forwardRef } from 'react'
 
 export const button = tv(
   {
-    base: 'flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:cursor-not-allowed',
+    base: 'flex items-center justify-center gap-2 transition-colors',
     variants: {
-      icon: {
+      iconOnly: {
         true: ''
       },
       color: {
@@ -30,17 +31,17 @@ export const button = tv(
     },
     compoundVariants: [
       {
-        icon: true,
+        iconOnly: true,
         size: 'large',
         class: 'p-3.5!'
       },
       {
-        icon: true,
+        iconOnly: true,
         size: 'medium',
         class: 'p-3!'
       },
       {
-        icon: true,
+        iconOnly: true,
         size: 'small',
         class: 'p-2!'
       },
@@ -79,17 +80,43 @@ export const button = tv(
   { twMerge: false }
 )
 
-export type ButtonProps = React.ComponentProps<'button'> &
-  VariantProps<typeof button>
+export type ButtonProps = ComponentProps<'button'> &
+  Omit<VariantProps<typeof button>, 'iconOnly'> & {
+    icon?: React.ReactElement<IconProps>
+    iconPosition?: 'start' | 'end' | 'both'
+  }
 
-export const Button = React.forwardRef<React.ElementRef<'button'>, ButtonProps>(
-  ({ className, ...props }, ref) => {
+export const Button = forwardRef<React.ElementRef<'button'>, ButtonProps>(
+  ({ children, className, icon, iconPosition = 'start', ...props }, ref) => {
+    const isIconOnly = !!icon && !children
+
+    const startIcon =
+      icon && ['start', 'both'].includes(iconPosition)
+        ? cloneElement(icon, {
+            size: props.size
+          })
+        : null
+
+    const endIcon =
+      icon && ['end', 'both'].includes(iconPosition)
+        ? cloneElement(icon, {
+            size: props.size
+          })
+        : null
+
     return (
       <button
         ref={ref}
-        className={twJoin(button(props), className)}
+        className={twJoin(
+          button({ ...props, iconOnly: isIconOnly }),
+          className
+        )}
         {...props}
-      />
+      >
+        {startIcon}
+        {children}
+        {endIcon}
+      </button>
     )
   }
 )
