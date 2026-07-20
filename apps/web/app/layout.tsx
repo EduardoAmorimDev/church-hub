@@ -2,6 +2,7 @@ import { Noto_Sans, Oswald } from 'next/font/google'
 
 import 'material-symbols'
 import './styles.css'
+import { ToastContainer } from '~/components/molecules'
 
 const noto_sans = Noto_Sans({
   subsets: ['latin'],
@@ -25,6 +26,7 @@ export default function RootLayout({
       lang="pt-br"
       className={`${noto_sans.variable} ${oswald.variable} text antialiased`}
     >
+      <ToastContainer />
       <body>{children}</body>
     </html>
   )

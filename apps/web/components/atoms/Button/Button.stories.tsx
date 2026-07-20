@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/nextjs'
+import type { Meta, StoryFn, StoryObj } from '@storybook/nextjs'
 
 import { Button, ButtonProps } from './Button'
 import { Icon } from '../Icon'
@@ -91,9 +91,14 @@ export default {
 
 export const Default: StoryObj<ButtonProps> = {}
 
-export const IconButton: StoryObj<ButtonProps> = {
-  args: {
-    children: undefined,
-    icon: <Icon name="brightness_1" />
-  }
-}
+export const IconButton: StoryFn = () => (
+  <div className="flex items-center gap-4">
+    {['small', 'medium', 'large'].map(size => (
+      <Button
+        key={size}
+        icon={<Icon name="brightness_1" />}
+        size={size as ButtonProps['size']}
+      />
+    ))}
+  </div>
+)

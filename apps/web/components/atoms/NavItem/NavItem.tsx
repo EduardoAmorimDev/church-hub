@@ -6,8 +6,10 @@ import { NavItemProps } from './NavItem.types'
 
 const nav = tv({
   slots: {
-    root: 'group relative flex list-none items-start transition-all duration-300 ease-out',
-    button: 'flex w-full items-center gap-2 rounded-xl lg:rounded-lg',
+    root: 'group relative flex list-none items-start transition-all ease-out',
+    button:
+      'flex w-full transition-all items-center gap-2 rounded-xl lg:rounded-lg',
+    icon: 'transition-all group-hover:text-neutral-999',
     label: 'text-size-75 lg:text-size-50 group-hover:text-neutral-999',
     arrow: 'ml-auto transition-all group-hover:text-neutral-999',
     inlineList: [
@@ -24,9 +26,9 @@ const nav = tv({
     subButton:
       'text-size-75 lg:text-size-50 w-full py-3 pr-3.5 pl-11 text-start lg:py-1.5 lg:pr-2.5 lg:pl-8',
     popupList:
-      'border-neutral-17 absolute rounded-xl border lg:rounded-lg ml-5 lg:ml-0',
+      'border-neutral-17 absolute rounded-xl border lg:rounded-lg ml-5 lg:ml-0 shadow-xl',
     popupItem:
-      'hover:text-neutral-999 text-neutral-83 z-10 flex-1 list-none transition-all duration-300 hover:translate-x-0.5',
+      'hover:text-neutral-999 text-neutral-83 z-10 flex-1 list-none transition-all hover:translate-x-0.5',
     popupButton:
       'text-size-75 lg:text-size-50 w-full px-5 py-2.5 text-start whitespace-nowrap lg:px-2.5'
   },
@@ -45,11 +47,13 @@ const nav = tv({
       true: {
         root: 'text-neutral-100',
         button: 'bg-neutral-alpha/20',
+        icon: 'text-neutral-100',
         label: '',
         arrow: '-rotate-180'
       },
       false: {
         button: 'hover:bg-neutral-alpha/20',
+        icon: 'text-neutral-50',
         label: 'text-neutral-83',
         arrow: 'text-neutral-67'
       }
@@ -125,9 +129,7 @@ export const NavItem = ({
           responsive
           fill={active ? 1 : 0}
           size="large"
-          className={
-            active ? '' : 'text-neutral-50 group-hover:text-neutral-100'
-          }
+          className={slots.icon({ active })}
         />
 
         <AnimatePresence initial={false}>
@@ -165,11 +167,8 @@ export const NavItem = ({
             transition={{ duration: 0.3 }}
             className={slots.inlineList()}
           >
-            {subItems.map((subItem, index) => (
-              <li
-                key={index}
-                className={slots.subItem({ activated: subItem.activated })}
-              >
+            {subItems.map(({ activated: sba, ...subItem }, index) => (
+              <li key={index} className={slots.subItem({ activated: sba })}>
                 <button
                   className={slots.subButton({ className: subItem.className })}
                   {...subItem}

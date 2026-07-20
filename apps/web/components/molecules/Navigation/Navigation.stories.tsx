@@ -3,7 +3,7 @@ import { Navigation, NavigationProps } from './Navigation'
 import { useState } from 'react'
 import { MaterialSymbol } from 'material-symbols'
 
-const meta: Meta<typeof Navigation> = {
+const meta: Meta<NavigationProps> = {
   title: 'molecules/Navigation',
   component: Navigation,
   decorators: [

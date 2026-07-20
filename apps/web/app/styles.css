@@ -2,6 +2,8 @@
 @import '@church/tokens/styles/root.css';
 
 @theme {
+  --default-transition-duration: 300ms;
+
   --color-*: initial;
   --color-blue-17: var(--blue-17);
   --color-blue-33: var(--blue-33);
