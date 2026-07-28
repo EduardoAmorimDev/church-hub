@@ -1,24 +1,8 @@
-import type { Meta, StoryFn, StoryObj } from '@storybook/nextjs'
+import type { Meta, StoryObj } from '@storybook/nextjs'
 
-import { Button, ButtonProps } from './Button'
 import { Icon } from '../Icon'
-
-const colors: Array<ButtonProps['color']> = [
-  'destructive',
-  'neutral',
-  'positive'
-]
-const iconPositions: Array<ButtonProps['iconPosition']> = [
-  'start',
-  'end',
-  'both'
-]
-const sizes: Array<ButtonProps['size']> = ['large', 'medium', 'small']
-const variants: Array<ButtonProps['variant']> = [
-  'filled',
-  'ghost',
-  'transparent'
-]
+import { Button, ButtonProps } from './Button'
+import { intentionColors, sizes, variants } from '../data'
 
 export default {
   title: 'atoms/Button',
@@ -32,7 +16,8 @@ export default {
   },
   args: {
     children: 'Button Text',
-    icon: <Icon name="brightness_1" />
+    endIcon: <Icon name="brightness_1" />,
+    startIcon: <Icon name="brightness_1" />
   },
   argTypes: {
     children: {
@@ -45,27 +30,28 @@ export default {
     color: {
       control: 'select',
       description: 'The color of the button',
-      options: colors,
+      options: intentionColors,
       table: {
-        type: { summary: colors.join('|') },
+        type: { summary: intentionColors.join('|') },
         defaultValue: { summary: 'neutral' }
       }
     },
-    icon: {
+    endIcon: {
       description:
-        'An optional icon to be rendered inside the button. The size of the icon will be automatically adjusted based on the button size',
+        'An optional icon to be rendered at the end of the button. The size of the icon will be automatically adjusted based on the button size',
       control: false,
       table: {
-        type: { summary: 'ReactElement<IconProps>' }
+        type: { summary: 'ReactElement<IconProps>' },
+        defaultValue: 'undefined'
       }
     },
-    iconPosition: {
-      control: 'select',
-      description: 'The position of the icon inside the button',
-      options: iconPositions,
+    startIcon: {
+      description:
+        'An optional icon to be rendered at the start of the button. The size of the icon will be automatically adjusted based on the button size',
+      control: false,
       table: {
-        type: { summary: iconPositions.join(' | ') },
-        defaultValue: { summary: 'start' }
+        type: { summary: 'ReactElement<IconProps>' },
+        defaultValue: 'undefined'
       }
     },
     size: {
@@ -90,15 +76,3 @@ export default {
 } as Meta<ButtonProps>
 
 export const Default: StoryObj<ButtonProps> = {}
-
-export const IconButton: StoryFn = () => (
-  <div className="flex items-center gap-4">
-    {['small', 'medium', 'large'].map(size => (
-      <Button
-        key={size}
-        icon={<Icon name="brightness_1" />}
-        size={size as ButtonProps['size']}
-      />
-    ))}
-  </div>
-)

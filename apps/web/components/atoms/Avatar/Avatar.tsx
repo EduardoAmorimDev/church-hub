@@ -1,5 +1,5 @@
 import Image, { ImageProps } from 'next/image'
-import { tv, VariantProps } from 'tailwind-variants'
+import { tv, VariantProps } from '~/lib/tailwind-variants'
 
 const avatar = tv({
   base: [

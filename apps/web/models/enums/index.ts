@@ -1,2 +1,2 @@
-export * from './AccentColorEnum'
+export * from './Components'
 export * from './ThemeEnum'

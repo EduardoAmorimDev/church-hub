@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode } from 'react'
 import {
   ToastContainer as ToastfyContainer,
@@ -6,7 +8,7 @@ import {
   UpdateOptions,
   TypeOptions
 } from 'react-toastify'
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from '~/lib/tailwind-merge'
 import { Icon } from '~/components/atoms'
 import { TOAST_TYPE_CLASSES } from './data'
 

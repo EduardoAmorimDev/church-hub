@@ -1,21 +1,18 @@
-export enum SizeEnum {
-  XSMALL = 'xSmall',
-  SMALL = 'small',
-  MEDIUM = 'medium',
-  LARGE = 'large',
-  XLARGE = 'xLarge'
+export enum AccentColorEnum {
+  'BLUE' = 'blue',
+  'RED' = 'red',
+  'ORANGE' = 'orange',
+  'YELLOW' = 'yellow',
+  'LIME' = 'lime',
+  'GREEN' = 'green',
+  'TEAL' = 'cyan',
+  'INDIGO' = 'indigo',
+  'PURPLE' = 'purple',
+  'PINK' = 'pink'
 }
 
-export enum ColorEnum {
-  ACCENT = 'accent',
-  ATTENTION = 'attention',
-  NEGATIVE = 'negative',
-  NEUTRAL = 'neutral',
-  POSITIVE = 'positive'
-}
-
-export enum VariantEnum {
-  PRIMARY = 'primary',
-  SECONDARY = 'secondary',
-  TERTIARY = 'tertiary'
+export enum IntentionColorEnum {
+  'DESTRUCTIVE' = 'destructive',
+  'NEUTRAL' = 'neutral',
+  'POSITIVE' = 'positive'
 }

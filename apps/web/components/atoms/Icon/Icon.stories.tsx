@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 
-import { Icon, IconProps } from './Icon'
+import { Icon } from './Icon'
+import { IconProps } from './models'
+import { sizes } from '../data'
+
+const variants = ['outlined', 'rounded', 'sharp']
 
 export default {
   title: 'atoms/Icon',
@@ -43,18 +47,18 @@ export default {
     size: {
       control: 'select',
       description: 'Size of the icon',
-      options: ['small', 'medium', 'large'],
+      options: sizes,
       table: {
-        type: { summary: 'small | medium | large' },
+        type: { summary: sizes.join('|') },
         defaultValue: { summary: 'medium' }
       }
     },
     variant: {
       control: 'select',
       description: 'Variant of the icon',
-      options: ['outlined', 'rounded', 'sharp'],
+      options: variants,
       table: {
-        type: { summary: 'outlined | rounded | sharp' },
+        type: { summary: variants.join('|') },
         defaultValue: { summary: 'outlined' }
       }
     },

@@ -1,6 +1,8 @@
+'use client'
+
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { tv } from 'tailwind-variants'
+import { tv } from '~/lib/tailwind-variants'
 import { Icon } from '~/components/atoms/Icon'
 import { NavItemProps } from './NavItem.types'
 

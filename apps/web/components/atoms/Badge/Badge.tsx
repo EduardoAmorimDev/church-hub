@@ -1,92 +1,58 @@
-import { tv, VariantProps } from 'tailwind-variants'
+import { tv, VariantProps } from '~/lib/tailwind-variants'
+import { Tag, tag, TagProps } from '../Tag'
+import { getClonedIcons } from '~/components/utils'
+import { twJoin } from 'tailwind-merge'
+
+const {
+  base,
+  defaultVariants,
+  variants: { size }
+} = tag
 
 const badge = tv({
-  base: 'px-1 text-size-100 font-medium rounded-full',
+  base: twJoin('text-neutral-00', base),
   variants: {
     color: {
-      neutral: 'text-neutral-83 bg-neutral-00',
-      red: 'text-neutral-00 bg-red-67',
-      orange: 'text-neutral-00 bg-orange-50',
-      yellow: 'text-neutral-00 bg-yellow-33',
-      lime: 'text-neutral-00 bg-lime-33',
-      green: 'text-neutral-00 bg-green-67',
-      cyan: 'text-neutral-00 bg-cyan-67',
-      blue: 'text-neutral-00 bg-blue-67',
-      indigo: 'text-neutral-00 bg-indigo-67',
-      purple: 'text-neutral-00 bg-purple-67',
-      pink: 'text-neutral-00 bg-pink-67'
+      neutral: 'bg-neutral-00 border border-neutral-alpha/20 text-neutral-83',
+      red: 'bg-red-67',
+      orange: 'bg-orange-50',
+      yellow: 'bg-yellow-33',
+      lime: 'bg-lime-33',
+      green: 'bg-green-67',
+      cyan: 'bg-cyan-67',
+      blue: 'bg-blue-67',
+      indigo: 'bg-indigo-67',
+      purple: 'bg-purple-67',
+      pink: 'bg-pink-67'
     },
-    type: {
-      low: '',
-      high: ''
-    }
-  },
-  compoundVariants: [
-    {
-      color: 'neutral',
-      type: 'low',
-      class: 'bg-neutral-alpha/10!'
-    },
-    {
-      color: 'red',
-      type: 'low',
-      class: 'bg-red-alpha/20! text-red-67'
-    },
-    {
-      color: 'orange',
-      type: 'low',
-      class: 'bg-orange-alpha/20! text-orange-50'
-    },
-    {
-      color: 'yellow',
-      type: 'low',
-      class: 'bg-yellow-alpha/20! text-yellow-67'
-    },
-    {
-      color: 'lime',
-      type: 'low',
-      class: 'bg-lime-alpha/20! text-lime-67'
-    },
-    {
-      color: 'green',
-      type: 'low',
-      class: 'bg-green-alpha/20! text-green-83'
-    },
-    {
-      color: 'cyan',
-      type: 'low',
-      class: 'bg-cyan-alpha/20! text-cyan-83'
-    },
-    {
-      color: 'blue',
-      type: 'low',
-      class: 'bg-blue-alpha/20! text-blue-83'
-    },
-    {
-      color: 'indigo',
-      type: 'low',
-      class: 'bg-indigo-alpha/20! text-indigo-67'
-    },
-    {
-      color: 'purple',
-      type: 'low',
-      class: 'bg-purple-alpha/20! text-purple-67'
-    },
-    {
-      color: 'pink',
-      type: 'low',
-      class: 'bg-pink-alpha/20! text-pink-67'
-    }
-  ],
-  defaultVariants: {
-    color: 'neutral',
-    type: 'high'
+    size,
+    defaultVariants
   }
 })
 
-export type BadgeProps = React.ComponentProps<'span'> &
-  VariantProps<typeof badge>
+export type BadgeProps = TagProps &
+  VariantProps<typeof badge> & {
+    variant?: 'low' | 'high'
+  }
 
-export const Badge = ({ color, type, ...props }: BadgeProps) => {
-  return <span className={badge({ color, type })} {...props} />
+export const Badge = ({ variant = 'high', ...props }: BadgeProps) => {
+  if (variant === 'low') return <Tag {...props} />
+
+  const {
+    children,
+    color = 'neutral',
+    endIcon,
+    startIcon,
+    size,
+    ...rest
+  } = props
+  const clones = getClonedIcons({ endIcon, startIcon, size })
+
+  return (
+    <div className={badge({ color, size })} {...rest}>
+      {clones.startIcon}
+      {children}
+      {clones.endIcon}
+    </div>
+  )
 }

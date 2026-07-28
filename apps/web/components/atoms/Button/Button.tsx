@@ -1,23 +1,16 @@
-import { cloneElement, ComponentProps, forwardRef } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { tv, VariantProps } from 'tailwind-variants'
-import { IconProps } from '../Icon'
+import { forwardRef } from 'react'
+import { twMerge } from '~/lib/tailwind-merge'
+import { ComponentWithIconProps } from '../Icon'
+import { getClonedIcons } from '~/components/utils'
+import { tv, VariantProps } from '~/lib/tailwind-variants'
 
-export const button = tv({
+export const buttonBase = tv({
   base: 'flex items-center justify-center gap-2 transition-colors',
   variants: {
-    iconOnly: {
-      true: ''
-    },
     color: {
       destructive: 'text-red-67 not-disabled:hover:text-red-83',
       neutral: 'text-neutral-83 not-disabled:hover:text-neutral-100',
       positive: 'text-green-67 not-disabled:hover:text-green-83'
-    },
-    size: {
-      large: 'px-5 py-3.5 rounded-2xl text-size-100!',
-      medium: 'px-4 py-3 rounded-xl text-size-75!',
-      small: 'px-3 py-2 rounded-lg text-size-50!'
     },
     variant: {
       filled:
@@ -29,21 +22,6 @@ export const button = tv({
     }
   },
   compoundVariants: [
-    {
-      iconOnly: true,
-      size: 'large',
-      class: 'p-4'
-    },
-    {
-      iconOnly: true,
-      size: 'medium',
-      class: 'p-3.5'
-    },
-    {
-      iconOnly: true,
-      size: 'small',
-      class: 'p-2'
-    },
     {
       color: 'destructive',
       variant: 'filled',
@@ -72,47 +50,39 @@ export const button = tv({
   ],
   defaultVariants: {
     color: 'neutral',
-    size: 'medium',
     variant: 'filled'
   }
 })
 
-export type ButtonProps = ComponentProps<'button'> &
-  Omit<VariantProps<typeof button>, 'iconOnly'> & {
-    icon?: React.ReactElement<IconProps>
-    iconPosition?: 'start' | 'end' | 'both'
-  }
+const button = tv({
+  extend: buttonBase,
+  variants: {
+    size: {
+      large: 'px-5 py-3.5 rounded-2xl text-size-100',
+      medium: 'px-4 py-3 rounded-xl text-size-75',
+      small: 'px-3 py-2 rounded-lg text-size-50'
+    }
+  },
+  defaultVariants: { size: 'medium' }
+})
+
+export type ButtonProps = ComponentWithIconProps<'button'> &
+  VariantProps<typeof button>
 
 export const Button = forwardRef<React.ElementRef<'button'>, ButtonProps>(
-  ({ children, className, icon, iconPosition = 'start', ...props }, ref) => {
-    const isIconOnly = !!icon && !children
-
-    const startIcon =
-      icon && ['start', 'both'].includes(iconPosition)
-        ? cloneElement(icon, {
-            size: props.size
-          })
-        : null
-
-    const endIcon =
-      icon && ['end', 'both'].includes(iconPosition)
-        ? cloneElement(icon, {
-            size: props.size
-          })
-        : null
+  ({ children, className, endIcon, startIcon, ...props }, ref) => {
+    const { size } = props
+    const clones = getClonedIcons({ endIcon, startIcon, size })
 
     return (
       <button
         ref={ref}
-        className={twMerge(
-          button({ ...props, iconOnly: isIconOnly }),
-          className
-        )}
+        className={twMerge(button(props), className)}
         {...props}
       >
-        {startIcon}
+        {clones.startIcon}
         {children}
-        {endIcon}
+        {clones.endIcon}
       </button>
     )
   }

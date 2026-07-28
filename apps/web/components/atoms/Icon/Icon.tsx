@@ -1,15 +1,5 @@
-import { MaterialSymbol } from 'material-symbols'
-import { twMerge } from 'tailwind-merge'
-
-export type IconProps = React.ComponentProps<'span'> & {
-  fill?: 0 | 1
-  grade?: -25 | 0 | 200
-  name: MaterialSymbol
-  responsive?: boolean
-  size?: 'small' | 'medium' | 'large'
-  variant?: 'outlined' | 'rounded' | 'sharp'
-  weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700
-}
+import { twMerge } from '~/lib/tailwind-merge'
+import { IconProps } from './models'
 
 export function Icon({
   className,
@@ -22,9 +12,11 @@ export function Icon({
   weight = 400
 }: IconProps) {
   const iconSizes: Record<string, string> = {
+    xSmall: 'text-[12px]!',
     small: responsive ? 'text-[16px]! lg:text-[12px]!' : 'text-[16px]!',
     medium: responsive ? 'text-[20px]! lg:text-[16px]!' : 'text-[20px]!',
-    large: responsive ? 'text-[24px]! lg:text-[20px]!' : 'text-[24px]!'
+    large: responsive ? 'text-[24px]! lg:text-[20px]!' : 'text-[24px]!',
+    xLarge: responsive ? 'text-[28px]! lg:text-[24px]!' : 'text-[28px]!'
   }
 
   return (
@@ -34,8 +26,7 @@ export function Icon({
         className
       )}
       style={{
-        fontVariationSettings: `'FILL' ${fill}, 'wght' ${weight}, 'GRAD' ${grade}`,
-        fontSize: 'inherit'
+        fontVariationSettings: `'FILL' ${fill}, 'wght' ${weight}, 'GRAD' ${grade}`
       }}
     >
       {name}
