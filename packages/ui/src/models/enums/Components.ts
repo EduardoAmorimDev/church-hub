@@ -1,0 +1,19 @@
+export enum AccentColorEnum {
+  'BLUE' = 'blue',
+  'RED' = 'red',
+  'ORANGE' = 'orange',
+  'YELLOW' = 'yellow',
+  'LIME' = 'lime',
+  'GREEN' = 'green',
+  'TEAL' = 'cyan',
+  'INDIGO' = 'indigo',
+  'PURPLE' = 'purple',
+  'PINK' = 'pink'
+}
+
+export enum IntentionColorEnum {
+  'ACCENT' = 'accent',
+  'DESTRUCTIVE' = 'destructive',
+  'NEUTRAL' = 'neutral',
+  'POSITIVE' = 'positive'
+}

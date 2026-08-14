@@ -1,0 +1,100 @@
+# Lote 5 do Lamb (PageHeader, SideMenu, MenuDrawer, Page): verificação
+
+**Verdict**: PASS
+**Profile**: light (o `AGENTS.md` não declara perfil). Neste round rodaram as provas completas, a releitura dos quatro vereditos que não passaram no round 1 e dos itens anotados, a atualização das citações nos arquivos tocados e o gate. **Não rodaram**, por serem `ui`/`standard`: passo 1 (fontes binding), recálculo do `Coverage`, `Test policy` e injeção de falhas obrigatória. Mesmo assim, rodei 9 mutantes voluntários numa worktree descartável para checar os pontos de discriminação (ver abaixo).
+**Diff range**: `680ffb7..330f03f + working tree` (sem commit; o topo de `main` é `330f03f`, que já contém o lote A)
+**Round**: 2 - scoped
+**Verifier**: independent sub-agent (author != verifier), somente leitura no código. O único arquivo escrito foi este relatório.
+
+## Escopo do round 2
+
+O diff da correção não se isola pelo git, porque está todo sem commit. Para `NavItem.spec.tsx` e `SideMenu.spec.tsx` ele se isola, já que os dois arquivos estão em `330f03f` (lote A): `git diff HEAD` mostra **só acréscimos**, com o espião de `next/link`, as 4 asserções de `linkHrefs`, o espião do `Avatar` e a asserção `toMatchObject`, mais as negações de C12/C14 convertidas em uma asserção por classe. Nenhuma asserção antiga foi removida. Em `Page.spec.tsx` e `Page.tsx` (lote B, sem rastreio em `HEAD`), comparei as linhas citadas no round 1 com os arquivos atuais e com o Handoff `### Correções do round 1`.
+
+## Passo 1 - fontes binding (carried from round 1)
+
+Não rodou (perfil `light`). A correção não tocou a interface: não mudou nenhum componente de produto além do `withClose` em `Page.tsx`.
+
+## Execução das provas (verified at working tree, round 2)
+
+- Uma invocação Jest nos 7 arquivos de prova (`styles.spec.ts`, `Page.spec.tsx`, `NavItem.spec.tsx`, `SideMenu.spec.tsx`, `MenuDrawer.spec.tsx`, `PageHeader.spec.tsx`, `figma-links.spec.ts`), com `-t "\((C[1-9]|C[12][0-9]|C3[0-8])\)" --json`: 7 suítes, **91 passaram**, 0 falharam, 301 pulados pelo filtro, exit 0. O round 1 teve 90; C31 ganhou um teste.
+- Casei os **39** padrões `-t` do checklist (38 checks, e C34 tem dois) como regex contra o `fullName`, cada um só no arquivo da sua prova. Todos casam com pelo menos um teste `passed`, e nenhum casa zero. C6 casa 3, C15 2, C18 3, C22 2, C25 2, **C31 3**, C35/C36/C37 5 cada, C38 10, e os demais 1. A soma dá 91.
+- `npm run typecheck -w @church/ui` (segunda prova de C6): exit 0. O único `@ts-expect-error` continua em `NavItem.spec.tsx:321`. A sonda do round 1 mostrou que só `href` + `subItems` consome esse diretivo, e o tipo não mudou.
+- Nos 4 arquivos tocados não há `as unknown as`, `as never`, `@ts-ignore`, `.only`/`.skip`, `console.log` nem `style={`.
+
+## Checks
+
+Marcados `R2` = citação atualizada neste round. Marcados `R1` = carried from round 1 (arquivo não tocado pela correção).
+
+| Check | Proof (todas passaram) | Evidence (`file:line` + asserção) | Result |
+| --- | --- | --- | --- |
+| C1 | `layout size tokens (C1)` | R1 `styles.spec.ts:679-685` `expect(size).toEqual({drawer: 650, sidebar: 240, sidebarCollapsed: 64, contentMax: 1440, menuDrawer: 390})`; `:698-701` utilitário compilado sem `[`/`]` | PASS |
+| C2 | `templates export (C2)` | R2 `Page.spec.tsx:143-147` `manifestExport('./templates/*')).toBe('./src/components/templates/*/index.ts')`; `typeof exported.Page/PageBody).toBe('function')` | PASS |
+| C3 | `density switches at the panel breakpoint (C3)` | R2 `NavItem.spec.tsx:145-152` base App `min-h-12 py-3 rounded-xl text-size-75` + `painel('min-h-8','py-1.5','rounded-lg','text-size-50')` (helper `:125-128`, as duas formas); `:154-159` `px-3.5`/`pr-3.5`/`text-icon-24!` + Painel; `:160`/`:181` sem `lg:`; `:178` `w-8`. Igual ao round 1 em substância | PASS (precisão: nomes de token, carried) |
+| C4 | `fills the container width (C4)` | R2 `NavItem.spec.tsx:195-200` `root toHaveClass('w-full')`, `not.toHaveClass('w-50')`, botão e sub-item `w-full` | PASS |
+| C5 | `collapsed branch is highlighted (C5)` | R2 `NavItem.spec.tsx:214-216` `toHaveClass('bg-selected','text-primary')`, sem `aria-current`, `isFilled` true; `:227-229` sem sub-item ativo: sem `bg-selected`, ícone vazio | PASS |
+| C6 | `renders a next link with href (C6)` ×3 + typecheck | R2 mock `NavItem.spec.tsx:11-21` (`...actual` de `jest.requireActual`, `default: jest.fn((props: ComponentProps<NextLink>) => createElement(actual.default, props))`). Asserções que decidem: `:250` `expect(linkHrefs()).toEqual(['/inicio'])` (folha), `:290` `toEqual(['/membros'])` (sub-item inline), `:306` `toContain('/membros')` (pop-up, depois de `mockClear` em `:302`). Mantidas: `:249-254` `tagName 'A'`, `href`, `aria-current 'page'`, `className` igual ao do botão, `type="button"`; `:270-274` colapsado; `:321` `@ts-expect-error`; `:331-335` pai segue botão | **PASS** (era GAP) |
+| C7 | `aside shell (C7)` | R2 `SideMenu.spec.tsx:68-82` `ASIDE` + `flex flex-col h-full bg-surface border-r border-default w-sidebar transition-width duration-300 ease-out shrink-0`; `:86-87` `w-sidebar-collapsed`, sem `w-sidebar`. R1 `styles.spec.ts:705-712` `transition-property` = `width` | PASS |
+| C8 | `head with logo (C8)` | R2 `SideMenu.spec.tsx:95-108` `h-16 border-b border-default flex items-center justify-between px-4`, Logo `h-9` `fullArt.viewBox`; `:113-119` `px-3`, `h-8` `symbolArt.viewBox`; `:125-128` `logo` substitui | PASS |
+| C9 | `collapse button (C9)` | R2 `SideMenu.spec.tsx:135-153` `BUTTON type=button aria-expanded=true`, `size-7 rounded-full border border-neutral-17 … top-4.5 -right-3.5 z-2`, `chevron_left` `text-icon-20!`; `:158-162` mesmo nó, `aria-expanded=false`, `chevron_right` | PASS |
+| C10 | `controlled and uncontrolled collapse (C10)` | R2 `SideMenu.spec.tsx:173-181` `toHaveBeenCalledTimes(1)` com `true`, depois 2× com `false`; `:186-188` `defaultCollapsed`; `:202-214` controlado | PASS |
+| C11 | `navigation in the middle (C11)` | R2 `SideMenu.spec.tsx:219` "Menu principal"; `:224-230` `flex-1 min-h-0 overflow-y-auto px-1.5 py-4`; `:237-241` `label` customizado, `px-4 py-4`, `title` | PASS |
+| C12 | `footer items (C12)` | R2 `SideMenu.spec.tsx:248-258` `flex flex-col gap-2 border-t border-default pt-3 px-1.5 pb-4`, vazio; `:267-271` `UL` fora da `nav`; `:275` colapsado `px-4 py-3`; **`:276-277` `for (const utility of ['px-1.5','pt-3','pb-4']) expect(getFooter()).not.toHaveClass(utility)`**; `:278-280` `title` | PASS (achado 6 resolvido) |
+| C13 | `profile button (C13)` | R2 mock `SideMenu.spec.tsx:11-16` (`...actual`, `Avatar: jest.fn(actual.Avatar)`). Decide: **`:314-319` `expect(jest.mocked(Avatar).mock.lastCall?.[0]).toMatchObject({alt: USER.name, decorative: true, size: 'small', src: USER.src})`** (`USER` em `:48-52`). Mantidas: `:301-313` `type=button`, último do rodapé, classes, `aria-hidden`, `size-8`; `:320-322` `src`; `:323-324` nome e `role`; `:326-331` `expand_more`, `onProfileClick` 1×; `:336` `PE`; `:341-344` sem `user`, sem botão | **PASS** (era GAP) |
+| C14 | `collapsed profile label (C14)` | R2 `SideMenu.spec.tsx:355-359` `aria-label 'Pessoa Exemplo, Função Exemplo'`, `justify-center p-1`; **`:360-361` `for (const utility of ['px-2.5','py-2']) expect(profile).not.toHaveClass(utility)`**; `:362-367` um filho `size-8`, sem nome nem ícone; `:373` `'Pessoa Exemplo'` | PASS (achado 6 resolvido) |
+| C15 | `renders only when open (C15)` ×2 | R1 `MenuDrawer.spec.tsx:65-66` fechado vazio; `:73-78` scrim `fixed inset-0 z-40 bg-scrim` `aria-hidden`, painel `aria-modal` `aria-label` `tabindex=-1`; `:84-87` `label` | PASS |
+| C16 | `panel side and shadow (C16)` | R1 `MenuDrawer.spec.tsx:94-108` `… z-41 w-menu-drawer max-w-full … right-0 shadow-elevation-low-left`; `:114-123` `left-0 shadow-elevation-low-right` | PASS |
+| C17 | `drawer bar (C17)` | R1 `MenuDrawer.spec.tsx:132-151` `flex h-16 items-center justify-between px-5 border-b border-default`, `[logo, close]`, Logo `h-9`, `bg-neutral-alpha/10 text-primary size-12`, `close` | PASS (precisão carried) |
+| C18 | `mobile items and footer (C18)` ×3 | R1 `MenuDrawer.spec.tsx:174-228` `data-viewport='mobile'`, `px-5 py-4 flex-1 overflow-y-auto`, `min-h-12`, rodapé `border-t border-default pt-3 px-5 pb-5`, perfil, `collapsed` ignorado | PASS |
+| C19 | `focus trap on open (C19)` | R1 `MenuDrawer.spec.tsx:248-258` foco em "Fechar menu", `overflow 'hidden'`, ciclo Tab/Shift+Tab | PASS |
+| C20 | `closes and restores focus (C20)` | R1 `MenuDrawer.spec.tsx:265-302` Esc/fundo/"Fechar menu" `toHaveBeenCalledTimes(1)` cada; foco no gatilho, `overflow` restaurado | PASS |
+| C21 | `header shell (C21)` | R1 `PageHeader.spec.tsx:46-62` `HEADER flex flex-col gap-6 pt-4 pb-3 px-5` + `${PANEL}px-8`/`${DESKTOP}px-8`, sem `lg:` | PASS |
+| C22 | `main row layout (C22)` ×2 | R1 `PageHeader.spec.tsx:79-97` `flex items-end justify-between gap-4 flex-wrap`, títulos `flex flex-col gap-1 min-w-0`, ações `gap-2` | PASS |
+| C23 | `primary header (C23)` | R1 `PageHeader.spec.tsx:118-143` `[trail, heading, description]`, `H1 text-size-300 font-semibold`, `P text-size-50 leading-5 font-normal text-primary`, `group` "Filtros rápidos" `gap-2` | PASS |
+| C24 | `home header (C24)` | R1 `PageHeader.spec.tsx:159-180` `H1` com `greeting`, `font-oswald font-bold uppercase text-size-300 leading-7.5`, sem trilha nem chips | PASS |
+| C25 | `page shell (C25)` ×2 | R2 `Page.spec.tsx:160-181` `DIV` + `flex w-full h-full min-h-150 bg-page text-primary` + `painel('flex-row')`, aside antes do conteúdo `flex-1 min-w-0 flex flex-col overflow-y-auto`; `:191-199` não responsivo/sem `nav`; `:210-216` `nav` chega ao SideMenu | PASS |
+| C26 | `main landmark (C26)` | R2 `Page.spec.tsx:229-238` `MAIN tabindex=-1`, ids distintos, `w-full max-w-content-max mx-auto`, `header` primeiro e `children` por último | PASS |
+| C27 | `skip link (C27)` | R2 `Page.spec.tsx:250-267` primeiro Tab, `href '#'+main.id`, `sr-only focus:not-sr-only … focus:font-medium`; `:272-275` `skipLinkLabel` | PASS |
+| C28 | `panel and app switch (C28)` | R2 `Page.spec.tsx:290-292` `flex-col` + `painel('flex-row')`, aside `hidden` + `painel('flex')`, sem `flex` cru; `:293-305` barra antes do `main` com `flex h-16 … border-default` + `painel('hidden')`; `:306-315` `[logo, opener]`, `h-8` full, `bg-neutral-alpha/10 text-primary size-12`, `menu`, `aria-expanded=false`; `:316` sem `lg:` | PASS |
+| C29 | `server markup ignores the viewport (C29)` | R2 `Page.spec.tsx:335-337` `appHtml).toBe(panelHtml)`, com `Abrir menu` e `<aside`; **`:344-359` `for (const clientNarrow of [true, false])`** hidrata com `matchMedia` de App e de Painel: `:353` `onRecoverableError).not.toHaveBeenCalled()`, `:354` `consoleError).not.toHaveBeenCalled()`, `:355` `container.innerHTML).toBe(serverDom.innerHTML)` | PASS (ressalva 5 resolvida) |
+| C30 | `opens the menu drawer (C30)` | R2 `Page.spec.tsx:381-404` `aria-expanded=true`, `right-0 shadow-elevation-low-left`, `navigation` com o `label`, itens e rodapé, foco em "Fechar menu", `onProfileClick` 1×; `:410-412` fechado, foco em "Abrir menu" | PASS |
+| C31 | `leaf click closes the drawer (C31)` ×3 | R2 `Page.spec.tsx:457-460` folha fecha, `onLeaf` 1×; `:463-471` pai expande/recolhe sem fechar, `onParent` 1×; `:474-476` sub-item do menu; `:479-483` folha do rodapé; **`:486-492` sub-item do rodapé: pai "Ajuda" `aria-expanded=true` com o drawer aberto, "Suporte" fecha e `onFooterSubItem).toHaveBeenCalledTimes(1)`**; `:495-501` sub-item sem `onClick` fecha, contagens estáveis; `:534-541` `subItems: []` fecha (menu e rodapé); `:557-565` SideMenu não embrulhado | **PASS** (era GAP) |
+| C32 | `non responsive and no nav (C32)` | R2 `Page.spec.tsx:577-583` aside `flex`, uma asserção por classe para `hidden` e `painel('flex')`, sem "Abrir menu", sem `flex-col`, Esc sem dialog; `:588-592` sem `nav` | PASS |
+| C33 | `drawer stays open across the breakpoint (C33)` | R2 `crossBreakpoint` `Page.spec.tsx:71-85` despacha `change` (com `matches`) a cada listener guardado por `addEventListener` (`:52-63`) e depois `resize`. Asserções `:607-611` `act(() => crossBreakpoint(false))`, `matchMedia(APP_MEDIA_QUERY).matches).toBe(false)`, `drawerOf()).toBeInTheDocument()`, `aria-expanded 'true'`; `:613-614` Esc fecha | **PASS** (era GAP; resíduo menor, achado R2-2) |
+| C34 | `page body (C34)` + `stats grid (C34)` | R2 `Page.spec.tsx:633-649` `DIV flex flex-col gap-4 pt-4 pb-8 px-5` + `painel('px-8')`, sem `px-8` cru, `grid grid-cols-fill-55 gap-4` com 2 stats antes dos `children`; `:654-657` sem grade. R1 `styles.spec.ts:724-733` `px).toBe(220)` | PASS |
+| C35 | `lamb batch 5 exports (C35)` ×5 | R1 `figma-links.spec.ts` `it.each(LOTE_5)`: `typeof exported[name]).toBe('function')`, arquivos existem, `story.default.title).toBe(entry)` | PASS |
+| C36 | `batch 5 figma nodes (C36)` ×5 | R1 `figma-links.spec.ts` `designUrls(meta)).toEqual([…node-id=${id}&m=dev])` para os 5 nós | PASS |
+| C37 | `figma-components rows batch 5 (C37)` ×5 | R1 `figma-links.spec.ts` uma linha por nome; Navigation em `13020:3345`, `not.toContain("Lamb's Side menu")` | PASS |
+| C38 | `synthetic fixtures batch 5 (C38)` ×10 | R1 `figma-links.spec.ts:418-425` `PREVIEW_NAMES.forEach(name => expect(source).not.toContain(name))` | PASS (precisão carried, achado 7) |
+
+**38/38 provados.** Cada check tem `file:line` localizado e uma asserção que mira o valor do critério.
+
+## Round 1 findings → resolution (verified at working tree, round 2)
+
+| # | Round 1 | Resolução | Evidência de discriminação (mutante na worktree) |
+| --- | --- | --- | --- |
+| 1 | C6 não distinguia `Link` de `<a>` | Espião parcial em `next/link` (`NavItem.spec.tsx:11-21`), com `...jest.requireActual` e tipo `ComponentProps<NextLink>`, sem `as unknown as`/`never`. Decidem `:250`, `:290` e `:306` | `<Link>`→`<a href={String(href)}>` na folha (`NavItem.tsx:254`): **morto**. O mesmo no `SubItemLink` (`:125`): **morto** |
+| 2 | C31 sem sub-item do rodapé | `Page.spec.tsx:486-492`; `Coverage` "cliques no drawer da Page (5)" | rodapé embrulhando só folhas (`Page.tsx:120`): **morto** |
+| 3 | C33 sem `change` de `matchMedia` | O `matchMedia` simulado guarda os listeners (`:52-63`); `crossBreakpoint` (`:71-85`) | `useEffect` fechando o drawer num `change` de `APP_MEDIA_QUERY`: **morto** (`drawerOf` não acha o dialog) |
+| 4 | C13 sem `alt` | Espião parcial do `Avatar` (`SideMenu.spec.tsx:11-16`), com `...actual` e `jest.fn(actual.Avatar)` tipado pelo componente real. Decide `:314-319` | `alt=""` em `ProfileButton.tsx:46`: **morto** |
+| 5 | C29 hidratava só no App | `Page.spec.tsx:344-359` hidrata com App e Painel | snapshot de viewport por `useSyncExternalStore` (servidor = App) que tira a barra só no cliente Painel: **morto** em `:355` |
+| 6 | Negação de várias classes em C12/C14 | `SideMenu.spec.tsx:276-277` e `:360-361`, uma asserção por classe | `pb-4` sobrando no rodapé colapsado: **morto**. `py-2` sobrando no perfil colapsado: **morto** |
+| 9 | `subItems: []` tratado como pai | `Page.tsx:57` `if (item.subItems && item.subItems.length > 0)`, igual ao `NavItem.tsx:148`; teste `Page.spec.tsx:504-542` | voltar a `if (item.subItems)`: **morto** |
+| 7, 8 | Precisão (lista negra de C38; densidade lida por nome de token) | Não mexidos, como combinado no Handoff | carried from round 1 |
+
+Os mutantes rodaram numa `git worktree` descartável (o `HEAD` mais uma cópia dos arquivos alterados e sem rastreio). Em cada um, só a prova mais estreita rodou. O arquivo foi restaurado e conferido com `cmp`. A worktree foi removida e o `git status --porcelain` da árvore real ficou idêntico ao registrado antes. Não usei `git stash`. Antes dos mutantes, as 11 provas-alvo passaram na worktree.
+
+## Achados restantes (não bloqueiam)
+
+1. **R2-1, C6 colapsado (fraco, sem mutante plausível):** em `NavItem.spec.tsx:269`, `expect(linkHrefs().at(-1)).toBe('/inicio')` roda depois do `rerender` sem `mockClear`. Por isso, a chamada do primeiro render já satisfaz a asserção. Hoje a folha colapsada e a expandida saem do mesmo `<Link>` (`NavItem.tsx:254`), e o mutante dessa linha morre em `:250`. Um ramo colapsado próprio que usasse `<a>` passaria.
+2. **R2-2, C33 (resíduo declarado):** o `addListener` legado do mock segue sem efeito (`Page.spec.tsx:64`), o que o Handoff registra. Um drawer que fechasse pela API depreciada `addListener` passaria.
+3. **Carried from round 1:** achado 7 (C38 só cobre a lista negra dos 4 nomes) e achado 8 (densidades afirmadas por nome de token, conferidas contra `typography.ts` no round 1).
+
+## Swept `existing` (carried from round 1)
+
+Os dois itens conferem: o Avatar cai nas iniciais (`Avatar.tsx:80`, `:97`) e o `useModalLayer` entrega o Esc só à camada de cima (`useModalLayer.ts:98-101`). A correção não tocou esses arquivos.
+
+## Gate (verified at working tree, round 2)
+
+- `npm run verify -- --force`: exit 0. 10 tarefas com sucesso, 0 em cache. `@church/ui:test` rodou **54 suítes e 1034 testes** (1033 no round 1, mais o teste novo de C31), 0 falhas. Lint e typecheck sem erro.
+- `npm run typecheck -w @church/ui`: exit 0.
+- `npx prettier --check` nos arquivos tocados pela correção (`NavItem.spec.tsx`, `SideMenu.spec.tsx`, `Page.spec.tsx`, `Page.tsx`, `.checks/lamb-page-shell.md`): todos conformes. O check dos 35 arquivos do lote foi feito no round 1 (carried).

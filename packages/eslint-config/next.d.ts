@@ -1,4 +1,5 @@
+import type { Linter } from 'eslint'
+
 declare module '@repo/eslint-config/next-js' {
-  const config: any;
-  export default config;
+  export const nextJsConfig: Linter.Config[]
 }

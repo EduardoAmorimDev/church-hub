@@ -1,0 +1,92 @@
+# Lote 3 do Lamb (Dialog, Drawer, BottomSheet): verificação
+
+**Verdict**: PASS
+**Profile**: light (o `AGENTS.md` não declara perfil). Rodaram os passos 2 (todas as provas), 3 (asserção por check, lacunas de precisão e de nível, linhas Swept/Observable "existing") e 5 (relatório). **Não rodaram**, por serem `ui`/`standard`: passo 1 (comparação com as fontes binding), recálculo da tabela `Coverage`, veredito de `Test policy` e injeção de falhas (passo 4).
+**Diff range**: `4233e85` (HEAD) + árvore de trabalho não commitada (`git diff 4233e85` + arquivos sem rastreio de `git status --short`)
+**Round**: 1 - full
+**Verifier**: sub-agente independente (author != verifier), somente leitura no código
+
+## Binding sources
+
+Passo 1 é `ui`: não rodou. O artefato Lamb (cópia local no scratchpad) foi aberto só para um ponto (`bundle.css:502`, `.lamb-dialog { max-height: calc(100% - var(--space-16)) }`), que confirma que `max-h-dialog` = `calc(100% - 16px)` dentro da camada com padding 16 segue a fonte. Nenhum check foi comparado de forma sistemática com o artefato ou com o Figma `13803:11075`.
+
+## Execução das provas
+
+- Uma invocação Jest para os 7 arquivos de prova (`useModalLayer.spec.tsx`, `Dialog.spec.tsx`, `Drawer.spec.tsx`, `BottomSheet.spec.tsx`, `MenuDropdown.spec.tsx`, `styles.spec.ts`, `figma-links.spec.ts`) com `--json`: **338/338 passaram**, 0 falhas, 0 pendentes.
+- Cada padrão `-t` do checklist foi casado como regex (com `\(`) contra o `fullName` do JSON, por arquivo: **todos os 38 padrões (C1–C36, C17 e C36 têm dois) casam ≥ 1 teste que rodou e passou**. Nenhum padrão casou zero.
+- Provas extras citadas abaixo também rodaram e passaram: `styles.css overlay geometry resolves in CSS (C7, C18, C26, C27, C31): *` (6), `styles.css bottom sheet motion resolves in CSS (C35): *` (2), `MenuDropdown esc stays in the menu (C6)`.
+- MenuDropdown: os 9 testes passaram, incluindo os já existentes C77–C84.
+
+## Checks
+
+| Check | Claim | Proof run | Evidence | Result |
+|---|---|---|---|---|
+| C1 | `overflow: hidden` aberto; valor anterior restaurado | `useModalLayer.spec` `locks body scroll \(C1\)` (5 testes) | `useModalLayer.spec.tsx:52` `toBe('hidden')`; `:55` `toBe('scroll')` (hook, Dialog, Drawer modal, BottomSheet); `:62` inline mantém `'scroll'` | PASS |
+| C2 | contador: fechar Dialog sobre Drawer mantém trava | `scroll lock counts layers \(C2\)` | `useModalLayer.spec.tsx:80` `toBe('hidden')` após o Dialog sair (`:77-79`); `:83` `toBe('auto')` | PASS |
+| C3 | ciclo de Tab; `[inert]`/ocultos fora; sem focável fica no painel | `traps focus \(C3\)` (2) | `useModalLayer.spec.tsx:109` Shift+Tab do painel -> `last`; `:112` Tab no último -> `first` ("Primeiro", não "Inerte"); `:119` Shift+Tab no primeiro -> `last` ("Último", não os ocultos); `:135`/`:138` painel mantém o foco | PASS |
+| C4 | foco volta ao gatilho se ainda está no documento | `restores focus \(C4\)` (2) | `useModalLayer.spec.tsx:158` `expect(trigger).toHaveFocus()`; `:187-188` gatilho removido -> `activeElement === body` (ver achado 1) | PASS |
+| C5 | Dialog sobre Drawer: Esc só no Dialog | `Dialog.spec` `esc reaches only the top layer \(C5\)` | `Dialog.spec.tsx:63` `onDialogClose` 1x; `:64` `onDrawerClose` não chamado (Dialog aninhado no Drawer, o caso que discrimina o `stopPropagation`) | PASS |
+| C6 | Esc no menu fecha só o menu, foco no gatilho, Dialog sem `onClose` | `esc inside an open menu ... \(C6\)` + MenuDropdown spec inteiro | `Dialog.spec.tsx:103` menu fechado; `:104` gatilho com foco; `:105` `onClose` não chamado; `:109` 2º Esc fecha. `MenuDropdown.spec.tsx:212` `not.toHaveBeenCalledWith('Escape')` no pai | PASS |
+| C7 | markup do Dialog | `modal markup \(C7\)` | `Dialog.spec.tsx:116` vazio com `open={false}`; `:122-129` `fixed inset-0 z-50 grid place-items-center p-4`; `:130-131` overlay `aria-hidden` `bg-scrim`; `:132-134` `aria-modal`, `aria-labelledby`, `tabindex -1`; `:135-143` `w-full max-h-dialog bg-surface text-primary rounded-2xl shadow-elevation-deep-high-bottom overflow-hidden`; `styles.spec.ts:193`+`:623` `max-h-dialog` -> `calc(100% - 16px)` | PASS |
+| C8 | max-width 400/560/720 | `sizes \(C8\)` | `Dialog.spec.tsx:147-152` tabela `[small,400] [medium,560] [undefined,560] [large,720]`; `:157` `toHaveClass(max-w-${px/4})`; `:159` exclusão das outras | PASS |
+| C9 | cabeçalho 24/24/8, gap 12, h2 600 20/28, Fechar | `header \(C9\)` | `Dialog.spec.tsx:172-178` `gap-3 pb-2` + Painel `px-6 pt-6`; `:179-180` `H2`, `flex-1 text-size-200 font-semibold`; `:181-186` `bg-transparent text-primary size-8 self-start`; `:191` `onClose` 1x; `:195` `closeLabel`; `:199` sem `onClose`, sem botão | PASS |
+| C10 | círculo 32px, ícone 20px preenchido, tabela de 4 cores | `status icon \(C10\)` | `Dialog.spec.tsx:203-208` tabela literal do critério 10; `:218` `size-8 rounded-full` + fundo/cor; `:219` glifo; `:220` `text-icon-20!`; `:221` `'FILL' 1`; `:226` sem `color` -> H2 primeiro | PASS |
+| C11 | corpo com rolagem, 8/24/24, gap 16; descrição 400 16/24 em `aria-describedby` | `body and description \(C11\)` | `Dialog.spec.tsx:237-245` `gap-4 overflow-y-auto overscroll-contain pt-2` + Painel `px-6 pb-6`; `:248-252` `text-size-75 font-normal text-secondary`; `:253-256` `aria-describedby`; `:260` ausente sem descrição | PASS |
+| C12 | rodapé montado: ordem, variantes, cor da primária, padding, `iconName`, `disabled` | `built footer \(C12\)` | `Dialog.spec.tsx:265-276` 5 cores (ausente/neutral/attention -> `bg-neutral-999`, destructive/positive mantêm); `:290-295` `justify-end gap-2` + Painel `pt-4 px-6 pb-6 flex-row`; `:296` `[secondary, primary]`; `:297-298` ghost neutral / filled `h-12`; `:299` ícone `send`; `:311-320` `disabled` por ação | PASS |
+| C13 | `footer` substitui o montado | `custom footer \(C13\)` | `Dialog.spec.tsx:330-332` | PASS |
+| C14 | ordem do foco inicial (5 degraus) | `initial focus order \(C14\)` | `Dialog.spec.tsx:342` `data-autofocus`; `:356` primeiro campo habilitado (pula o `disabled`); `:361` secundária em `destructive`; `:365` primária com `attention`; `:369` painel | PASS |
+| C15 | Esc, fundo, `dismissible={false}` | `dismissal \(C15\)` | `Dialog.spec.tsx:379` Esc; `:382` fundo; `:388` fundo ignorado; `:392` Esc mantido | PASS |
+| C16 | `loading`: `aria-busy`, rodapé `inert` 80%, Spinner, Fechar desabilitado, Esc/fundo travados, status | `loading locks the dialog \(C16\)` | `Dialog.spec.tsx:408` `aria-busy`; `:409` `toHaveAttribute('inert')`; `:410` `opacity-80`; `:411-412` Spinner no lugar de `send`; `:413` Fechar `disabled`; `:414-415` `role=status` "Processando…" `sr-only`; `:420` nenhum `onClose` após Esc/fundo/Fechar; `:431-435` tudo removido sem `loading` | PASS |
+| C17 | densidade App/Painel compilada | `dialog density resolves in CSS \(C17\)` (11) + `density classes \(C17\)` | `styles.spec.ts:631-676` tabela [App, Painel] px literal (cabeçalho 20/24, corpo 20/24, rodapé 12/16 e 20/24) + `:680` `expectAutoDensity` (media `(width >= 60rem)`, seletores `[data-viewport]`); `:685-686` 8px fixos; `:708`/`:710` `column`/`row`, `stretch`/`center`, `100%`/`auto`; `Dialog.spec.tsx:455-471` classes com `data-viewport="mobile"`, primária por último | PASS |
+| C18 | Drawer modal: fundo z-40, painel z-41 a 24px, 650px limitado, raio 24 | `modal drawer \(C18\)` (2) | `Drawer.spec.tsx:46-47` fundo `fixed inset-0 z-40 bg-scrim` `aria-hidden`; `:49-51` ARIA; `:52-66` `fixed z-41 top-6 right-6 bottom-6 w-drawer max-w-drawer-modal bg-surface rounded-3xl shadow-elevation-high-left overflow-hidden flex flex-col`; `:69` clique no fundo; `:75` sem descrição; `styles.spec.ts:194-195`+`:623` `650px`, `calc(100% - 48px)` | PASS |
+| C19 | cabeçalho 24/24/12/24, gap 12, borda; h2 600 16/24; descrição 400 14/20 | `header \(C19\)` | `Drawer.spec.tsx:82-91` `gap-3 px-6 pt-6 pb-3 border-b border-default`; `:92-93` `H2 text-size-75 font-semibold`; `:94-99` `text-size-50 leading-5 font-normal text-secondary`; `:103-104` `divider={false}` | PASS |
+| C20 | Voltar antes, `headerActions` depois, Fechar por último | `header buttons \(C20\)` | `Drawer.spec.tsx:124-129` ordem `[back, títulos, Editar, close]`; `:131` `bg-transparent text-primary size-8`; `:133-134` glifos; `:138-139` callbacks; `:143` `closeLabel`; `:147-148` sem callbacks, sem botões | PASS |
+| C21 | corpo `flex-1`, rolagem, p 24, gap 16, min 120, `tabindex 0`, "Conteúdo" | `scrollable body \(C21\)` | `Drawer.spec.tsx:22` nome "Conteúdo"; `:155` `tabindex 0`; `:157-165` `flex-1 overflow-auto p-6 flex flex-col gap-4 min-h-30` | PASS |
+| C22 | rodapé em linha, p 24, gap 10, borda | `footer \(C22\)` | `Drawer.spec.tsx:174-181` `flex items-center p-6 gap-2.5 border-t border-default`; `:185` `divider={false}`; `:189` sem `footer` | PASS |
+| C23 | foco no primeiro focável; Esc | `modal focus and esc \(C23\)` | `Drawer.spec.tsx:200` "Voltar" com foco; `:203` Esc -> `onClose`; `:207` sem botões -> corpo | PASS |
+| C24 | `open` padrão `true` | `open defaults to true \(C24\)` | `Drawer.spec.tsx:212`, `:216` | PASS |
+| C25 | inline: sem fundo, `region`, sem `fixed`, sem trava, sem Esc | `inline drawer \(C25\)` | `Drawer.spec.tsx:231` `region` nomeada; `:234-238`; `:239` rolagem livre; `:243` foco não roubado; `:247` Esc ignorado; `:250-255` Tab sai da região | PASS |
+| C26 | BottomSheet: z-55, fundo, painel ancorado, 600px, tela − 24, cantos 16 | `sheet markup \(C26\)` | `BottomSheet.spec.tsx:153` vazio; `:158` `fixed inset-0 z-55`; `:159-160`; `:161-162` ARIA; `:163-176` `absolute inset-x-0 bottom-0 mx-auto w-full max-w-150 max-h-sheet bg-surface rounded-t-2xl shadow-elevation-low-above flex flex-col`; `:179`/`:185` `dismissible`; `styles.spec.ts:196`+`:623` `calc(100% - 24px)` | PASS |
+| C27 | `half` 50%, `full` tela − 24, `auto` conteúdo | `detents \(C27\)` | `BottomSheet.spec.tsx:190-196` tabela `undefined/auto -> nada, half -> h-1/2, full -> h-sheet`; `:201-202`; `styles.spec.ts:197` `h-sheet` -> `calc(100% - 24px)` | PASS |
+| C28 | alça 36×4 `neutral-33`, 8/4; cabeçalho 4/12/8/20; Fechar ghost medium | `grab area and header \(C28\)` | `BottomSheet.spec.tsx:214` `pt-2`; `:217-224` `w-9 h-1 rounded-full bg-neutral-33 mx-auto mb-1`; `:225-233` `gap-3 pt-1 pr-3 pb-2 pl-5`; `:235` `flex-1 text-size-75 font-semibold`; `:236` `bg-neutral-alpha/10 text-primary size-12`; `:240` `onClose`; `:244` `closeLabel` visível | PASS |
+| C29 | corpo `flex-1 min-h-0`, rolagem, 8/20/16, gap 16 | `body \(C29\)` | `BottomSheet.spec.tsx:251-262` | PASS |
+| C30 | rodapé em coluna, gap 8, 12×20, borda, `bg-surface`, filhos 100% | `footer \(C30\)` | `BottomSheet.spec.tsx:269-279` | PASS |
+| C31 | `safeArea` env/mock/none, padrão `env` | `safe area \(C31\)` | `BottomSheet.spec.tsx:285-287` padrão `h-safe-area` `aria-hidden` abaixo do rodapé; `:302-311` `h-8.5` (34px) `before:w-33.5 before:h-1.25` (134×5) `rounded-full bg-neutral-999`; `:316` `none`; `styles.spec.ts:198` `env(safe-area-inset-bottom, 0px)` | PASS |
+| C32 | regra do arraste; botão não arrasta | `drag to dismiss \(C32\)` (12) | `BottomSheet.spec.tsx:320-328` limites de `max(96, 25%)` e flick (100 em 400 -> false, 96 em 200 -> false, 41/250ms -> false, 40/100ms -> false); `:332` `shouldDismissSheet(drag) === expected`; integração `:351` 90px não fecha, `:352` volta a `none`, `:355` 120px fecha, `:358` flick fecha, `:362` lentos/curtos não; `:371`/`:374` piso de 96; `:386`/`:389` começo no botão | PASS |
+| C33 | base sobe `innerHeight − vv.height − vv.offsetTop`; sem `visualViewport`, base | `virtual keyboard offset \(C33\)` (2) | `BottomSheet.spec.tsx:403` `'300px'` (768−468); `:409` `'200px'` (offsetTop 100, discrimina a fórmula); `:416` volta a `0px`; `:425` não lança; `:427-428` `0px` e `bottom-0` | PASS |
+| C34 | foco: `data-autofocus` -> campo -> painel; Esc | `initial focus and esc \(C34\)` | `BottomSheet.spec.tsx:442`, `:454` (campo, não o botão "Limpar" antes dele), `:459`, `:462` | PASS |
+| C35 | fade 200ms / slide 250ms ease-out; nada com `reduce` | `motion \(C35\)` + `bottom sheet motion resolves in CSS (C35)` (2) | `BottomSheet.spec.tsx:471-474` só classes `motion-safe:`; `styles.spec.ts:723-724` `sheet-fade 200ms ease-out` de `opacity 0`, `sheet-in 250ms ease-out` de `translate 0 100%`; `:740` media `(prefers-reduced-motion: no-preference)`; `:743`/`:745` (ver achado 3) | PASS |
+| C36 | exports, spec e story, nó do Drawer, linhas no doc | `lote 3 resolves and is documented \(C36\)` (6) + `story design links: Drawer` | `figma-links.spec.ts:208` export é função; `:213` linha no `figma-components.md` com `@church/ui/organisms/<Nome>`; `:224` `useModalLayer` em `@church/ui/utils`; `:239` Dialog/BottomSheet sem `design`; `:57` + `:267` Drawer -> `13803:11075` | PASS |
+| C37 | gate sem cache | `npm run verify -- --force` exit 0 | Tasks 10/10, Cached 0/10; `@church/ui:test` 44 suítes / 864 testes, 0 falhas; lint e typecheck sem problema | PASS |
+
+**37/37 provados.**
+
+## Itens que o brief pediu para olhar
+
+- **Foco preso e retorno (C3, C4):** C3 discrimina. Uma implementação que não excluísse `[inert]` faria "Inerte" virar `first` e quebraria `:112`; uma que não excluísse os ocultos faria `last` ser um botão oculto e quebraria `:109`/`:119`. O C4 principal (`:158`) discrimina, porque sem o retorno o foco cairia no `body`.
+- **C4, "gatilho que já saiu do documento":** confirmo o relato do autor. O caso passa sem o guarda `isConnected`. Uma sonda no jsdom do repositório (`node` com `jsdom` de `node_modules`, fora da árvore) mostra que `focus()` num elemento desconectado não faz nada (`activeElement` continua `BODY`), e a especificação HTML diz o mesmo para os navegadores. O ramo é defensivo e não tem efeito observável, então nenhuma asserção consegue discriminá-lo. O critério 4 continua provado pela parte observável (o foco não vai para o nó removido e nada lança erro). Vai como achado 1, não bloqueia.
+- **Camadas de Esc (C5, C6):** as duas provas discriminam. Sem o `stopPropagation` do `useModalLayer`, o Drawer pai receberia o Esc e `Dialog.spec.tsx:64` quebraria. Sem o `stopPropagation` novo do MenuDropdown, `Dialog.spec.tsx:105` e `MenuDropdown.spec.tsx:212` quebrariam. O caso irmão (`:67-79`) não discrimina nada, mas não precisa.
+- **Arraste (C32) e teclado (C33):** os limites estão nas duas bordas (`>` contra `>=`, `<` contra `<=`). O teclado prova o termo `offsetTop` separadamente.
+- **Trava do `loading` (C16):** `inert` é afirmado como atributo (`:409`) e removido ao sair do `loading` (`:432`). Ele é aplicado por callback ref (`Dialog.tsx:195-197`).
+- **`style` inline:** a única ocorrência em código de produção é `BottomSheet.tsx:160` `style={{ bottom, y }}` (MotionValues), como manda a linha 3 do Decided. `useModalLayer.ts:20-28` escreve `document.body.style.overflow`: é a trava de rolagem do critério 1, não estilo visual.
+- **Valores arbitrários do Tailwind:** nenhum. `in-data-[viewport=…]`/`not-in-data-[…]` são variantes que já existiam, e `h-8.5`, `h-1.25`, `w-33.5`, `z-41`, `z-55` são da escala nativa. Valores nomeados novos em `styles.css`: `--width-drawer` (`--size-drawer` = 650, token novo em `packages/tokens/src/size.ts`), `--max-width-drawer-modal`, `--max-height-dialog`, `--height-sheet`, `--height-safe-area` e `--animate-sheet-*`, cada um provado no CSS compilado.
+- **Comentários:** todos os blocos adicionados abrem com `why:`/`hazard:`/`invariant:`, nenhum passa de 5 linhas e todos estão em inglês. Procurei em todos os arquivos novos e alterados; só apareceram seletores CSS antigos.
+- **Props renomeadas:** nenhuma. O MenuDropdown ganhou só `event.stopPropagation()` (`MenuDropdown.tsx:+3`).
+- **Fixtures:** fictícias ("Pessoa Exemplo", "Pessoa Exemplo 1–3", "Membro desde 2020", "Inativar Pessoa Exemplo?").
+- **Swept/Observable "existing":** o checklist não tem linha `existing`. A linha Observable da task (`figma-components.md`, tabela "Components") confere: `## Components` está em `figma-components.md:11` e as linhas novas em `:57-59`. Fora o realinhamento do Prettier, o diff só acrescenta essas 3 linhas.
+- **Landing linha 4 (decidida no build):** combina com a linha 1 do Decided ("ouve `keydown` no painel"). O hook devolve `onKeyDown`, que é posto no painel. Mudou o mecanismo, não a decisão.
+
+## Gate
+
+`npm run verify -- --force`: 10 tasks com sucesso, 0 em cache; `@church/ui:test` 44 suítes / 864 testes passaram, 0 falharam. O único `console.error` vem de `NavItem.spec.tsx` (`window.scrollTo` do `motion`), que já existia e fica fora deste lote.
+
+Jest nos 7 arquivos de prova: 338 passaram, 0 falharam.
+
+## Achados (por ordem)
+
+1. **C4, sub-caso sem discriminação** (`useModalLayer.spec.tsx:161-189`). "A trigger no longer in the document is skipped" passa com ou sem o guarda `previous.isConnected` (`useModalLayer.ts:90`), porque `focus()` num nó desconectado não faz nada. O guarda não pode ser provado por comportamento. Sugestão: tratar o teste como prova de que nada lança erro e o foco não vai para o nó removido, ou retirar o nome do ramo. **Não bloqueia.**
+2. **Risco conhecido, sem critério:** se Drawer e Dialog montam no mesmo commit, o foco adiado do Drawer roda por último e tira o foco do Dialog. Isso viola o critério 14 nesse cenário (Handoff, "Known limit"). O fluxo real, em que o Dialog abre depois, está provado em `Dialog.spec.tsx:59-60`. Nenhum check cobre a montagem simultânea. **Não bloqueia**; levar ao usuário se esse fluxo for possível.
+3. **Precisão da prova do C35:** a prova nomeada no checklist (`BottomSheet.spec` `motion \(C35\)`) só afirma os prefixos `motion-safe:`. Durações, easing, keyframes e o gating por media query estão na prova extra `styles.spec.ts:721-746`, que o checklist não lista para o C35. Recomendo incluí-la nas provas do C35 no checklist. **Não bloqueia.**
+4. **Menor, Constituição III ("`as` como último recurso"):** `Dialog.spec.tsx:56` `document.activeElement as HTMLElement`. `toContainElement` aceita `Element | null` com narrowing, então o cast dá para evitar. O lint passa. Os `} as Meta<…>` das stories seguem o padrão das 30 stories que já existem.
+
+Passo 1, `Coverage`, `Test policy` e injeção de falhas não rodaram (perfil `light`). Os julgamentos de discriminação acima vêm da leitura das asserções e de uma única sonda do jsdom, não de mutantes.
