@@ -1,0 +1,363 @@
+/* why: the consuming app owns `@import 'tailwindcss'`; this file adds the
+   design-system theme and makes Tailwind scan the package's own sources. */
+@import '@church/tokens/styles/root.css';
+
+@source './';
+
+@theme {
+  --default-transition-duration: 300ms;
+
+  --color-*: initial;
+  --color-blue-17: var(--blue-17);
+  --color-blue-33: var(--blue-33);
+  --color-blue-50: var(--blue-50);
+  --color-blue-67: var(--blue-67);
+  --color-blue-83: var(--blue-83);
+  --color-blue-100: var(--blue-100);
+  --color-blue-alpha: var(--blue-alpha);
+  --color-cyan-17: var(--cyan-17);
+  --color-cyan-33: var(--cyan-33);
+  --color-cyan-50: var(--cyan-50);
+  --color-cyan-67: var(--cyan-67);
+  --color-cyan-83: var(--cyan-83);
+  --color-cyan-100: var(--cyan-100);
+  --color-cyan-alpha: var(--cyan-alpha);
+  --color-green-17: var(--green-17);
+  --color-green-33: var(--green-33);
+  --color-green-50: var(--green-50);
+  --color-green-67: var(--green-67);
+  --color-green-83: var(--green-83);
+  --color-green-100: var(--green-100);
+  --color-green-alpha: var(--green-alpha);
+  --color-indigo-17: var(--indigo-17);
+  --color-indigo-33: var(--indigo-33);
+  --color-indigo-50: var(--indigo-50);
+  --color-indigo-67: var(--indigo-67);
+  --color-indigo-83: var(--indigo-83);
+  --color-indigo-100: var(--indigo-100);
+  --color-indigo-alpha: var(--indigo-alpha);
+  --color-lime-17: var(--lime-17);
+  --color-lime-33: var(--lime-33);
+  --color-lime-50: var(--lime-50);
+  --color-lime-67: var(--lime-67);
+  --color-lime-83: var(--lime-83);
+  --color-lime-100: var(--lime-100);
+  --color-lime-alpha: var(--lime-alpha);
+  --color-neutral-00: var(--grey-00);
+  --color-neutral-17: var(--grey-17);
+  --color-neutral-33: var(--grey-33);
+  --color-neutral-50: var(--grey-50);
+  --color-neutral-67: var(--grey-67);
+  --color-neutral-83: var(--grey-83);
+  --color-neutral-100: var(--grey-100);
+  --color-neutral-999: var(--grey-999);
+  --color-neutral-alpha: var(--grey-alpha);
+  --color-orange-17: var(--orange-17);
+  --color-orange-33: var(--orange-33);
+  --color-orange-50: var(--orange-50);
+  --color-orange-67: var(--orange-67);
+  --color-orange-83: var(--orange-83);
+  --color-orange-100: var(--orange-100);
+  --color-orange-alpha: var(--orange-alpha);
+  --color-pink-17: var(--pink-17);
+  --color-pink-33: var(--pink-33);
+  --color-pink-50: var(--pink-50);
+  --color-pink-67: var(--pink-67);
+  --color-pink-83: var(--pink-83);
+  --color-pink-100: var(--pink-100);
+  --color-pink-alpha: var(--pink-alpha);
+  --color-purple-17: var(--purple-17);
+  --color-purple-33: var(--purple-33);
+  --color-purple-50: var(--purple-50);
+  --color-purple-67: var(--purple-67);
+  --color-purple-83: var(--purple-83);
+  --color-purple-100: var(--purple-100);
+  --color-purple-alpha: var(--purple-alpha);
+  --color-red-17: var(--red-17);
+  --color-red-33: var(--red-33);
+  --color-red-50: var(--red-50);
+  --color-red-67: var(--red-67);
+  --color-red-83: var(--red-83);
+  --color-red-100: var(--red-100);
+  --color-red-alpha: var(--red-alpha);
+  --color-yellow-17: var(--yellow-17);
+  --color-yellow-33: var(--yellow-33);
+  --color-yellow-50: var(--yellow-50);
+  --color-yellow-67: var(--yellow-67);
+  --color-yellow-83: var(--yellow-83);
+  --color-yellow-100: var(--yellow-100);
+  --color-yellow-alpha: var(--yellow-alpha);
+
+  --text-*: initial;
+  --text-size-10: var(--typography-size-10);
+  --text-size-25: var(--typography-size-25);
+  --text-size-25--line-height: var(--typography-line-height-25);
+  --text-size-50: var(--typography-size-50);
+  --text-size-50--line-height: var(--typography-line-height-50);
+  --text-size-75: var(--typography-size-75);
+  --text-size-75--line-height: var(--typography-line-height-75);
+  --text-size-100: var(--typography-size-100);
+  --text-size-100--line-height: var(--typography-line-height-100);
+  --text-size-200: var(--typography-size-200);
+  --text-size-200--line-height: var(--typography-line-height-200);
+  --text-size-300: var(--typography-size-300);
+  --text-size-300--line-height: var(--typography-line-height-300);
+  --text-size-400: var(--typography-size-400);
+  --text-size-400--line-height: var(--typography-line-height-400);
+  --text-size-500: var(--typography-size-500);
+  --text-size-500--line-height: var(--typography-line-height-500);
+  --text-icon-12: var(--icon-size-12);
+  --text-icon-14: var(--icon-size-14);
+  --text-icon-16: var(--icon-size-16);
+  --text-icon-18: var(--icon-size-18);
+  --text-icon-20: var(--icon-size-20);
+  --text-icon-24: var(--icon-size-24);
+  --text-icon-26: var(--icon-size-26);
+  --text-icon-28: var(--icon-size-28);
+
+  /* invariant: after `--text-*: initial`, which would otherwise clear them.
+     Lamb's semantic names become `text-primary`, `bg-page`, `border-control`. */
+  --text-color-primary: var(--semantic-light-text-primary);
+  --text-color-secondary: var(--semantic-light-text-secondary);
+  --text-color-disabled: var(--semantic-light-text-disabled);
+  --text-color-inverse: var(--semantic-light-text-inverse);
+  --text-color-link: var(--semantic-light-text-link);
+  --text-color-danger: var(--semantic-light-text-danger);
+  --text-color-positive: var(--semantic-light-text-positive);
+  --text-color-attention: var(--semantic-light-text-attention);
+  --text-color-accent: var(--semantic-light-text-accent);
+  --text-color-on-accent: var(--semantic-light-text-on-accent);
+  --text-color-on-positive: var(--semantic-light-text-on-positive);
+  --text-color-on-danger: var(--semantic-light-text-on-danger);
+  --text-color-on-attention: var(--semantic-light-text-on-attention);
+  --background-color-page: var(--semantic-light-background-page);
+  --background-color-surface: var(--semantic-light-background-surface);
+  --background-color-hover: var(--semantic-light-background-hover);
+  --background-color-selected: var(--semantic-light-background-selected);
+  --background-color-disabled: var(--semantic-light-background-disabled);
+  --background-color-action-primary: var(
+    --semantic-light-background-action-primary
+  );
+  --background-color-accent-solid: var(
+    --semantic-light-background-accent-solid
+  );
+  --background-color-positive-solid: var(
+    --semantic-light-background-positive-solid
+  );
+  --background-color-danger-solid: var(
+    --semantic-light-background-danger-solid
+  );
+  --background-color-attention-solid: var(
+    --semantic-light-background-attention-solid
+  );
+  --background-color-accent-subtle: var(
+    --semantic-light-background-accent-subtle
+  );
+  --background-color-positive-subtle: var(
+    --semantic-light-background-positive-subtle
+  );
+  --background-color-danger-subtle: var(
+    --semantic-light-background-danger-subtle
+  );
+  --background-color-attention-subtle: var(
+    --semantic-light-background-attention-subtle
+  );
+  --background-color-scrim: var(--semantic-light-background-scrim);
+  --border-color-default: var(--semantic-light-border-default);
+  --border-color-control: var(--semantic-light-border-control);
+  --color-focus-ring: var(--semantic-light-focus-ring);
+  --color-brand-red: var(--brand-red);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-teal: var(--brand-teal);
+
+  --shadow-elevation-low-bottom-12: var(--elevation-low-bottom-12);
+  --shadow-elevation-low-low-above: var(--elevation-low-low-above);
+  --shadow-elevation-low-low-left: var(--elevation-low-low-left);
+  --shadow-elevation-low-low-right: var(--elevation-low-low-right);
+  --shadow-elevation-low-bottom-24: var(--elevation-low-bottom-24);
+  --shadow-elevation-low-above: var(--elevation-low-above);
+  --shadow-elevation-low-left: var(--elevation-low-left);
+  --shadow-elevation-low-right: var(--elevation-low-right);
+  --shadow-elevation-high-bottom: var(--elevation-high-bottom);
+  --shadow-elevation-high-above: var(--elevation-high-above);
+  --shadow-elevation-high-left: var(--elevation-high-left);
+  --shadow-elevation-high-right: var(--elevation-high-right);
+  --shadow-elevation-deep-high-bottom: var(--elevation-deep-high-bottom);
+  --shadow-elevation-deep-high-above: var(--elevation-deep-high-above);
+  --shadow-elevation-deep-high-left: var(--elevation-deep-high-left);
+  --shadow-elevation-deep-high-right: var(--elevation-deep-high-right);
+
+  --radius-10: var(--border-radius-10);
+
+  --font-sans: var(--font-inter);
+  --font-oswald: var(--font-oswald);
+}
+
+[data-theme='dark'] {
+  --color-blue-17: var(--blue-100);
+  --color-blue-33: var(--blue-83);
+  --color-blue-50: var(--blue-67);
+  --color-blue-67: var(--blue-50);
+  --color-blue-83: var(--blue-33);
+  --color-blue-100: var(--blue-17);
+  --color-blue-alpha: var(--blue-alpha);
+  --color-cyan-17: var(--cyan-100);
+  --color-cyan-33: var(--cyan-83);
+  --color-cyan-50: var(--cyan-67);
+  --color-cyan-67: var(--cyan-50);
+  --color-cyan-83: var(--cyan-33);
+  --color-cyan-100: var(--cyan-17);
+  --color-cyan-alpha: var(--cyan-alpha);
+  --color-green-17: var(--green-100);
+  --color-green-33: var(--green-83);
+  --color-green-50: var(--green-67);
+  --color-green-67: var(--green-50);
+  --color-green-83: var(--green-33);
+  --color-green-100: var(--green-17);
+  --color-green-alpha: var(--green-alpha);
+  --color-indigo-17: var(--indigo-100);
+  --color-indigo-33: var(--indigo-83);
+  --color-indigo-50: var(--indigo-67);
+  --color-indigo-67: var(--indigo-50);
+  --color-indigo-83: var(--indigo-33);
+  --color-indigo-100: var(--indigo-17);
+  --color-indigo-alpha: var(--indigo-alpha);
+  --color-lime-17: var(--lime-100);
+  --color-lime-33: var(--lime-83);
+  --color-lime-50: var(--lime-67);
+  --color-lime-67: var(--lime-50);
+  --color-lime-83: var(--lime-33);
+  --color-lime-100: var(--lime-17);
+  --color-lime-alpha: var(--lime-alpha);
+  --color-neutral-00: var(--grey-999);
+  --color-neutral-17: var(--grey-100);
+  --color-neutral-33: var(--grey-83);
+  --color-neutral-50: var(--grey-67);
+  --color-neutral-67: var(--grey-50);
+  --color-neutral-83: var(--grey-33);
+  --color-neutral-100: var(--grey-17);
+  --color-neutral-999: var(--grey-00);
+  --color-neutral-alpha: var(--grey-alpha);
+  --color-orange-17: var(--orange-100);
+  --color-orange-33: var(--orange-83);
+  --color-orange-50: var(--orange-67);
+  --color-orange-67: var(--orange-50);
+  --color-orange-83: var(--orange-33);
+  --color-orange-100: var(--orange-17);
+  --color-orange-alpha: var(--orange-alpha);
+  --color-pink-17: var(--pink-100);
+  --color-pink-33: var(--pink-83);
+  --color-pink-50: var(--pink-67);
+  --color-pink-67: var(--pink-50);
+  --color-pink-83: var(--pink-33);
+  --color-pink-100: var(--pink-17);
+  --color-pink-alpha: var(--pink-alpha);
+  --color-purple-17: var(--purple-100);
+  --color-purple-33: var(--purple-83);
+  --color-purple-50: var(--purple-67);
+  --color-purple-67: var(--purple-50);
+  --color-purple-83: var(--purple-33);
+  --color-purple-100: var(--purple-17);
+  --color-purple-alpha: var(--purple-alpha);
+  --color-red-17: var(--red-100);
+  --color-red-33: var(--red-83);
+  --color-red-50: var(--red-67);
+  --color-red-67: var(--red-50);
+  --color-red-83: var(--red-33);
+  --color-red-100: var(--red-17);
+  --color-red-alpha: var(--red-alpha);
+  --color-yellow-17: var(--yellow-100);
+  --color-yellow-33: var(--yellow-83);
+  --color-yellow-50: var(--yellow-67);
+  --color-yellow-67: var(--yellow-50);
+  --color-yellow-83: var(--yellow-33);
+  --color-yellow-100: var(--yellow-17);
+  --color-yellow-alpha: var(--yellow-alpha);
+
+  --text-color-primary: var(--semantic-dark-text-primary);
+  --text-color-secondary: var(--semantic-dark-text-secondary);
+  --text-color-disabled: var(--semantic-dark-text-disabled);
+  --text-color-inverse: var(--semantic-dark-text-inverse);
+  --text-color-link: var(--semantic-dark-text-link);
+  --text-color-danger: var(--semantic-dark-text-danger);
+  --text-color-positive: var(--semantic-dark-text-positive);
+  --text-color-attention: var(--semantic-dark-text-attention);
+  --text-color-accent: var(--semantic-dark-text-accent);
+  --text-color-on-accent: var(--semantic-dark-text-on-accent);
+  --text-color-on-positive: var(--semantic-dark-text-on-positive);
+  --text-color-on-danger: var(--semantic-dark-text-on-danger);
+  --text-color-on-attention: var(--semantic-dark-text-on-attention);
+  --background-color-page: var(--semantic-dark-background-page);
+  --background-color-surface: var(--semantic-dark-background-surface);
+  --background-color-hover: var(--semantic-dark-background-hover);
+  --background-color-selected: var(--semantic-dark-background-selected);
+  --background-color-disabled: var(--semantic-dark-background-disabled);
+  --background-color-action-primary: var(
+    --semantic-dark-background-action-primary
+  );
+  --background-color-accent-solid: var(--semantic-dark-background-accent-solid);
+  --background-color-positive-solid: var(
+    --semantic-dark-background-positive-solid
+  );
+  --background-color-danger-solid: var(--semantic-dark-background-danger-solid);
+  --background-color-attention-solid: var(
+    --semantic-dark-background-attention-solid
+  );
+  --background-color-accent-subtle: var(
+    --semantic-dark-background-accent-subtle
+  );
+  --background-color-positive-subtle: var(
+    --semantic-dark-background-positive-subtle
+  );
+  --background-color-danger-subtle: var(
+    --semantic-dark-background-danger-subtle
+  );
+  --background-color-attention-subtle: var(
+    --semantic-dark-background-attention-subtle
+  );
+  --background-color-scrim: var(--semantic-dark-background-scrim);
+  --border-color-default: var(--semantic-dark-border-default);
+  --border-color-control: var(--semantic-dark-border-control);
+  --color-focus-ring: var(--semantic-dark-focus-ring);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+@layer base {
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
+  /* why: one keyboard focus ring for every focusable element (Lamb README);
+     a pointer focus draws nothing. Fields replace it with their own border. */
+  :focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

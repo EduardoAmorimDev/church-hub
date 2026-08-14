@@ -31,5 +31,9 @@ npm-debug.log*
 # vercel
 .vercel
 
+# storybook
 *storybook.log
 storybook-static
+
+# typescript
+tsconfig.tsbuildinfo

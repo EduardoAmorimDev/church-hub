@@ -33,3 +33,9 @@ npm-debug.log*
 
 # turbo
 .turbo
+
+# claude
+.tlc
+specs
+# python
+__pycache__/

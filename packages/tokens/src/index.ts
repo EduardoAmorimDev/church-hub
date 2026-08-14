@@ -1,2 +1,6 @@
 export * from './colors'
+export * from './icon'
+export * from './radius'
+export * from './semantic'
+export * from './shadow'
 export * from './typography'

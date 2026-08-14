@@ -1,13 +1,13 @@
-import { Noto_Sans, Oswald } from 'next/font/google'
+import { Inter, Oswald } from 'next/font/google'
 
 import 'material-symbols'
 import './styles.css'
-import { ToastContainer } from '~/components/molecules'
+import { ToastContainer } from '@church/ui/molecules/Toast'
 
-const noto_sans = Noto_Sans({
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-noto-sans'
+  variable: '--font-inter'
 })
 
 const oswald = Oswald({
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-br"
-      className={`${noto_sans.variable} ${oswald.variable} text antialiased`}
+      className={`${inter.variable} ${oswald.variable} text antialiased`}
     >
       <ToastContainer />
       <body>{children}</body>
