@@ -3,6 +3,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { colors } from '../colors'
+import { icon } from '../icon'
+import { radius } from '../radius'
 import { typography } from '../typography'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -78,6 +80,10 @@ function writeCssFile(contents: string) {
 writeCssFile(
   buildCssFile([
     { tokens: colors },
-    { tokens: typography, prefix: ['typography'], numberUnit: 'px' }
+    { tokens: typography, prefix: ['typography'], numberUnit: 'px' },
+    { tokens: icon, prefix: ['icon'], numberUnit: 'px' },
+    // why: `--radius-*` is Tailwind's own theme namespace; a token of the same
+    // name would make the `@theme` mapping refer to itself.
+    { tokens: radius, prefix: ['border-radius'], numberUnit: 'px' }
   ])
 )

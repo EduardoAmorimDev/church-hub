@@ -1,5 +1,6 @@
 export const typography = {
   size: {
+    10: 11,
     25: 12,
     50: 14,
     75: 16,

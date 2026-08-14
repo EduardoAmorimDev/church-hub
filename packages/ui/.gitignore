@@ -1,0 +1,9 @@
+# storybook
+*storybook.log
+storybook-static
+
+# testing
+coverage
+
+# typescript
+tsconfig.tsbuildinfo

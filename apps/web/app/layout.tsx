@@ -2,7 +2,7 @@ import { Noto_Sans, Oswald } from 'next/font/google'
 
 import 'material-symbols'
 import './styles.css'
-import { ToastContainer } from '~/components/molecules'
+import { ToastContainer } from '@church/ui/molecules/Toast'
 
 const noto_sans = Noto_Sans({
   subsets: ['latin'],

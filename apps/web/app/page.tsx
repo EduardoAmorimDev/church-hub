@@ -1,4 +1,5 @@
-import { Button, Icon } from '~/components'
+import { Button } from '@church/ui/atoms/Button'
+import { Icon } from '@church/ui/atoms/Icon'
 
 export default function Web() {
   return (

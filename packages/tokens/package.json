@@ -12,13 +12,16 @@
     "./styles/root.css": "./dist/styles/root.css"
   },
   "scripts": {
-    "build": "npx tsup src/index.ts --target esnext --format esm,cjs --dts --sourcemap --clean --out-dir dist && npm run build:css",
-    "build:css": "npx tsx src/scripts/generate-css-file.ts"
+    "build": "tsup src/index.ts --target esnext --format esm,cjs --dts --sourcemap --clean --out-dir dist && npm run build:css",
+    "build:css": "tsx src/scripts/generate-css-file.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "tsup": "^8.5.1"
+    "tsup": "^8.5.1",
+    "tsx": "4.23.15"
   }
 }
