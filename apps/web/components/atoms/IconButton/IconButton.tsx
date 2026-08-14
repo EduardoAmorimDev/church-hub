@@ -1,8 +1,13 @@
-import { cloneElement, ComponentProps, forwardRef, ReactElement } from 'react'
+import {
+  cloneElement,
+  ComponentProps,
+  ElementRef,
+  forwardRef,
+  ReactElement
+} from 'react'
 import { tv, VariantProps } from '~/lib/tailwind-variants'
-import { twMerge } from '~/lib/tailwind-merge'
-import { IconProps } from '../Icon'
 import { buttonBase } from '../Button'
+import { IconProps } from '../Icon'
 
 const iconButton = tv({
   extend: buttonBase,
@@ -21,18 +26,17 @@ export type IconButtonProps = Omit<ComponentProps<'button'>, 'children'> &
     children: ReactElement<IconProps>
   }
 
-export const IconButton = forwardRef<
-  React.ElementRef<'button'>,
-  IconButtonProps
->(({ children, className, ...props }, ref) => {
-  return (
-    <button
-      ref={ref}
-      className={twMerge(iconButton(props), className)}
-      {...props}
-    >
-      {cloneElement(children, { size: props.size })}
-    </button>
-  )
-})
-IconButton.displayName = 'Button'
+export const IconButton = forwardRef<ElementRef<'button'>, IconButtonProps>(
+  ({ children, className, color, size, variant, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className={iconButton({ className, color, size, variant })}
+        {...props}
+      >
+        {cloneElement(children, { size })}
+      </button>
+    )
+  }
+)
+IconButton.displayName = 'IconButton'

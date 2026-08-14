@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/nextjs'
 import { Avatar, AvatarProps } from './Avatar'
 
-const sizes = ['small', 'medium', 'large', 'xlarge']
+const sizes = ['small', 'medium', 'large', 'xLarge']
 
 export default {
   title: 'atoms/Avatar',

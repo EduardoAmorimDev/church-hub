@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/nextjs'
-import { Button } from '~/components/atoms'
+import { Button } from '~/components/atoms/Button'
 import { Toast, toast, ToastContainer, ToastProps } from './Toast'
 import { TypeOptions } from 'react-toastify'
 

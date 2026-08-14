@@ -13,17 +13,17 @@ const avatar = tv({
       medium: 'w-9 h-9',
       large: 'w-16 h-16 text-size-400',
       xLarge: 'w-20 h-20 text-size-500'
-    },
-    defaultVariants: {
-      size: 'medium'
     }
+  },
+  defaultVariants: {
+    size: 'medium'
   }
 })
 
 export type AvatarProps = Omit<ImageProps, 'width' | 'height'> &
   VariantProps<typeof avatar>
 
-export const Avatar = ({ size = 'medium', ...props }: AvatarProps) => {
+export const Avatar = ({ size, ...props }: AvatarProps) => {
   const { src, alt } = props
   return (
     <div className={avatar({ size })}>

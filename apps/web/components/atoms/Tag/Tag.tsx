@@ -1,6 +1,6 @@
 import { tv, VariantProps } from '~/lib/tailwind-variants'
 import { ComponentWithIconProps } from '../Icon'
-import { getClonedIcons } from '../../utils/getClonedIcons'
+import { getClonedResizedIcons } from '../../utils/getClonedIcons'
 import React from 'react'
 
 export const tag = tv({
@@ -41,13 +41,16 @@ export const Tag = ({
   startIcon,
   ...props
 }: TagProps) => {
-  const clones = getClonedIcons({ endIcon, startIcon, size })
+  const [startIconClone, endIconClone] = getClonedResizedIcons({
+    icons: [startIcon, endIcon],
+    size
+  })
 
   return (
     <div className={tag({ color, size })} {...props}>
-      {clones.startIcon}
+      {startIconClone}
       {children}
-      {clones.endIcon}
+      {endIconClone}
     </div>
   )
 }

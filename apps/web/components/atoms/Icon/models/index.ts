@@ -6,8 +6,7 @@ export type IconProps = ComponentProps<'span'> & {
   fill?: 0 | 1
   grade?: -25 | 0 | 200
   name: MaterialSymbol
-  responsive?: boolean
-  size?: Extract<Size, 'small' | 'medium' | 'large'>
+  size?: Size
   variant?: 'outlined' | 'rounded' | 'sharp'
   weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700
 }

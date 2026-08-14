@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavItem } from '~/components/atoms'
+import { NavItem } from '~/components/atoms/NavItem'
 import { NavItemProps } from '~/components/atoms/NavItem/NavItem.types'
 
 export type NavigationProps = Pick<NavItemProps, 'collapsed'> & {

@@ -128,7 +128,6 @@ export const NavItem = ({
       >
         <Icon
           name={iconName}
-          responsive
           fill={active ? 1 : 0}
           size="large"
           className={slots.icon({ active })}
@@ -152,7 +151,6 @@ export const NavItem = ({
         {hasSubItems && !collapsed && (
           <Icon
             name="keyboard_arrow_down"
-            responsive
             size="large"
             className={slots.arrow()}
           />

@@ -1,7 +1,7 @@
 import { tv, VariantProps } from '~/lib/tailwind-variants'
 import { Tag, tag, TagProps } from '../Tag'
-import { getClonedIcons } from '~/components/utils'
-import { twJoin } from 'tailwind-merge'
+import { getClonedResizedIcons } from '~/components/utils'
+import { twJoin } from '~/lib/tailwind-merge'
 
 const {
   base,
@@ -25,9 +25,9 @@ const badge = tv({
       purple: 'bg-purple-67',
       pink: 'bg-pink-67'
     },
-    size,
-    defaultVariants
-  }
+    size
+  },
+  defaultVariants
 })
 
 export type BadgeProps = TagProps &
@@ -46,13 +46,16 @@ export const Badge = ({ variant = 'high', ...props }: BadgeProps) => {
     size,
     ...rest
   } = props
-  const clones = getClonedIcons({ endIcon, startIcon, size })
+  const [clonedStartIcon, clonedEndIcon] = getClonedResizedIcons({
+    icons: [startIcon, endIcon],
+    size
+  })
 
   return (
     <div className={badge({ color, size })} {...rest}>
-      {clones.startIcon}
+      {clonedStartIcon}
       {children}
-      {clones.endIcon}
+      {clonedEndIcon}
     </div>
   )
 }

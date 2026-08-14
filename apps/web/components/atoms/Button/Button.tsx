@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
-import { twMerge } from '~/lib/tailwind-merge'
 import { ComponentWithIconProps } from '../Icon'
-import { getClonedIcons } from '~/components/utils'
+import { getClonedResizedIcons } from '~/components/utils'
 import { tv, VariantProps } from '~/lib/tailwind-variants'
 
 export const buttonBase = tv({
@@ -70,19 +69,22 @@ export type ButtonProps = ComponentWithIconProps<'button'> &
   VariantProps<typeof button>
 
 export const Button = forwardRef<React.ElementRef<'button'>, ButtonProps>(
-  ({ children, className, endIcon, startIcon, ...props }, ref) => {
+  ({ children, className, color, endIcon, startIcon, ...props }, ref) => {
     const { size } = props
-    const clones = getClonedIcons({ endIcon, startIcon, size })
+    const [clonedStartIcon, clonedEndIcon] = getClonedResizedIcons({
+      icons: [startIcon, endIcon],
+      size
+    })
 
     return (
       <button
         ref={ref}
-        className={twMerge(button(props), className)}
+        className={button({ className, color, size })}
         {...props}
       >
-        {clones.startIcon}
+        {clonedStartIcon}
         {children}
-        {clones.endIcon}
+        {clonedEndIcon}
       </button>
     )
   }

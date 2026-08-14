@@ -33,3 +33,6 @@ npm-debug.log*
 
 # turbo
 .turbo
+
+# claude
+specs

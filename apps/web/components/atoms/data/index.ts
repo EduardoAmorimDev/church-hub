@@ -7,5 +7,6 @@ export const sizes: Extract<Size, 'small' | 'medium' | 'large'>[] = [
   'medium',
   'large'
 ]
+export const states = ['default', 'error', 'success'] as const
 
 export const variants: Variants[] = ['filled', 'ghost', 'transparent']

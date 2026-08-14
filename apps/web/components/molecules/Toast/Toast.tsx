@@ -9,7 +9,7 @@ import {
   TypeOptions
 } from 'react-toastify'
 import { twMerge } from '~/lib/tailwind-merge'
-import { Icon } from '~/components/atoms'
+import { Icon } from '~/components/atoms/Icon'
 import { TOAST_TYPE_CLASSES } from './data'
 
 export type ToastProps = {

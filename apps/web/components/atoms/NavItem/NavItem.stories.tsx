@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { NavItem } from './NavItem'
 import { NavItemProps } from './NavItem.types'
 
-const meta: Meta<typeof NavItem> = {
+const meta: Meta<NavItemProps> = {
   title: 'atoms/NavItem',
   component: NavItem,
   decorators: [
