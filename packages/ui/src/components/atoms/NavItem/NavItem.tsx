@@ -2,7 +2,16 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import Link from 'next/link'
-import { FocusEvent, MouseEvent, useEffect, useId, useState } from 'react'
+import {
+  CSSProperties,
+  FocusEvent,
+  MouseEvent,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react'
 import { tv } from '@church/ui/lib/tailwind-variants'
 import { CountBadge } from '@church/ui/atoms/CountBadge'
 import { Icon } from '@church/ui/atoms/Icon'
@@ -32,17 +41,21 @@ const nav = tv({
     icon: 'text-current',
     label: 'min-w-0 flex-1 truncate',
     arrow: 'ml-auto text-current transition-transform duration-200 ease-out',
-    inlineList: 'mt-1 flex w-full flex-col gap-1 overflow-hidden',
+    // why: `282:37325` draws a 1px guide line from under the parent to the last sub-item; `pt-1` keeps that gap inside the line.
+    inlineList: [
+      'relative flex w-full flex-col gap-1 overflow-hidden pt-1',
+      'before:absolute before:inset-y-0 before:left-4.75 before:w-px before:bg-neutral-17'
+    ],
     subItem: 'list-none',
     subButton: [
       ...ITEM_BOX,
       'relative flex w-full items-center pr-3.5 pl-9.5 text-start',
-      'panel:not-in-data-[viewport=mobile]:pr-2.5 in-data-[viewport=desktop]:pr-2.5',
-      'before:absolute before:top-1/2 before:left-4.75 before:size-1',
-      'before:-translate-y-1/2 before:rounded-full before:bg-current'
+      'panel:not-in-data-[viewport=mobile]:pr-2.5 in-data-[viewport=desktop]:pr-2.5'
     ],
+    // why: `fixed` escapes the SideMenu's `overflow-y-auto`, which clipped an
+    // `absolute` pop-up; it stays inside the `li` so `handleBlur` still works.
     popupList: [
-      'border-neutral-17 absolute ml-5 rounded-xl border shadow-xl',
+      'border-neutral-17 bg-surface fixed z-30 ml-5 rounded-xl border shadow-xl',
       'panel:not-in-data-[viewport=mobile]:ml-0 panel:not-in-data-[viewport=mobile]:rounded-lg',
       'in-data-[viewport=desktop]:ml-0 in-data-[viewport=desktop]:rounded-lg'
     ],
@@ -83,8 +96,16 @@ const nav = tv({
         button: 'bg-selected text-primary'
       }
     },
+    // why: Lamb Nav sub-item (`13506:10602`) shows the dot only on the
+    // current sub-item.
     subActivated: {
-      true: { subButton: 'bg-selected text-primary' },
+      true: {
+        subButton: [
+          'bg-selected text-primary',
+          'before:absolute before:top-1/2 before:left-4.75 before:size-1',
+          'before:-translate-y-1/2 before:rounded-full before:bg-current'
+        ]
+      },
       false: {
         subButton: 'text-secondary hover:bg-hover hover:text-primary'
       }
@@ -149,6 +170,8 @@ export const NavItem = ({
   const subItemActive = subItems.some(subItem => subItem.activated)
   const [expanded, setExpanded] = useState(subItemActive)
   const [showPopup, setShowPopup] = useState(false)
+  const [popupPosition, setPopupPosition] = useState<CSSProperties>()
+  const rootRef = useRef<HTMLLIElement>(null)
 
   useEffect(() => {
     if (subItemActive) setExpanded(true)
@@ -157,6 +180,23 @@ export const NavItem = ({
   useEffect(() => {
     setShowPopup(false)
   }, [collapsed])
+
+  // invariant: the pop-up starts at the item's top-left corner, where the
+  // `absolute` pop-up sat, and follows it on any scroll or resize.
+  useLayoutEffect(() => {
+    if (!showPopup) return
+    const place = () => {
+      const rect = rootRef.current?.getBoundingClientRect()
+      if (rect) setPopupPosition({ top: rect.top, left: rect.left })
+    }
+    place()
+    window.addEventListener('scroll', place, true)
+    window.addEventListener('resize', place)
+    return () => {
+      window.removeEventListener('scroll', place, true)
+      window.removeEventListener('resize', place)
+    }
+  }, [showPopup])
 
   // invariant: losing focus never changes activated/selected; it only closes
   // the collapsed pop-up once focus leaves the whole item.
@@ -257,7 +297,7 @@ export const NavItem = ({
     )
 
   return (
-    <li className={slots.root()} onBlur={handleBlur}>
+    <li ref={rootRef} className={slots.root()} onBlur={handleBlur}>
       {item}
 
       <AnimatePresence initial={false}>
@@ -290,10 +330,11 @@ export const NavItem = ({
           <motion.ul
             key="subitems-popup"
             id={listId}
-            initial={{ opacity: 0, left: 0 }}
-            animate={{ opacity: 1, left: 40 }}
-            exit={{ opacity: 0, left: 0 }}
+            initial={{ opacity: 0, x: 0 }}
+            animate={{ opacity: 1, x: 40 }}
+            exit={{ opacity: 0, x: 0 }}
             transition={transition}
+            style={popupPosition}
             className={slots.popupList()}
           >
             {subItems.map((subItem, index) => (

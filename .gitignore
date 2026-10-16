@@ -21,6 +21,7 @@ build
 .DS_Store
 *.pem
 dist
+packages/tokens/styles/
 
 # debug
 npm-debug.log*

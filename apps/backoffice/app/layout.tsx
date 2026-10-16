@@ -24,10 +24,12 @@ export default function RootLayout({
   return (
     <html
       lang="pt-br"
-      className={`${inter.variable} ${oswald.variable} text antialiased`}
+      className={`${inter.variable} ${oswald.variable} text h-full antialiased`}
     >
-      <ToastContainer />
-      <body>{children}</body>
+      <body className="h-full">
+        {children}
+        <ToastContainer />
+      </body>
     </html>
   )
 }

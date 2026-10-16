@@ -123,6 +123,7 @@ export const Page = ({
           onClose={close}
           onProfileClick={nav.onProfileClick}
           open={drawerOpen}
+          profileMenuItems={nav.profileMenuItems}
           side="right"
           user={nav.user}
         />

@@ -100,7 +100,7 @@ afterEach(() => {
 
 const PANEL = 'panel:not-in-data-[viewport=mobile]:'
 const DESKTOP = 'in-data-[viewport=desktop]:'
-const painel = (...utilities: string[]) =>
+const panel = (...utilities: string[]) =>
   utilities.flatMap(utility => [`${PANEL}${utility}`, `${DESKTOP}${utility}`])
 
 // invariant: synthetic data only (constitution, Principle V).
@@ -165,7 +165,7 @@ describe('Page', () => {
       'min-h-150',
       'bg-page',
       'text-primary',
-      ...painel('flex-row')
+      ...panel('flex-row')
     )
     expect(aside.parentElement).toBe(root)
     expect(content.parentElement).toBe(root)
@@ -287,8 +287,8 @@ describe('Page', () => {
     const topBar = opener.parentElement
     const logo = within(topBar ?? document.body).getByRole('img')
 
-    expect(root).toHaveClass('flex-col', ...painel('flex-row'))
-    expect(aside).toHaveClass('hidden', ...painel('flex'))
+    expect(root).toHaveClass('flex-col', ...panel('flex-row'))
+    expect(aside).toHaveClass('hidden', ...panel('flex'))
     expect(aside).not.toHaveClass('flex')
     expect(topBar?.parentElement).toBe(contentOf())
     expect(topBar?.nextElementSibling).toBe(mainOf())
@@ -301,7 +301,7 @@ describe('Page', () => {
       'bg-surface',
       'border-b',
       'border-default',
-      ...painel('hidden')
+      ...panel('hidden')
     )
     expect(topBar && Array.from(topBar.children)).toEqual([logo, opener])
     expect(logo).toHaveClass('h-8')
@@ -575,7 +575,7 @@ describe('Page', () => {
     const aside = screen.getByRole('complementary')
 
     expect(aside).toHaveClass('flex')
-    for (const utility of ['hidden', ...painel('flex')])
+    for (const utility of ['hidden', ...panel('flex')])
       expect(aside).not.toHaveClass(utility)
     expect(screen.queryByRole('button', { name: 'Abrir menu' })).toBeNull()
     expect(rootOf(container)).not.toHaveClass('flex-col')
@@ -638,7 +638,7 @@ describe('Page', () => {
       'pt-4',
       'pb-8',
       'px-5',
-      ...painel('px-8')
+      ...panel('px-8')
     )
     expect(body).not.toHaveClass('px-8')
     expect(grid).toHaveClass('grid', 'grid-cols-fill-55', 'gap-4')
@@ -655,5 +655,32 @@ describe('Page', () => {
       screen.getByText('Conteúdo da página')
     )
     expect(plain.container.querySelector('.grid')).toBeNull()
+  })
+
+  it('profile menu in the drawer: nav.profileMenuItems reaches the MenuDrawer', async () => {
+    const user = userEvent.setup()
+    render(
+      <Page
+        header={HEADER}
+        nav={navOf({
+          profileMenuItems: [{ iconName: 'logout', label: 'Sair' }]
+        })}
+      >
+        {BODY}
+      </Page>
+    )
+
+    await user.click(openerOf())
+    const profile = within(drawerOf()).getByRole('button', {
+      name: /Pessoa Exemplo/
+    })
+    await user.click(profile)
+
+    expect(
+      within(screen.getByRole('menu', { name: 'Menu do perfil' })).getByRole(
+        'menuitem',
+        { name: 'Sair' }
+      )
+    ).toBeInTheDocument()
   })
 })

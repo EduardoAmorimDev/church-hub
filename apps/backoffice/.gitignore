@@ -37,3 +37,6 @@ storybook-static
 
 # typescript
 tsconfig.tsbuildinfo
+# env files (only .env.example is committed)
+.env
+.env.local

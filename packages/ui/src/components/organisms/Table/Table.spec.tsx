@@ -7,11 +7,11 @@ import { useTableContext } from './Table.context'
 import { ColumnDefinition, TableRowData } from './Table.types'
 
 const columns: ColumnDefinition[] = [
-  { header: 'Nome', id: 'nome' },
-  { header: 'Ministério', id: 'ministerio' },
+  { header: 'Nome', id: 'name' },
+  { header: 'Ministério', id: 'ministry' },
   {
     header: 'Situação',
-    id: 'situacao',
+    id: 'status',
     sortable: true,
     sortDirection: 'ascending'
   }
@@ -20,25 +20,25 @@ const columns: ColumnDefinition[] = [
 const rows: TableRowData[] = [
   {
     cells: {
-      ministerio: { label: 'Louvor', type: 'default' },
-      nome: { label: 'Ana Beatriz', paragraph: 'Membro', type: 'default' },
-      situacao: { label: 'Ativa', type: 'default' }
+      ministry: { label: 'Louvor', type: 'default' },
+      name: { label: 'Ana Beatriz', paragraph: 'Membro', type: 'default' },
+      status: { label: 'Ativa', type: 'default' }
     },
     id: 'r1'
   },
   {
     cells: {
-      ministerio: { label: 'Diaconia', type: 'default' },
-      nome: { label: 'Carlos Menezes', paragraph: 'Membro', type: 'default' },
-      situacao: { label: 'Ativo', type: 'default' }
+      ministry: { label: 'Diaconia', type: 'default' },
+      name: { label: 'Carlos Menezes', paragraph: 'Membro', type: 'default' },
+      status: { label: 'Ativo', type: 'default' }
     },
     id: 'r2'
   },
   {
     cells: {
-      ministerio: { label: 'Ensino', type: 'default' },
-      nome: { label: 'Denise Prado', paragraph: 'Visitante', type: 'default' },
-      situacao: { label: 'Inativa', type: 'default' }
+      ministry: { label: 'Ensino', type: 'default' },
+      name: { label: 'Denise Prado', paragraph: 'Visitante', type: 'default' },
+      status: { label: 'Inativa', type: 'default' }
     },
     disabled: true,
     id: 'r3'
@@ -310,19 +310,19 @@ describe('Table', () => {
       const onColumnOrderChange = jest.fn()
       render(
         <ControlledTable onColumnOrderChange={onColumnOrderChange}>
-          <ReorderProbe from="nome" to="situacao" />
+          <ReorderProbe from="name" to="status" />
         </ControlledTable>
       )
 
       await user.click(screen.getByRole('button', { name: 'mover' }))
 
       expect(onColumnOrderChange).toHaveBeenCalledWith([
-        'ministerio',
-        'situacao',
-        'nome'
+        'ministry',
+        'status',
+        'name'
       ])
       expect(screen.getByTestId('order')).toHaveTextContent(
-        'ministerio,situacao,nome'
+        'ministry,status,name'
       )
     })
 
@@ -330,14 +330,14 @@ describe('Table', () => {
       const user = userEvent.setup()
       render(
         <ControlledTable initialSelection={['r1']}>
-          <ReorderProbe from="nome" to="situacao" />
+          <ReorderProbe from="name" to="status" />
         </ControlledTable>
       )
 
       await user.click(screen.getByRole('button', { name: 'mover' }))
 
       expect(screen.getByTestId('order')).toHaveTextContent(
-        'ministerio,situacao,nome'
+        'ministry,status,name'
       )
     })
 
@@ -346,7 +346,7 @@ describe('Table', () => {
       const onColumnOrderChange = jest.fn()
       render(
         <ControlledTable onColumnOrderChange={onColumnOrderChange}>
-          <ReorderProbe from="nome" to="coluna-inexistente" />
+          <ReorderProbe from="name" to="coluna-inexistente" />
         </ControlledTable>
       )
 
@@ -354,7 +354,7 @@ describe('Table', () => {
 
       expect(onColumnOrderChange).not.toHaveBeenCalled()
       expect(screen.getByTestId('order')).toHaveTextContent(
-        'nome,ministerio,situacao'
+        'name,ministry,status'
       )
     })
 
@@ -363,7 +363,7 @@ describe('Table', () => {
       const onColumnOrderChange = jest.fn()
       render(
         <ControlledTable onColumnOrderChange={onColumnOrderChange}>
-          <ReorderProbe from="nome" to="nome" />
+          <ReorderProbe from="name" to="name" />
         </ControlledTable>
       )
 
@@ -449,7 +449,7 @@ describe('Table', () => {
       render(
         <ControlledTable
           rows={[
-            { cells: { nome: { label: 'Só nome', type: 'default' } }, id: 'r9' }
+            { cells: { name: { label: 'Só nome', type: 'default' } }, id: 'r9' }
           ]}
         />
       )
@@ -496,7 +496,7 @@ describe('Table', () => {
             <Table.Header />
             <Table.Body />
           </table>
-          <ReorderProbe from="nome" to="situacao" />
+          <ReorderProbe from="name" to="status" />
         </ControlledTable>
       )
 
@@ -557,7 +557,7 @@ describe('Table', () => {
       // The sortable is registered on this container, so everything inside it
       // travels with the drag — header and all three data cells.
       rows.forEach(row => {
-        const cell = row.cells['nome']
+        const cell = row.cells['name']
         if (cell !== undefined && cell.type === 'default') {
           expect(
             within(container as HTMLElement).getByText(cell.label)
@@ -636,14 +636,14 @@ describe('Table', () => {
       render(
         <ControlledTable
           columns={[
-            { header: 'Nome', id: 'nome' },
-            { align: 'right', header: 'Valor', id: 'valor' }
+            { header: 'Nome', id: 'name' },
+            { align: 'right', header: 'Valor', id: 'amount' }
           ]}
           rows={[
             {
               cells: {
-                nome: { label: 'Membro fictício', type: 'default' },
-                valor: { label: '1.234', type: 'default' }
+                name: { label: 'Membro fictício', type: 'default' },
+                amount: { label: '1.234', type: 'default' }
               },
               id: 'f1'
             }
@@ -676,10 +676,10 @@ describe('Table', () => {
         render(
           <ControlledTable
             columns={[
-              { header: 'Nome', id: 'nome' },
+              { header: 'Nome', id: 'name' },
               {
                 header: 'Situação',
-                id: 'situacao',
+                id: 'status',
                 sortable: true,
                 sortDirection: from
               }
@@ -698,7 +698,7 @@ describe('Table', () => {
         await user.click(sortButton)
 
         expect(onSortChange).toHaveBeenCalledTimes(1)
-        expect(onSortChange).toHaveBeenCalledWith('situacao', next)
+        expect(onSortChange).toHaveBeenCalledWith('status', next)
       }
     )
 
@@ -707,7 +707,7 @@ describe('Table', () => {
       const onSortChange = jest.fn()
       render(
         <ControlledTable
-          columns={[{ header: 'Nome', id: 'nome', sortable: true }]}
+          columns={[{ header: 'Nome', id: 'name', sortable: true }]}
           onSortChange={onSortChange}
         />
       )
@@ -716,7 +716,7 @@ describe('Table', () => {
       expect(header).toHaveAttribute('aria-sort', 'none')
       await user.click(within(header).getByRole('button', { name: 'Nome' }))
 
-      expect(onSortChange).toHaveBeenCalledWith('nome', 'ascending')
+      expect(onSortChange).toHaveBeenCalledWith('name', 'ascending')
     })
 
     it('sort cycle: a column that is not sortable has no sort button', () => {

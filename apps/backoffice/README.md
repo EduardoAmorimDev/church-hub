@@ -1,6 +1,15 @@
 ## Getting Started
 
-First, run the development server:
+Create `apps/backoffice/.env.local` (never committed) with:
+
+| Variable         | Purpose                                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| `API_URL`        | ibfc-server base URL, read only on the server (defaults to `http://localhost:3000`)            |
+| `SESSION_SECRET` | seals the `church_session` cookie; at least 32 characters, e.g. from `openssl rand -base64 32` |
+
+Set the same two variables in the Vercel project for deployed environments.
+
+Then run the development server:
 
 ```bash
 yarn dev

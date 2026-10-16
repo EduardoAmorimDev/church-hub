@@ -38,6 +38,7 @@ in step.
 | Divider (`13628:935`)                 | `@church/ui/atoms/Divider`           | Decorative by default; the vertical rule is visible (opacity 0 in Figma)                                         |
 | Logo (`12967:3338`)                   | `@church/ui/atoms/Logo`              | `full` = Group 6, `symbol` = Group 7; height through a `h-*` class                                               |
 | Chip (`13596:6864`)                   | `@church/ui/atoms/Chip`              | `selected` makes it a toggle (`aria-pressed`)                                                                    |
+| Tab (Backoffice `141-4446`)           | `@church/ui/molecules/Tabs`          | Links with `aria-current`, drawn as the `Chip` at `size="small"` (28px); not the ARIA tab pattern               |
 | CountBadge                            | `@church/ui/atoms/CountBadge`        | The legacy Badge; the node the artifact cites (`13354:6056`) does not open                                       |
 | Spinner                               | `@church/ui/atoms/Spinner`           | Created in Lamb, no Figma node                                                                                   |
 | Radio                                 | `@church/ui/atoms/Radio`             | Created in Lamb, no Figma node; grouped by `@church/ui/molecules/RadioGroup`                                     |

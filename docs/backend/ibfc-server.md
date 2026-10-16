@@ -1042,7 +1042,7 @@ Estes itens são comportamento atual do backend, confirmado no código. Os que e
 
 As regras de `docs/constitution.md` e do `AGENTS.md` continuam valendo. Para o backend em particular:
 
-- **URL base por variável de ambiente** (ex.: `NEXT_PUBLIC_API_URL` no web, `EXPO_PUBLIC_API_URL` no native). Nunca fixe o host no código.
+- **URL base por variável de ambiente** (ex.: `API_URL` no backoffice, lida só no servidor pelo BFF; `EXPO_PUBLIC_API_URL` no native). Nunca fixe o host no código.
 - **Tokens nunca vão para log, fixture ou commit.** No native, guarde o refresh token em armazenamento seguro do sistema (Keychain/Keystore), e não em `AsyncStorage`.
 - **Desembrulhe o envelope num único lugar** (o cliente HTTP), tratando:
   - `204` como "não existe" e `{}` como sucesso sem dados;

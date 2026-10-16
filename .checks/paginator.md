@@ -23,12 +23,12 @@ and `Field` (reused as-is for "Ir para página:"); page buttons extend `buttonBa
 atom instead of restyling a button. The "Linhas:" select reuses the field ring from
 `components/utils/fieldRingStyles.ts`. `Table` is untouched.
 
-| One-way door | Literal shape | Alternative rejected |
-| --- | --- | --- |
-| Public API, controlled and 1-based | `PaginatorProps = { page; pageSize; totalItems; onPageChange(page); onPageSizeChange(pageSize); pageSizeOptions?: ReadonlyArray<number>; className? }` | uncontrolled state - cannot follow server pagination; 0-based - does not match the shown/typed number (tanstack users convert with `page - 1`) |
-| `Paginator` is a sibling of `Table` | `<Table rows={pageRows} />` then `<Paginator />` | `pagination` prop on `Table` - `Table` would own totals and slicing |
-| Name and level | `Paginator` in `~/components/molecules/Paginator` | organism - it composes only atoms and native controls |
-| First native `<select>` in the DS, styled with the shared field ring | `FieldControlTag` gains `'select'`: `inset-ring inset-ring-neutral-33 has-[select:focus]:inset-ring-2 has-[select:focus]:inset-ring-neutral-999` | a ring constant private to `Paginator` - forks the field focus look the next select would copy |
+| One-way door                                                         | Literal shape                                                                                                                                          | Alternative rejected                                                                                                                           |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Public API, controlled and 1-based                                   | `PaginatorProps = { page; pageSize; totalItems; onPageChange(page); onPageSizeChange(pageSize); pageSizeOptions?: ReadonlyArray<number>; className? }` | uncontrolled state - cannot follow server pagination; 0-based - does not match the shown/typed number (tanstack users convert with `page - 1`) |
+| `Paginator` is a sibling of `Table`                                  | `<Table rows={pageRows} />` then `<Paginator />`                                                                                                       | `pagination` prop on `Table` - `Table` would own totals and slicing                                                                            |
+| Name and level                                                       | `Paginator` in `~/components/molecules/Paginator`                                                                                                      | organism - it composes only atoms and native controls                                                                                          |
+| First native `<select>` in the DS, styled with the shared field ring | `FieldControlTag` gains `'select'`: `inset-ring inset-ring-neutral-33 has-[select:focus]:inset-ring-2 has-[select:focus]:inset-ring-neutral-999`       | a ring constant private to `Paginator` - forks the field focus look the next select would copy                                                 |
 
 - Nothing else in this change is hard to reverse
 
@@ -121,15 +121,15 @@ Proof: `-t "C17 stories"`
 
 ## Coverage
 
-| Set (size) | Member -> proof | Unproven |
-| --- | --- | --- |
-| nav buttons (4) | first C6 · prev C6 · next C6 · last C6 | - |
-| disabled edges (2) | start C8 · end C8 | - |
-| page window (4 shapes) | start C9 · middle C9 · end C9 · fewer than 3 pages C9 | - |
-| jump input classes (7) | other page C10 · current page C10 · `0` C12 · `31` C12 · `2.5` C12 · `abc` C12 · empty C12 | - |
-| jump threshold (3) | 6 pages C11 · 5 pages C11 · 0 pages C15 | - |
-| counter forms (5) | full page C1 · partial last C2 · singular C3 · empty C15 · clamped C16 | - |
-| invalid props (3) | page above C16 · page below C16 · pageSize 0 C16 | - |
+| Set (size)             | Member -> proof                                                                            | Unproven |
+| ---------------------- | ------------------------------------------------------------------------------------------ | -------- |
+| nav buttons (4)        | first C6 · prev C6 · next C6 · last C6                                                     | -        |
+| disabled edges (2)     | start C8 · end C8                                                                          | -        |
+| page window (4 shapes) | start C9 · middle C9 · end C9 · fewer than 3 pages C9                                      | -        |
+| jump input classes (7) | other page C10 · current page C10 · `0` C12 · `31` C12 · `2.5` C12 · `abc` C12 · empty C12 | -        |
+| jump threshold (3)     | 6 pages C11 · 5 pages C11 · 0 pages C15                                                    | -        |
+| counter forms (5)      | full page C1 · partial last C2 · singular C3 · empty C15 · clamped C16                     | -        |
+| invalid props (3)      | page above C16 · page below C16 · pageSize 0 C16                                           | -        |
 
 - Claims naming a status code, route or response shape: none
 - No other check claims more than the single case its proof exercises

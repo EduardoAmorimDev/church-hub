@@ -20,12 +20,17 @@ const section = tv({
     footer: 'flex items-center gap-4 border-t border-default'
   },
   variants: {
+    // invariant: with no visible top row, the tools row takes its top padding.
+    topless: {
+      true: { tools: 'pt-4' },
+      false: {}
+    },
     footerType: {
       button: { footer: 'p-4' },
       paginator: { footer: 'px-4 py-2' }
     }
   },
-  defaultVariants: { footerType: 'button' }
+  defaultVariants: { footerType: 'button', topless: false }
 })
 
 const present = (node: unknown) => node != null && node !== false
@@ -42,11 +47,18 @@ export const Section = ({
   id,
   search,
   simple = false,
-  title
+  title,
+  titleHidden = false
 }: SectionProps) => {
   const titleId = useId()
   const Heading = `h${headingLevel}` as const
-  const slots = section({ footerType })
+  const topless = titleHidden && !present(description) && !present(actions)
+  const slots = section({ footerType, topless })
+  const heading = (
+    <Heading className={titleHidden ? 'sr-only' : slots.title()} id={titleId}>
+      {title}
+    </Heading>
+  )
 
   return (
     <section
@@ -55,17 +67,21 @@ export const Section = ({
       id={id}
     >
       <div className={slots.head()}>
-        <div className={slots.top()}>
-          <div>
-            <Heading className={slots.title()} id={titleId}>
-              {title}
-            </Heading>
-            {present(description) && (
-              <p className={slots.description()}>{description}</p>
+        {topless ? (
+          heading
+        ) : (
+          <div className={slots.top()}>
+            <div>
+              {heading}
+              {present(description) && (
+                <p className={slots.description()}>{description}</p>
+              )}
+            </div>
+            {present(actions) && (
+              <div className={slots.actions()}>{actions}</div>
             )}
           </div>
-          {present(actions) && <div className={slots.actions()}>{actions}</div>}
-        </div>
+        )}
         {!simple && (present(search) || present(filters)) && (
           <div className={slots.tools()}>
             <div className={slots.search()}>{search}</div>

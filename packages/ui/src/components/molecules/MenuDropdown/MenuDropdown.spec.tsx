@@ -75,6 +75,22 @@ describe('MenuDropdown', () => {
     expect(menuOf()).not.toHaveClass('left-0')
   })
 
+  it('side: bottom by default, top opens above the trigger', async () => {
+    const user = userEvent.setup()
+    const { unmount } = renderMenu()
+
+    await user.click(triggerOf())
+    expect(menuOf()).toHaveClass('top-full', 'mt-1')
+    expect(menuOf()).not.toHaveClass('bottom-full')
+    unmount()
+
+    renderMenu({ side: 'top' })
+    await user.click(triggerOf())
+    expect(menuOf()).toHaveClass('bottom-full', 'mb-1')
+    expect(menuOf()).not.toHaveClass('top-full')
+    expect(menuOf()).not.toHaveClass('mt-1')
+  })
+
   it('menu item (C79)', async () => {
     const user = userEvent.setup()
     renderMenu({
@@ -236,5 +252,62 @@ describe('MenuDropdown', () => {
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('menu')).not.toBeInTheDocument()
     expect(triggerOf()).toHaveFocus()
+  })
+
+  it('C18a strategy="fixed": placed from the trigger rect, still selectable', async () => {
+    const user = userEvent.setup()
+    const onSelect = jest.fn()
+    renderMenu({
+      align: 'end',
+      items: items(onSelect),
+      strategy: 'fixed'
+    })
+    jest.spyOn(triggerOf(), 'getBoundingClientRect').mockReturnValue({
+      bottom: 140,
+      height: 32,
+      left: 900,
+      right: 932,
+      top: 108,
+      width: 32,
+      x: 900,
+      y: 108,
+      toJSON: () => ({})
+    })
+
+    await user.click(triggerOf())
+    const menu = menuOf()
+
+    expect(menu).toHaveClass('fixed')
+    expect(menu).not.toHaveClass('absolute', 'top-full', 'right-0')
+    expect(menu).toHaveStyle({
+      top: '144px',
+      right: `${window.innerWidth - 932}px`
+    })
+    expect(menu.parentElement).toContainElement(triggerOf())
+
+    await user.click(itemOf('Duplicar'))
+    expect(onSelect).toHaveBeenCalledTimes(1)
+  })
+
+  it('strategy="fixed" side top: bottom offset from the trigger top', async () => {
+    const user = userEvent.setup()
+    renderMenu({ side: 'top', strategy: 'fixed' })
+    jest.spyOn(triggerOf(), 'getBoundingClientRect').mockReturnValue({
+      bottom: 140,
+      height: 32,
+      left: 20,
+      right: 52,
+      top: 108,
+      width: 32,
+      x: 20,
+      y: 108,
+      toJSON: () => ({})
+    })
+
+    await user.click(triggerOf())
+    expect(menuOf()).toHaveStyle({
+      bottom: `${window.innerHeight - 108 + 4}px`,
+      left: '20px'
+    })
   })
 })

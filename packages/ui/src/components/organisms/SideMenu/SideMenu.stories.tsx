@@ -80,3 +80,7 @@ export const Collapsed: Story = {
 export const WithoutUser: Story = {
   args: { user: undefined }
 }
+
+export const WithProfileMenu: Story = {
+  args: { profileMenuItems: [{ iconName: 'logout', label: 'Sair' }] }
+}

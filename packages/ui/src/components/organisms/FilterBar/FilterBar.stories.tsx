@@ -12,7 +12,7 @@ const FILTERS: ActiveFilter[] = [
   { id: 'bairro', label: 'Bairro', value: 'Bairro Exemplo' }
 ]
 
-const REDES = Array.from({ length: 6 }, (_, index) => ({
+const NETWORKS = Array.from({ length: 6 }, (_, index) => ({
   value: `rede-${index + 1}`,
   label: `Rede Exemplo ${index + 1}`
 }))
@@ -46,7 +46,7 @@ export default {
     filters: FILTERS,
     filtersLabel: 'Filtros',
     panel: (
-      <Select label="Rede" options={REDES} optional presentation="popover" />
+      <Select label="Rede" options={NETWORKS} optional presentation="popover" />
     ),
     panelTitle: 'Filtros',
     resultCount: 23,

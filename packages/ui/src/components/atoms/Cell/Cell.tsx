@@ -6,6 +6,7 @@ import { AvatarGroup } from '../AvatarGroup'
 import { Checkbox } from '../Checkbox'
 import { IconButton } from '../IconButton'
 import { CellProps } from './Cell.types'
+import { MenuDropdown } from '@church/ui/molecules/MenuDropdown'
 import { getClonedResizedIcons } from '@church/ui/utils'
 import { twMerge } from '@church/ui/lib/tailwind-merge'
 import { tv } from '@church/ui/lib/tailwind-variants'
@@ -145,19 +146,35 @@ export const Cell = (props: CellProps) => {
   return (
     <div className={twMerge(slots.container(), className)}>
       <div className={slots.actions()}>
-        {props.actions.map(action => (
-          <IconButton
-            aria-label={action['aria-label']}
-            color="neutral"
-            disabled={action.disabled}
-            key={action['aria-label']}
-            onClick={action.onClick}
-            size="small"
-            variant="transparent"
-          >
-            {action.icon}
-          </IconButton>
-        ))}
+        {props.actions.map(action => {
+          const button = (
+            <IconButton
+              aria-label={action['aria-label']}
+              color="neutral"
+              disabled={action.disabled}
+              key={action['aria-label']}
+              onClick={'onClick' in action ? action.onClick : undefined}
+              size="small"
+              variant="transparent"
+            >
+              {action.icon}
+            </IconButton>
+          )
+
+          // why: `fixed` keeps the menu whole past the Table's overflow.
+          return 'menu' in action ? (
+            <MenuDropdown
+              align="end"
+              items={action.menu}
+              key={action['aria-label']}
+              label={action['aria-label']}
+              strategy="fixed"
+              trigger={button}
+            />
+          ) : (
+            button
+          )
+        })}
       </div>
     </div>
   )

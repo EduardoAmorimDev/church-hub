@@ -9,17 +9,17 @@ import { Tag } from '@church/ui/atoms/Tag'
 // Synthetic data only — a members table is exactly where real personal data
 // would leak into a repository (constitution, Principle V).
 const columns: ColumnDefinition[] = [
-  { header: 'Nome', id: 'nome' },
-  { header: 'Ministério', id: 'ministerio' },
-  { header: 'Situação', id: 'situacao', sortable: true, sortDirection: 'none' },
-  { align: 'right', header: 'Presenças', id: 'presencas' },
-  { header: 'Ações', id: 'acoes', reorderable: false }
+  { header: 'Nome', id: 'name' },
+  { header: 'Ministério', id: 'ministry' },
+  { header: 'Situação', id: 'status', sortable: true, sortDirection: 'none' },
+  { align: 'right', header: 'Presenças', id: 'attendance' },
+  { header: 'Ações', id: 'actions', reorderable: false }
 ]
 
 const rows: TableRowData[] = [
   {
     cells: {
-      acoes: {
+      actions: {
         actions: [
           {
             'aria-label': 'Editar',
@@ -34,24 +34,24 @@ const rows: TableRowData[] = [
         ],
         type: 'action'
       },
-      ministerio: {
+      ministry: {
         icon: <Icon name="music_note" />,
         label: 'Louvor',
         type: 'default'
       },
-      nome: {
+      name: {
         label: 'Ana Beatriz',
         paragraph: 'Membro desde 2019',
         type: 'avatar'
       },
-      presencas: { label: '1.024', type: 'default' },
-      situacao: { tag: <Tag size="small">Ativa</Tag>, type: 'tag' }
+      attendance: { label: '1.024', type: 'default' },
+      status: { tag: <Tag size="small">Ativa</Tag>, type: 'tag' }
     },
     id: 'r1'
   },
   {
     cells: {
-      acoes: {
+      actions: {
         actions: [
           {
             'aria-label': 'Editar',
@@ -61,24 +61,24 @@ const rows: TableRowData[] = [
         ],
         type: 'action'
       },
-      ministerio: { label: 'Diaconia', type: 'default' },
-      nome: {
+      ministry: { label: 'Diaconia', type: 'default' },
+      name: {
         label: 'Carlos Menezes',
         paragraph: 'Membro desde 2021',
         type: 'avatar'
       },
-      presencas: { label: '87', type: 'default' },
-      situacao: { tag: <Tag size="small">Ativo</Tag>, type: 'tag' }
+      attendance: { label: '87', type: 'default' },
+      status: { tag: <Tag size="small">Ativo</Tag>, type: 'tag' }
     },
     id: 'r2'
   },
   {
     cells: {
-      acoes: { actions: [], type: 'action' },
-      ministerio: { label: 'Ensino', type: 'default' },
-      nome: { label: 'Denise Prado', paragraph: 'Visitante', type: 'avatar' },
-      presencas: { label: '3', type: 'default' },
-      situacao: { tag: <Tag size="small">Inativa</Tag>, type: 'tag' }
+      actions: { actions: [], type: 'action' },
+      ministry: { label: 'Ensino', type: 'default' },
+      name: { label: 'Denise Prado', paragraph: 'Visitante', type: 'avatar' },
+      attendance: { label: '3', type: 'default' },
+      status: { tag: <Tag size="small">Inativa</Tag>, type: 'tag' }
     },
     disabled: true,
     id: 'r3'
@@ -91,7 +91,7 @@ const meta: Meta<typeof Table> = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13615-5328&m=dev'
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13616-5097&m=dev'
     },
     docs: {
       description: {
@@ -190,7 +190,7 @@ export const PartialSelection: StoryObj<typeof Table> = { render: PreSelected }
 const Sortable: StoryFn<typeof Table> = args => {
   const [sort, setSort] = useState<{ id: string; direction: SortDirection }>({
     direction: 'none',
-    id: 'situacao'
+    id: 'status'
   })
 
   return (

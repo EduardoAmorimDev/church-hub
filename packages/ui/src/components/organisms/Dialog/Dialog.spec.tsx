@@ -30,10 +30,10 @@ const headerOf = () => {
 }
 const buttonOf = (name: string) => screen.getByRole('button', { name })
 
-const PAINEL = 'panel:not-in-data-[viewport=mobile]:'
+const PANEL = 'panel:not-in-data-[viewport=mobile]:'
 const DESKTOP = 'in-data-[viewport=desktop]:'
-const painel = (...classes: string[]) =>
-  classes.flatMap(name => [`${PAINEL}${name}`, `${DESKTOP}${name}`])
+const panel = (...classes: string[]) =>
+  classes.flatMap(name => [`${PANEL}${name}`, `${DESKTOP}${name}`])
 
 const actions = {
   primaryAction: { label: 'Inativar membro', onClick: jest.fn() },
@@ -174,7 +174,7 @@ describe('Dialog', () => {
       'items-center',
       'gap-3',
       'pb-2',
-      ...painel('px-6', 'pt-6')
+      ...panel('px-6', 'pt-6')
     )
     expect(heading.tagName).toBe('H2')
     expect(heading).toHaveClass('flex-1', 'text-size-200', 'font-semibold')
@@ -241,7 +241,7 @@ describe('Dialog', () => {
       'overflow-y-auto',
       'overscroll-contain',
       'pt-2',
-      ...painel('px-6', 'pb-6')
+      ...panel('px-6', 'pb-6')
     )
     expect(body?.firstElementChild).toBe(description)
     expect(body).toContainElement(screen.getByText('Conteúdo do corpo'))
@@ -291,7 +291,7 @@ describe('Dialog', () => {
       'flex',
       'justify-end',
       'gap-2',
-      ...painel('pt-4', 'px-6', 'pb-6', 'flex-row')
+      ...panel('pt-4', 'px-6', 'pb-6', 'flex-row')
     )
     expect(Array.from(footer?.children ?? [])).toEqual([secondary, primary])
     expect(secondary).toHaveClass('bg-neutral-alpha/10', 'text-primary', 'h-12')
@@ -456,9 +456,9 @@ describe('Dialog', () => {
       'px-5',
       'pt-5',
       'pb-2',
-      ...painel('px-6', 'pt-6')
+      ...panel('px-6', 'pt-6')
     )
-    expect(body).toHaveClass('px-5', 'pt-2', 'pb-5', ...painel('px-6', 'pb-6'))
+    expect(body).toHaveClass('px-5', 'pt-2', 'pb-5', ...panel('px-6', 'pb-6'))
     expect(footer).toHaveClass(
       'flex-col',
       'items-stretch',
@@ -466,7 +466,7 @@ describe('Dialog', () => {
       'px-5',
       'pt-3',
       'pb-5',
-      ...painel('flex-row', 'items-center', '*:w-auto', 'px-6', 'pt-4', 'pb-6')
+      ...panel('flex-row', 'items-center', '*:w-auto', 'px-6', 'pt-4', 'pb-6')
     )
     expect(footer?.lastElementChild).toBe(primary)
     // invariant: still a centred dialog in App; it never turns into a sheet.

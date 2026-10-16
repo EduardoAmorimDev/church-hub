@@ -3,6 +3,9 @@ import { ReactNode } from 'react'
 export type SectionProps = {
   /** invariant: names the `<section>`. */
   title: ReactNode
+  /** invariant: the title still names the `<section>` but is visually
+   * hidden; with no `description` or `actions` the top row is dropped. */
+  titleHidden?: boolean
   description?: ReactNode
   /** why: small Buttons; secondary ones `ghost` neutral, one `filled` neutral. */
   actions?: ReactNode

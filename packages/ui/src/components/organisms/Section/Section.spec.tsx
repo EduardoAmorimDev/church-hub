@@ -192,4 +192,28 @@ describe('Section', () => {
     renderSection()
     expect(regionOf().children).toHaveLength(2)
   })
+
+  it('titleHidden: the title only names the region', () => {
+    renderSection({
+      filters: <Button>Adicionar membro</Button>,
+      search: <SearchField placeholder="Buscar membro" size="small" />,
+      titleHidden: true
+    })
+    const heading = screen.getByRole('heading', { level: 2, name: 'Membros' })
+    const tools = screen.getByRole('search').parentElement?.parentElement
+
+    expect(regionOf()).toBeInTheDocument()
+    expect(heading).toHaveClass('sr-only')
+    expect(heading.parentElement).toBe(headOf())
+    expect(tools?.parentElement).toBe(headOf())
+    expect(tools).toHaveClass('pt-4')
+  })
+
+  it('titleHidden keeps the top row when there are actions', () => {
+    renderSection({ actions: <Button>Novo</Button>, titleHidden: true })
+    const heading = screen.getByRole('heading', { level: 2, name: 'Membros' })
+
+    expect(heading).toHaveClass('sr-only')
+    expect(heading.parentElement?.parentElement).toHaveClass('p-4')
+  })
 })

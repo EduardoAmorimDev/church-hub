@@ -54,8 +54,9 @@ number — it makes the principle concrete and MAY make it stricter, never loose
 appear to disagree, flag the conflict instead of silently picking one.
 
 Church Hub is a personal church-management product (not a VIACERTA repository): an npm-workspaces
-+ Turborepo monorepo with one shared design system (`packages/ui`, `@church/ui`), the backoffice
-(`apps/web`, Next.js 16) and a native app (`apps/native`, Expo 55).
+
+- Turborepo monorepo with one shared design system (`packages/ui`, `@church/ui`), the backoffice
+  (`apps/web`, Next.js 16) and a native app (`apps/native`, Expo 55).
 
 ## Principle Bindings
 

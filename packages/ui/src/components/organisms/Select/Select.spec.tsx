@@ -59,14 +59,14 @@ afterEach(() => {
 })
 
 // invariant: synthetic data only (constitution, Principle V).
-const GCS: SelectOption[] = [
+const GROUPS: SelectOption[] = [
   { value: 'gc-1', label: 'GC Exemplo Norte', iconName: 'groups' },
   { value: 'gc-2', label: 'GC Exemplo Sul', description: 'Rede Exemplo Sul' },
   { value: 'gc-3', label: 'GC Exemplo Leste', disabled: true },
   { value: 'gc-4', label: 'GC Exemplo Oeste' }
 ]
 
-const BAIRROS: SelectOption[] = [
+const NEIGHBORHOODS: SelectOption[] = [
   { value: 'pinheiros', label: 'Pinheiros' },
   { value: 'sao-joao', label: 'São João', description: 'Zona Exemplo' },
   { value: 'se', label: 'Sé' },
@@ -79,7 +79,7 @@ const MANY: SelectOption[] = Array.from({ length: 8 }, (_, index) => ({
 }))
 
 const renderSelect = (props: Partial<SelectProps> = {}) =>
-  render(<Select label="GC" options={GCS} {...props} />)
+  render(<Select label="GC" options={GROUPS} {...props} />)
 
 const triggerOf = () => {
   const trigger = document.querySelector<HTMLElement>(
@@ -122,20 +122,20 @@ describe('Select', () => {
   it('auto presentation (C1)', async () => {
     const user = userEvent.setup()
 
-    const wide = render(<Select label="GC" options={GCS} />)
+    const wide = render(<Select label="GC" options={GROUPS} />)
     await user.click(triggerOf())
     expect(isPopover()).toBe(true)
     wide.unmount()
 
     narrow = true
-    const narrowWindow = render(<Select label="GC" options={GCS} />)
+    const narrowWindow = render(<Select label="GC" options={GROUPS} />)
     await user.click(triggerOf())
     expect(screen.getByRole('dialog', { name: 'GC' })).toBeInTheDocument()
     narrowWindow.unmount()
 
     const desktop = render(
       <div data-viewport="desktop">
-        <Select label="GC" options={GCS} />
+        <Select label="GC" options={GROUPS} />
       </div>
     )
     await user.click(triggerOf())
@@ -145,7 +145,7 @@ describe('Select', () => {
     narrow = false
     render(
       <div data-viewport="mobile">
-        <Select label="GC" options={GCS} />
+        <Select label="GC" options={GROUPS} />
       </div>
     )
     await user.click(triggerOf())
@@ -159,7 +159,7 @@ describe('Select', () => {
         defaultValue="gc-1"
         helperText="Só GCs da sua rede."
         label="GC"
-        options={GCS}
+        options={GROUPS}
         searchable
       />
     )
@@ -181,7 +181,7 @@ describe('Select', () => {
 
     const popover = render(
       <div data-viewport="mobile">
-        <Select label="GC" options={GCS} presentation="popover" />
+        <Select label="GC" options={GROUPS} presentation="popover" />
       </div>
     )
     await user.click(triggerOf())
@@ -191,7 +191,7 @@ describe('Select', () => {
     narrow = false
     render(
       <div data-viewport="desktop">
-        <Select label="GC" options={GCS} presentation="sheet" />
+        <Select label="GC" options={GROUPS} presentation="sheet" />
       </div>
     )
     await user.click(triggerOf())
@@ -211,7 +211,7 @@ describe('Select', () => {
     })
     // why: a re-render while open fails any build that reads the width
     // during render instead of only when it opens.
-    rerender(<Select helperText="Largura nova" label="GC" options={GCS} />)
+    rerender(<Select helperText="Largura nova" label="GC" options={GROUPS} />)
     expect(screen.getByText('Largura nova')).toBeInTheDocument()
     expect(isPopover()).toBe(true)
     expect(listOf().closest('[role="dialog"]')).toBeNull()
@@ -233,7 +233,7 @@ describe('Select', () => {
       window.dispatchEvent(new Event('resize'))
     })
     sheet.rerender(
-      <Select helperText="Largura nova" label="GC" options={GCS} />
+      <Select helperText="Largura nova" label="GC" options={GROUPS} />
     )
     expect(screen.getByText('Largura nova')).toBeInTheDocument()
     expect(screen.getByRole('dialog', { name: 'GC' })).toBeInTheDocument()
@@ -373,7 +373,7 @@ describe('Select', () => {
     unmount()
 
     const unlabelled = render(
-      <Select clearable defaultValue="gc-2" options={GCS} />
+      <Select clearable defaultValue="gc-2" options={GROUPS} />
     )
     expect(
       screen.getByRole('button', { name: 'Limpar seleção' })
@@ -451,17 +451,17 @@ describe('Select', () => {
     renderSelect({ defaultValue: 'gc-1', onChange })
 
     await user.click(triggerOf())
-    const norte = optionOf(/Norte/)
-    const sul = optionOf(/Sul/)
-    const leste = optionOf(/Leste/)
-    const description = within(sul).getByText('Rede Exemplo Sul')
+    const north = optionOf(/Norte/)
+    const south = optionOf(/Sul/)
+    const east = optionOf(/Leste/)
+    const description = within(south).getByText('Rede Exemplo Sul')
 
     expect(within(listOf()).getAllByRole('option')).toHaveLength(4)
-    expect(norte).toHaveAttribute('aria-selected', 'true')
-    expect(sul).toHaveAttribute('aria-selected', 'false')
-    expect(leste).toHaveAttribute('aria-disabled', 'true')
-    expect(sul).not.toHaveAttribute('aria-disabled')
-    expect(sul).toHaveClass(
+    expect(north).toHaveAttribute('aria-selected', 'true')
+    expect(south).toHaveAttribute('aria-selected', 'false')
+    expect(east).toHaveAttribute('aria-disabled', 'true')
+    expect(south).not.toHaveAttribute('aria-disabled')
+    expect(south).toHaveClass(
       'min-h-11',
       'panel:not-in-data-[viewport=mobile]:min-h-10',
       'in-data-[viewport=desktop]:min-h-10',
@@ -472,28 +472,28 @@ describe('Select', () => {
       'text-size-50',
       'font-medium'
     )
-    expect(within(norte).getByText('groups')).toHaveClass('text-icon-20!')
+    expect(within(north).getByText('groups')).toHaveClass('text-icon-20!')
     expect(description).toHaveClass(
       'text-size-25',
       'font-normal',
       'text-secondary'
     )
-    expect(norte).toHaveClass('bg-selected')
-    expect(norte.lastElementChild).toHaveTextContent('check')
-    expect(within(sul).queryByText('check')).not.toBeInTheDocument()
+    expect(north).toHaveClass('bg-selected')
+    expect(north.lastElementChild).toHaveTextContent('check')
+    expect(within(south).queryByText('check')).not.toBeInTheDocument()
 
     await user.keyboard('{ArrowDown}')
-    expect(sul).toHaveAttribute('data-active', 'true')
-    expect(sul).toHaveClass(
+    expect(south).toHaveAttribute('data-active', 'true')
+    expect(south).toHaveClass(
       'bg-hover',
       'outline-2',
       '-outline-offset-2',
       'outline-focus-ring'
     )
-    expect(norte).not.toHaveClass('outline-2')
-    expect(leste).toHaveClass('text-disabled', 'cursor-not-allowed')
+    expect(north).not.toHaveClass('outline-2')
+    expect(east).toHaveClass('text-disabled', 'cursor-not-allowed')
 
-    await user.click(leste)
+    await user.click(east)
     expect(onChange).not.toHaveBeenCalled()
     expect(listOf()).toBeInTheDocument()
   })
@@ -502,7 +502,7 @@ describe('Select', () => {
     const user = userEvent.setup()
     const options: SelectOption[] = [
       { value: 'a', label: 'Opção A', disabled: true },
-      ...GCS
+      ...GROUPS
     ]
     const { unmount } = render(
       <Select label="GC" options={options} defaultValue="gc-4" />
@@ -510,10 +510,10 @@ describe('Select', () => {
     const trigger = triggerOf()
 
     await user.click(trigger)
-    const oeste = optionOf(/Oeste/)
+    const west = optionOf(/Oeste/)
     expect(listOf()).toBeInTheDocument()
-    expect(trigger).toHaveAttribute('aria-activedescendant', oeste.id)
-    expect(scrollIntoView.mock.contexts).toContain(oeste)
+    expect(trigger).toHaveAttribute('aria-activedescendant', west.id)
+    expect(scrollIntoView.mock.contexts).toContain(west)
     expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' })
 
     await user.click(trigger)
@@ -600,7 +600,7 @@ describe('Select', () => {
       const user = userEvent.setup({
         advanceTimers: jest.advanceTimersByTime
       })
-      render(<Select label="Bairro" options={BAIRROS} />)
+      render(<Select label="Bairro" options={NEIGHBORHOODS} />)
       const trigger = triggerOf()
       const activeName = () =>
         document
@@ -644,7 +644,7 @@ describe('Select', () => {
     const onClose = jest.fn()
     render(
       <Dialog onClose={onClose} open title="Editar pessoa">
-        <Select label="GC" options={GCS} />
+        <Select label="GC" options={GROUPS} />
       </Dialog>
     )
     await waitFor(() => expect(triggerOf()).toHaveFocus())
@@ -665,7 +665,7 @@ describe('Select', () => {
     const onChange = jest.fn()
     const { unmount } = render(
       <>
-        <Select label="GC" onChange={onChange} options={GCS} />
+        <Select label="GC" onChange={onChange} options={GROUPS} />
         <button type="button">Fora</button>
       </>
     )
@@ -688,7 +688,7 @@ describe('Select', () => {
 
     await user.click(optionOf(/Sul/))
     expect(onChange).toHaveBeenCalledTimes(1)
-    expect(onChange).toHaveBeenCalledWith('gc-2', GCS[1])
+    expect(onChange).toHaveBeenCalledWith('gc-2', GROUPS[1])
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 
     await user.click(trigger)
@@ -699,7 +699,7 @@ describe('Select', () => {
     expect(screen.getByRole('button', { name: 'Fora' })).toHaveFocus()
     unmount()
 
-    render(<Select label="GC" options={GCS} searchable />)
+    render(<Select label="GC" options={GROUPS} searchable />)
     await user.click(triggerOf())
     await waitFor(() => expect(searchOf()).toHaveFocus())
     expect(fireEvent.mouseDown(optionOf(/Norte/))).toBe(false)
@@ -741,7 +741,7 @@ describe('Select', () => {
     expect(input).toHaveAttribute('aria-activedescendant', optionOf(/Sul/).id)
     unmount()
 
-    render(<Select options={GCS} searchPlaceholder="Buscar GC" searchable />)
+    render(<Select options={GROUPS} searchPlaceholder="Buscar GC" searchable />)
     await user.click(triggerOf())
     expect(searchOf()).toHaveAccessibleName('Buscar em opções')
     expect(searchOf()).toHaveAttribute('placeholder', 'Buscar GC')
@@ -749,7 +749,7 @@ describe('Select', () => {
 
   it('search filters (C18)', async () => {
     const user = userEvent.setup()
-    render(<Select label="Bairro" options={BAIRROS} searchable />)
+    render(<Select label="Bairro" options={NEIGHBORHOODS} searchable />)
 
     await user.click(triggerOf())
     await waitFor(() => expect(searchOf()).toHaveFocus())
@@ -795,7 +795,7 @@ describe('Select', () => {
 
   it('empty search (C19)', async () => {
     const user = userEvent.setup()
-    render(<Select label="Bairro" options={BAIRROS} searchable />)
+    render(<Select label="Bairro" options={NEIGHBORHOODS} searchable />)
 
     await user.click(triggerOf())
     await waitFor(() => expect(searchOf()).toHaveFocus())
@@ -875,7 +875,7 @@ describe('Select', () => {
     expect(onChange).toHaveBeenCalledTimes(1)
     many.unmount()
 
-    render(<Select options={GCS} presentation="sheet" />)
+    render(<Select options={GROUPS} presentation="sheet" />)
     await user.click(triggerOf())
     const few = screen.getByRole('dialog', { name: 'Selecione' })
     expect(few).not.toHaveClass('h-1/2')
@@ -885,21 +885,21 @@ describe('Select', () => {
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { rerender, unmount } = render(
-      <Select label="GC" onChange={onChange} options={GCS} value="gc-1" />
+      <Select label="GC" onChange={onChange} options={GROUPS} value="gc-1" />
     )
 
     await user.click(triggerOf())
     await user.click(optionOf(/Sul/))
-    expect(onChange).toHaveBeenCalledWith('gc-2', GCS[1])
+    expect(onChange).toHaveBeenCalledWith('gc-2', GROUPS[1])
     expect(valueOf()).toHaveTextContent('GC Exemplo Norte')
 
     rerender(
-      <Select label="GC" onChange={onChange} options={GCS} value="gc-2" />
+      <Select label="GC" onChange={onChange} options={GROUPS} value="gc-2" />
     )
     expect(valueOf()).toHaveTextContent('GC Exemplo Sul')
 
     rerender(
-      <Select label="GC" onChange={onChange} options={GCS} value={null} />
+      <Select label="GC" onChange={onChange} options={GROUPS} value={null} />
     )
     expect(valueOf()).toHaveTextContent('Selecione')
     unmount()
@@ -910,28 +910,28 @@ describe('Select', () => {
         defaultValue="gc-1"
         label="GC"
         onChange={uncontrolled}
-        options={GCS}
+        options={GROUPS}
       />
     )
     expect(valueOf()).toHaveTextContent('GC Exemplo Norte')
     await user.click(triggerOf())
     await user.click(optionOf(/Oeste/))
-    expect(uncontrolled).toHaveBeenCalledWith('gc-4', GCS[3])
+    expect(uncontrolled).toHaveBeenCalledWith('gc-4', GROUPS[3])
     expect(valueOf()).toHaveTextContent('GC Exemplo Oeste')
   })
 
   it('react-hook-form (C22)', async () => {
     const user = userEvent.setup()
-    type Form = { gc: string | null }
+    type Form = { group: string | null }
     const Harness = ({ provider = false }: { provider?: boolean }) => {
-      const form = useForm<Form>({ defaultValues: { gc: 'gc-2' } })
+      const form = useForm<Form>({ defaultValues: { group: 'gc-2' } })
       const field = (
         <Select
           clearable
           control={provider ? undefined : form.control}
           label="GC"
-          name="gc"
-          options={GCS}
+          name="group"
+          options={GROUPS}
           rules={{ required: 'Escolha um GC.' }}
         />
       )
@@ -939,10 +939,10 @@ describe('Select', () => {
         <form onSubmit={form.handleSubmit(() => undefined)}>
           {provider ? <FormProvider {...form}>{field}</FormProvider> : field}
           <output data-testid="value">
-            {JSON.stringify(form.watch('gc'))}
+            {JSON.stringify(form.watch('group'))}
           </output>
           <output data-testid="touched">
-            {form.formState.touchedFields.gc ? 'tocado' : 'intocado'}
+            {form.formState.touchedFields.group ? 'tocado' : 'intocado'}
           </output>
           <button type="submit">Salvar</button>
         </form>
@@ -974,12 +974,17 @@ describe('Select', () => {
     }
 
     const Touched = () => {
-      const form = useForm<Form>({ defaultValues: { gc: null } })
+      const form = useForm<Form>({ defaultValues: { group: null } })
       return (
         <>
-          <Select control={form.control} label="GC" name="gc" options={GCS} />
+          <Select
+            control={form.control}
+            label="GC"
+            name="group"
+            options={GROUPS}
+          />
           <output data-testid="touched">
-            {form.formState.touchedFields.gc ? 'tocado' : 'intocado'}
+            {form.formState.touchedFields.group ? 'tocado' : 'intocado'}
           </output>
         </>
       )
@@ -995,7 +1000,7 @@ describe('Select', () => {
       <Select
         helperText="Escolha um GC."
         label="GC"
-        options={GCS}
+        options={GROUPS}
         state="error"
       />
     )
@@ -1008,7 +1013,7 @@ describe('Select', () => {
 
   it('defaultOpen (C23)', () => {
     const tree = (props: Partial<SelectProps>): ReactNode => (
-      <Select defaultOpen label="GC" options={GCS} {...props} />
+      <Select defaultOpen label="GC" options={GROUPS} {...props} />
     )
 
     expect(renderToString(tree({}))).toContain('role="listbox"')

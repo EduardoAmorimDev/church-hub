@@ -106,22 +106,22 @@ mantém `page` e `pageSize` e entrega à `Table` só as linhas da página atual.
 - Layout compacto para larguras estreitas - o Figma só define a largura de 1088px.
 - `apps/native` - o design system hoje vive em `apps/web`.
 - Corrigir o `Button` atom, que não repassa `variant` ao `tv` (`Button.tsx`, `button({ className,
-  color, size })`) - observado, não tocado; o `Paginator` não depende dele.
+color, size })`) - observado, não tocado; o `Paginator` não depende dele.
 
 ## Observable
 
-| Surface | Decision | Landing |
-| --- | --- | --- |
-| componente `Paginator` | empty state | 15 |
-| componente `Paginator` | loading state | n/a - sem estado próprio; o consumidor decide (confirmado pelo usuário, ver Out of scope) |
-| componente `Paginator` | error state | 12 (entrada inválida no campo); n/a para dados - não faz chamada assíncrona |
-| componente `Paginator` | unauthorised state | n/a - componente de design system sem dados nem permissões |
-| componente `Paginator` | density | 4 |
-| componente `Paginator` | ordering | 1, 9, 13, 14 |
-| componente `Paginator` | destructive action confirms | n/a - nenhuma ação destrutiva |
-| copy `Paginator` | textos e tom | 1, 3, 15 |
-| copy `Paginator` | o que o leitor faz em seguida | 6, 7, 10, 13 |
-| copy `Paginator` | nomes acessíveis | 5 |
+| Surface                | Decision                      | Landing                                                                                   |
+| ---------------------- | ----------------------------- | ----------------------------------------------------------------------------------------- |
+| componente `Paginator` | empty state                   | 15                                                                                        |
+| componente `Paginator` | loading state                 | n/a - sem estado próprio; o consumidor decide (confirmado pelo usuário, ver Out of scope) |
+| componente `Paginator` | error state                   | 12 (entrada inválida no campo); n/a para dados - não faz chamada assíncrona               |
+| componente `Paginator` | unauthorised state            | n/a - componente de design system sem dados nem permissões                                |
+| componente `Paginator` | density                       | 4                                                                                         |
+| componente `Paginator` | ordering                      | 1, 9, 13, 14                                                                              |
+| componente `Paginator` | destructive action confirms   | n/a - nenhuma ação destrutiva                                                             |
+| copy `Paginator`       | textos e tom                  | 1, 3, 15                                                                                  |
+| copy `Paginator`       | o que o leitor faz em seguida | 6, 7, 10, 13                                                                              |
+| copy `Paginator`       | nomes acessíveis              | 5                                                                                         |
 
 ## Swept
 
@@ -137,29 +137,29 @@ mantém `page` e `pageSize` e entrega à `Table` só as linhas da página atual.
 
 ## Impact
 
-| Front | What changes |
-|---|---|
-| domain | new term: `Paginator` - componente controlado que exibe e altera a página e o tamanho de página de uma lista, vive em `apps/web/components/molecules` |
-| componentes existentes | `Field` atom (`size="small"`: `h-8 px-3 rounded-lg text-size-50`, `state="error"`) reutilizado no campo "Ir para página:" sem alteração |
+| Front                  | What changes                                                                                                                                                                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| domain                 | new term: `Paginator` - componente controlado que exibe e altera a página e o tamanho de página de uma lista, vive em `apps/web/components/molecules`                                                                                |
+| componentes existentes | `Field` atom (`size="small"`: `h-8 px-3 rounded-lg text-size-50`, `state="error"`) reutilizado no campo "Ir para página:" sem alteração                                                                                              |
 | componentes existentes | `fieldDefaultRing` / `FieldControlTag` (`components/utils/fieldRingStyles.ts`) só aceita `'input' \| 'textarea'`; se o seletor "Linhas:" reutilizar o anel, ganha `'select'` sem alterar os valores que `Field` e `TextArea` já usam |
-| componentes existentes | `Table` - nada muda na API; só aparece composta numa story |
-| stored data | nothing to migrate |
+| componentes existentes | `Table` - nada muda na API; só aparece composta numa story                                                                                                                                                                           |
+| stored data            | nothing to migrate                                                                                                                                                                                                                   |
 
 ## Decided
 
-| Decision | Shape | Alternative rejected |
-|---|---|---|
-| API pública controlada, página 1-based | `{ page: number; pageSize: number; totalItems: number; onPageChange: (page: number) => void; onPageSizeChange: (pageSize: number) => void; pageSizeOptions?: ReadonlyArray<number>; className?: string }` | Estado interno não controlado - não sincroniza com paginação no servidor e destoa da `Table`, controlada por `selectedIds`/`onSelectionChange`. Índice 0-based - não bate com o número exibido nem com o número digitado em "Ir para página"; isso fecha a porta para repassar direto o `pageIndex` 0-based do `@tanstack/react-table`: quem usá-lo converte com `page - 1` |
-| `Paginator` irmão da `Table`, não uma prop dela | `<Table rows={linhasDaPagina} … />` seguido de `<Paginator … />` | `pagination` dentro da `Table` - a `Table` passaria a conhecer `totalItems` e a decidir entre fatiar no cliente ou no servidor, que hoje não são responsabilidade dela |
-| Nome e nível atômico | `Paginator`, exportado de `~/components/molecules/Paginator` | Organism - compõe apenas atoms (`IconButton`, `Icon`, `Typography`, `Field`) e um `<select>` nativo, sem molecules nem contexto; o nome segue o pedido do usuário e o `aria-label` usa o termo do Figma, "Paginação" |
-| "Linhas:" como `<select>` nativo, primeiro seletor do design system | Caixa fechada estilizada com os tokens do critério 4; a lista aberta é a nativa do SO | Implementar antes o "Menu dropdown" do Figma - recusado pelo usuário em 2026-10-04; viraria uma segunda task com restrição de ordem |
+| Decision                                                            | Shape                                                                                                                                                                                                     | Alternative rejected                                                                                                                                                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| API pública controlada, página 1-based                              | `{ page: number; pageSize: number; totalItems: number; onPageChange: (page: number) => void; onPageSizeChange: (pageSize: number) => void; pageSizeOptions?: ReadonlyArray<number>; className?: string }` | Estado interno não controlado - não sincroniza com paginação no servidor e destoa da `Table`, controlada por `selectedIds`/`onSelectionChange`. Índice 0-based - não bate com o número exibido nem com o número digitado em "Ir para página"; isso fecha a porta para repassar direto o `pageIndex` 0-based do `@tanstack/react-table`: quem usá-lo converte com `page - 1` |
+| `Paginator` irmão da `Table`, não uma prop dela                     | `<Table rows={linhasDaPagina} … />` seguido de `<Paginator … />`                                                                                                                                          | `pagination` dentro da `Table` - a `Table` passaria a conhecer `totalItems` e a decidir entre fatiar no cliente ou no servidor, que hoje não são responsabilidade dela                                                                                                                                                                                                      |
+| Nome e nível atômico                                                | `Paginator`, exportado de `~/components/molecules/Paginator`                                                                                                                                              | Organism - compõe apenas atoms (`IconButton`, `Icon`, `Typography`, `Field`) e um `<select>` nativo, sem molecules nem contexto; o nome segue o pedido do usuário e o `aria-label` usa o termo do Figma, "Paginação"                                                                                                                                                        |
+| "Linhas:" como `<select>` nativo, primeiro seletor do design system | Caixa fechada estilizada com os tokens do critério 4; a lista aberta é a nativa do SO                                                                                                                     | Implementar antes o "Menu dropdown" do Figma - recusado pelo usuário em 2026-10-04; viraria uma segunda task com restrição de ordem                                                                                                                                                                                                                                         |
 
 ## Sources
 
 - Figma, Lamb Design System, componente "Paginação" - node `13607:2572` (frame `13628:13675`),
   https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13628-13675&m=dev
   - **binding for the interface**, exceto "Ir para página:" (ver abaixo): valores transcritos nos
-  critérios 1 e 4; a copy ("Linhas:", "1-10 de 300 itens", "Ir para página:") está nesse node.
+    critérios 1 e 4; a copy ("Linhas:", "1-10 de 300 itens", "Ir para página:") está nesse node.
 - Conversa com o usuário, 2026-10-04 (sem endereço) - "<select> nativo (Recomendado)" para
   "Linhas:"; "Todas as perguntas que você falou estão corretas. do 1 ao 8." (confirma os critérios
   8, 9, 13, 3/15, 16 e a ausência de estado de carregamento); "deixe apenas um campo numérico para
@@ -173,6 +173,6 @@ This task is the record of decision. If a linked document diverges, ask before b
 
 ## Unresolved
 
-| # | Kind | Question | Until answered |
-|---|---|---|---|
-| - | | None | |
+| #   | Kind | Question | Until answered |
+| --- | ---- | -------- | -------------- |
+| -   |      | None     |                |

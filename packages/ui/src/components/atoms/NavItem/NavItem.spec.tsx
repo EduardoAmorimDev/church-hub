@@ -1,4 +1,12 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import type { ComponentProps, ReactElement } from 'react'
 import { NavItem } from './NavItem'
 import { NavItemProps } from './NavItem.types'
@@ -124,7 +132,7 @@ describe('NavItem', () => {
   // `in-data-[viewport=desktop]:` = Painel forced by an ancestor.
   const PANEL = 'panel:not-in-data-[viewport=mobile]:'
   const DESKTOP = 'in-data-[viewport=desktop]:'
-  const painel = (...utilities: string[]) =>
+  const panel = (...utilities: string[]) =>
     utilities.flatMap(utility => [`${PANEL}${utility}`, `${DESKTOP}${utility}`])
 
   it('density switches at the panel breakpoint (C3)', () => {
@@ -148,14 +156,14 @@ describe('NavItem', () => {
         'rounded-xl',
         'text-size-75',
         'font-medium',
-        ...painel('min-h-8', 'py-1.5', 'rounded-lg', 'text-size-50')
+        ...panel('min-h-8', 'py-1.5', 'rounded-lg', 'text-size-50')
       )
     }
-    expect(leaf).toHaveClass('px-3.5', ...painel('px-2.5'))
-    expect(subItem).toHaveClass('pr-3.5', ...painel('pr-2.5'))
+    expect(leaf).toHaveClass('px-3.5', ...panel('px-2.5'))
+    expect(subItem).toHaveClass('pr-3.5', ...panel('pr-2.5'))
     expect(screen.getByText('home')).toHaveClass(
       'text-icon-24!',
-      ...painel('text-icon-20!')
+      ...panel('text-icon-20!')
     )
     expect(container.innerHTML).not.toMatch(/(^|[\s"])lg:/)
     unmount()
@@ -175,9 +183,9 @@ describe('NavItem', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Pessoas' }))
     const popupItem = screen.getByRole('button', { name: 'Membros' })
 
-    expect(collapsed).toHaveClass('w-8', 'min-h-8', 'p-1.5', ...painel('p-1.5'))
-    expect(collapsed).not.toHaveClass(...painel('px-2.5'))
-    expect(popupItem).toHaveClass('text-size-75', ...painel('text-size-50'))
+    expect(collapsed).toHaveClass('w-8', 'min-h-8', 'p-1.5', ...panel('p-1.5'))
+    expect(collapsed).not.toHaveClass(...panel('px-2.5'))
+    expect(popupItem).toHaveClass('text-size-75', ...panel('text-size-50'))
     expect(collapsedContainer.innerHTML).not.toMatch(/(^|[\s"])lg:/)
   })
 
@@ -427,7 +435,7 @@ describe('NavItem', () => {
     expect(isFilled(screen.getByText('group'))).toBe(false)
   })
 
-  it('sub-item: 38px left padding and an always-visible 4px dot 19px from the edge, with no vertical guide line', () => {
+  it('sub-item: 38px left padding and a 4px dot 19px from the edge, dot only on the activated sub-item', () => {
     render(
       <NavItem
         iconName="group"
@@ -440,21 +448,96 @@ describe('NavItem', () => {
     )
     const idle = screen.getByRole('button', { name: 'Visitantes' })
     const current = screen.getByRole('button', { name: 'Membros' })
-    const list = idle.closest('ul')
+    const dot = [
+      'before:left-4.75',
+      'before:size-1',
+      'before:rounded-full',
+      'before:bg-current'
+    ]
 
-    for (const subItem of [idle, current]) {
-      expect(subItem).toHaveClass(
-        'pl-9.5',
-        'before:left-4.75',
-        'before:size-1',
-        'before:rounded-full',
-        'before:bg-current'
-      )
-    }
+    expect(idle).toHaveClass('pl-9.5', 'text-secondary')
+    for (const token of dot) expect(idle).not.toHaveClass(token)
+    expect(current).toHaveClass('pl-9.5', ...dot)
     expect(current).toHaveClass('bg-selected', 'text-primary')
     expect(current).toHaveAttribute('aria-current', 'page')
-    expect(idle).toHaveClass('text-secondary')
+  })
+
+  it('sub-list: a 1px neutral-17 vertical guide line down the dot column, from under the parent', () => {
+    render(
+      <NavItem
+        iconName="group"
+        label="Pessoas"
+        subItems={[{ label: 'Membros' }, { label: 'Visitantes' }]}
+      />
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Pessoas' }))
+    const list = screen.getByRole('button', { name: 'Membros' }).closest('ul')
+
+    expect(list).toHaveClass(
+      'relative',
+      'before:absolute',
+      'before:inset-y-0',
+      'before:left-4.75',
+      'before:w-px',
+      'before:bg-neutral-17'
+    )
+    // invariant: the 4px gap above the first sub-item is padding inside the
+    // list, so the line covers it (`Rectangle 1`: 1×144 for 4 sub-items).
+    expect(list).toHaveClass('pt-1')
+    expect(list).not.toHaveClass('mt-1')
+  })
+
+  it('collapsed: the sub-item pop-up has no guide line and no dot', () => {
+    render(
+      <NavItem
+        collapsed
+        iconName="group"
+        label="Pessoas"
+        subItems={[{ label: 'Membros', activated: true }, { label: 'GCs' }]}
+      />
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Pessoas' }))
+    const current = screen.getByRole('button', { name: 'Membros' })
+    const list = current.closest('ul')
+
     expect(list?.className ?? '').not.toMatch(/before:/)
+    expect(current.className).not.toMatch(/before:/)
+    expect(screen.getByRole('button', { name: 'GCs' }).className).not.toMatch(
+      /before:/
+    )
+  })
+
+  it('C4 popup focus: Tab into a sub-item keeps the pop-up open, Tab out of the item closes it', async () => {
+    const user = userEvent.setup()
+    render(
+      <ul>
+        <NavItem
+          collapsed
+          iconName="group"
+          label="Pessoas"
+          subItems={[{ label: 'Membros' }, { label: 'GCs' }]}
+        />
+        <NavItem collapsed iconName="home" label="Início" />
+      </ul>
+    )
+    const trigger = screen.getByRole('button', { name: 'Pessoas' })
+
+    await user.click(trigger)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+
+    await user.tab()
+    expect(screen.getByRole('button', { name: 'Membros' })).toHaveFocus()
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+
+    await user.tab()
+    await user.tab()
+    expect(screen.getByRole('button', { name: 'Início' })).toHaveFocus()
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('button', { name: 'Membros' })
+      ).not.toBeInTheDocument()
+    )
   })
 
   it('collapsed: only the icon, 32px wide, with the label as aria-label and title', () => {

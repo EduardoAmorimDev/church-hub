@@ -3,6 +3,7 @@ import { Button } from '@church/ui/atoms/Button'
 import { Chip } from '@church/ui/atoms/Chip'
 import { Icon } from '@church/ui/atoms/Icon'
 import { IconButton } from '@church/ui/atoms/IconButton'
+import { Tabs } from '@church/ui/molecules/Tabs'
 import { PageHeader } from './PageHeader'
 import { PageHeaderProps } from './PageHeader.types'
 
@@ -73,5 +74,26 @@ export const Home: Story = {
     description: 'Resumo da semana',
     greeting: 'Olá, Pessoa Exemplo',
     type: 'home'
+  }
+}
+
+export const WithTabs: Story = {
+  args: {
+    actions: undefined,
+    breadcrumb: undefined,
+    chips: undefined,
+    description: undefined,
+    tabs: (
+      <Tabs
+        items={[
+          { label: 'Membros', href: '#', current: true },
+          { label: 'Visitantes', href: '#visitantes' },
+          { label: 'Grupos de Crescimento', href: '#gcs' },
+          { label: 'Ministérios', href: '#ministerios' }
+        ]}
+        label="Seções de pessoas"
+      />
+    ),
+    title: 'Gestão de pessoas'
   }
 }

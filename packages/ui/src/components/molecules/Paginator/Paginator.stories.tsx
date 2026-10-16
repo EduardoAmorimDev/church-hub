@@ -33,7 +33,7 @@ const meta: Meta<PaginatorProps> = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13607-2556&m=dev'
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13607-2572&m=dev'
     },
     docs: { description: { component: 'The Lamb Paginator component' } }
   },
@@ -63,14 +63,14 @@ export const CustomLabel: Story = { args: { label: 'Paginação de membros' } }
 // why: synthetic rows only - a members table is where real personal data
 // would leak into the repository (constitution, Principle V).
 const columns: ColumnDefinition[] = [
-  { header: 'Nome', id: 'nome' },
-  { header: 'Ministério', id: 'ministerio' }
+  { header: 'Nome', id: 'name' },
+  { header: 'Ministério', id: 'ministry' }
 ]
 
 const rows: TableRowData[] = Array.from({ length: 30 }, (_, index) => ({
   cells: {
-    ministerio: { label: 'Ministério fictício', type: 'default' },
-    nome: { label: `Membro fictício ${index + 1}`, type: 'default' }
+    ministry: { label: 'Ministério fictício', type: 'default' },
+    name: { label: `Membro fictício ${index + 1}`, type: 'default' }
   },
   id: `membro-${index + 1}`
 }))

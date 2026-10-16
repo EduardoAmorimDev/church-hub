@@ -42,6 +42,7 @@ export const MenuDrawer = ({
   onClose,
   onProfileClick,
   open,
+  profileMenuItems,
   side = 'right',
   user
 }: MenuDrawerProps) => {
@@ -100,7 +101,13 @@ export const MenuDrawer = ({
               ))}
             </ul>
           )}
-          {user && <ProfileButton onClick={onProfileClick} user={user} />}
+          {user && (
+            <ProfileButton
+              menuItems={profileMenuItems}
+              onClick={onProfileClick}
+              user={user}
+            />
+          )}
         </div>
       </div>
     </>

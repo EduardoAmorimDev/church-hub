@@ -301,4 +301,27 @@ describe('MenuDrawer', () => {
     expect(trigger).toHaveFocus()
     expect(document.body.style.overflow).toBe('auto')
   })
+
+  it('profile menu: the footer profile opens profileMenuItems above it', async () => {
+    const user = userEvent.setup()
+    const onClose = jest.fn()
+    renderDrawer({
+      onClose,
+      profileMenuItems: [{ iconName: 'logout', label: 'Sair' }],
+      user: USER
+    })
+    const profile = within(dialogOf()).getByRole('button', {
+      name: /Pessoa Exemplo/
+    })
+
+    expect(profile).toHaveAttribute('aria-haspopup', 'menu')
+    await user.click(profile)
+    const menu = screen.getByRole('menu', { name: 'Menu do perfil' })
+
+    expect(menu).toHaveClass('bottom-full', 'mb-1')
+    expect(within(menu).getByRole('menuitem', { name: 'Sair' })).toHaveFocus()
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+    expect(onClose).not.toHaveBeenCalled()
+  })
 })

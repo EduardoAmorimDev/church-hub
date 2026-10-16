@@ -143,6 +143,14 @@ export const AllVariants: StoryFn<typeof Cell> = () => (
               'aria-label': 'Remover',
               icon: <Icon name="delete" />,
               onClick: () => {}
+            },
+            {
+              'aria-label': 'Mais ações',
+              icon: <Icon name="more_vert" />,
+              menu: [
+                { iconName: 'edit', label: 'Editar' },
+                { iconName: 'person_off', label: 'Inativar' }
+              ]
             }
           ]}
           type="action"

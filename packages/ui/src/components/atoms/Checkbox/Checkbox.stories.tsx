@@ -11,12 +11,12 @@ const meta: Meta<CheckboxProps> = {
       {
         name: 'atom-checkbox',
         type: 'figma',
-        url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=167-1943&m=dev'
+        url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13628-1215&m=dev'
       },
       {
         name: 'Checkbox Item',
         type: 'figma',
-        url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=167-1943&m=dev'
+        url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13628-1586&m=dev'
       }
     ],
     docs: { description: { component: 'The Lamb Checkbox component' } }

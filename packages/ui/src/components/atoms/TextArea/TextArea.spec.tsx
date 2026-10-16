@@ -38,14 +38,14 @@ describe('TextArea', () => {
   it('counter: joins an existing helper text in aria-describedby and follows react-hook-form values', async () => {
     const user = userEvent.setup()
     const Form = () => {
-      const { control } = useForm({ defaultValues: { nota: 'ab' } })
+      const { control } = useForm({ defaultValues: { note: 'ab' } })
       return (
         <TextArea
           control={control}
           helperText="Texto de apoio"
           label="Nota"
           maxLength={20}
-          name="nota"
+          name="note"
         />
       )
     }

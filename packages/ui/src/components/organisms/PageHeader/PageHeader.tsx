@@ -27,6 +27,7 @@ export const PageHeader = ({
   chips,
   description,
   greeting,
+  tabs,
   title,
   type = 'primary'
 }: PageHeaderProps) => {
@@ -49,6 +50,7 @@ export const PageHeader = ({
         </div>
         {actions && <div className={slots.actions()}>{actions}</div>}
       </div>
+      {primary && tabs}
       {primary && chips && (
         <div
           aria-label="Filtros rápidos"

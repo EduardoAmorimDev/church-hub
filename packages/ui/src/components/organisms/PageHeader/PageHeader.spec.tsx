@@ -179,4 +179,29 @@ describe('PageHeader', () => {
     expect(headingOf()).toHaveTextContent('Início')
     expect(headingOf()).toHaveClass('font-oswald', 'uppercase')
   })
+
+  it('tabs: rendered under the title row, primary only', () => {
+    const { unmount } = render(
+      <PageHeader
+        tabs={<nav aria-label="Seções de pessoas">abas</nav>}
+        title="Gestão de pessoas"
+      />
+    )
+    const tabs = screen.getByRole('navigation', { name: 'Seções de pessoas' })
+
+    expect(tabs.parentElement).toBe(headerOf())
+    expect(tabs.previousElementSibling).toBe(rowOf())
+    unmount()
+
+    render(
+      <PageHeader
+        tabs={<nav aria-label="Seções de pessoas">abas</nav>}
+        title="Olá"
+        type="home"
+      />
+    )
+    expect(
+      screen.queryByRole('navigation', { name: 'Seções de pessoas' })
+    ).not.toBeInTheDocument()
+  })
 })

@@ -71,6 +71,15 @@ describe('Paginator', () => {
     ])
   })
 
+  it('spans its container, controls apart from the counter', () => {
+    renderPaginator()
+
+    expect(screen.getByRole('navigation', { name: 'Paginação' })).toHaveClass(
+      'w-full',
+      'justify-between'
+    )
+  })
+
   it('C2 partial last page', () => {
     renderPaginator({ page: 30, totalItems: 295 })
 

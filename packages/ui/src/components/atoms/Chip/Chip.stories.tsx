@@ -9,7 +9,7 @@ export default {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=47-352&m=dev'
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13596-6864&m=dev'
     },
     docs: { description: { component: 'The Lamb DS `Chip` component' } }
   },

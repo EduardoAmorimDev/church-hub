@@ -13,12 +13,12 @@ Atualizado em 2026-10-08. Ponto de partida para a próxima sessão.
 
 ## Arquivos de referência
 
-| Arquivo | Conteúdo |
-| --- | --- |
-| `.tasks/lamb-alinhamento.md` | Task: 44 critérios, Decided, Out of scope, Unresolved |
-| `.tasks/lamb-notas-para-o-designer.md` | 30 inconsistências internas do artefato e a precedência aplicada |
-| `.checks/lamb-alinhamento.md` | Checklist C1–C45 com as provas; Landing e Handoff dos lotes A, B e C |
-| `.checks/lamb-alinhamento.verified.md` | Relatório do Verifier |
+| Arquivo                                | Conteúdo                                                             |
+| -------------------------------------- | -------------------------------------------------------------------- |
+| `.tasks/lamb-alinhamento.md`           | Task: 44 critérios, Decided, Out of scope, Unresolved                |
+| `.tasks/lamb-notas-para-o-designer.md` | 30 inconsistências internas do artefato e a precedência aplicada     |
+| `.checks/lamb-alinhamento.md`          | Checklist C1–C45 com as provas; Landing e Handoff dos lotes A, B e C |
+| `.checks/lamb-alinhamento.verified.md` | Relatório do Verifier                                                |
 
 Fonte do design: o artefato "Lamb" (https://claude.ai/artifact/PwGC8XAgiawWSwqvnEbMmb), atualizado
 pelo designer em 2026-10-05. A cópia local da sessão anterior ficou no scratchpad, que não

@@ -6,7 +6,7 @@ import { BottomSheet } from './BottomSheet'
 import { BottomSheetProps } from './BottomSheet.types'
 
 // invariant: synthetic data only (constitution, Principle V).
-const PARTICIPANTES = [
+const PARTICIPANTS = [
   'Pessoa Exemplo 1',
   'Pessoa Exemplo 2',
   'Pessoa Exemplo 3'
@@ -46,7 +46,7 @@ export default {
   },
   render: Render,
   args: {
-    children: PARTICIPANTES.map(name => <Checkbox key={name} label={name} />),
+    children: PARTICIPANTS.map(name => <Checkbox key={name} label={name} />),
     detents: 'auto',
     dismissible: true,
     safeArea: 'mock',

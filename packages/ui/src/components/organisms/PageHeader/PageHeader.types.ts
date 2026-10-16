@@ -13,4 +13,7 @@ export type PageHeaderProps = {
   actions?: ReactNode
   /** invariant: quick filters, grouped as "Filtros rápidos". */
   chips?: ReactNode
+  /** why: page-level navigation (a `Tabs`) under the title, as in the
+   * Backoffice header (141-4446); `primary` only. */
+  tabs?: ReactNode
 }

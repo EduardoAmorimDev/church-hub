@@ -98,11 +98,11 @@ describe('SearchField', () => {
       const onSearch = jest.fn()
       const onClear = jest.fn()
       const Form = () => {
-        const { control } = useForm({ defaultValues: { busca: '' } })
+        const { control } = useForm({ defaultValues: { search: '' } })
         return (
           <SearchField
             control={control}
-            name="busca"
+            name="search"
             onClear={onClear}
             onSearch={onSearch}
           />
@@ -142,13 +142,13 @@ describe('SearchField', () => {
 
     it('is absent while disabled, even with a value, in both modes', () => {
       const Form = () => {
-        const { control } = useForm({ defaultValues: { busca: 'nome' } })
+        const { control } = useForm({ defaultValues: { search: 'nome' } })
         return (
           <SearchField
             control={control}
             disabled
             label="Com form"
-            name="busca"
+            name="search"
           />
         )
       }
@@ -168,8 +168,8 @@ describe('SearchField', () => {
     it('is labelled "Limpar busca" in react-hook-form mode and clears the form value', async () => {
       const user = userEvent.setup()
       const Form = () => {
-        const { control } = useForm({ defaultValues: { busca: '' } })
-        return <SearchField control={control} name="busca" />
+        const { control } = useForm({ defaultValues: { search: '' } })
+        return <SearchField control={control} name="search" />
       }
       render(<Form />)
       const input = screen.getByRole('searchbox')

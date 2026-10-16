@@ -52,7 +52,7 @@ const PANEL = <p>Conteúdo dos filtros</p>
 
 const PANEL_PREFIX = 'panel:not-in-data-[viewport=mobile]:'
 const DESKTOP_PREFIX = 'in-data-[viewport=desktop]:'
-const painel = (utility: string) => [
+const panel = (utility: string) => [
   `${PANEL_PREFIX}${utility}`,
   `${DESKTOP_PREFIX}${utility}`
 ]
@@ -92,8 +92,8 @@ describe('FilterBar', () => {
     expect(searchWrapper).toHaveClass(
       'grow',
       'shrink',
-      ...painel('basis-60'),
-      ...painel('max-w-90')
+      ...panel('basis-60'),
+      ...panel('max-w-90')
     )
   })
 
@@ -158,7 +158,7 @@ describe('FilterBar', () => {
       'font-medium',
       'text-secondary',
       'whitespace-nowrap',
-      ...painel('ml-auto')
+      ...panel('ml-auto')
     )
     plain.unmount()
 
@@ -269,23 +269,20 @@ describe('FilterBar', () => {
       'snap-x',
       'snap-proximity',
       'no-scrollbar',
-      ...painel('flex-wrap'),
-      ...painel('overflow-x-visible')
+      ...panel('flex-wrap'),
+      ...panel('overflow-x-visible')
     )
     within(list)
       .getAllByRole('listitem')
       .forEach(item => expect(item).toHaveClass('snap-start'))
-    expect(list.parentElement).toHaveClass(
-      'flex-nowrap',
-      ...painel('flex-wrap')
-    )
+    expect(list.parentElement).toHaveClass('flex-nowrap', ...panel('flex-wrap'))
     expect(screen.getByRole('search').parentElement).toHaveClass(
       'basis-full',
       'max-w-none',
-      ...painel('basis-60'),
-      ...painel('max-w-90')
+      ...panel('basis-60'),
+      ...panel('max-w-90')
     )
-    expect(screen.getByRole('status')).toHaveClass('ml-0', ...painel('ml-auto'))
+    expect(screen.getByRole('status')).toHaveClass('ml-0', ...panel('ml-auto'))
     // invariant: the density is CSS only; no render reads the window.
     expect(matchMedia).not.toHaveBeenCalled()
   })
@@ -294,7 +291,7 @@ describe('FilterBar', () => {
     const user = userEvent.setup()
     const onApply = jest.fn()
     const onClear = jest.fn()
-    const painelBar = renderBar({
+    const panelBar = renderBar({
       onApply,
       onClear,
       panel: PANEL,
@@ -321,7 +318,7 @@ describe('FilterBar', () => {
     await user.click(apply)
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(onApply).toHaveBeenCalledTimes(1)
-    painelBar.unmount()
+    panelBar.unmount()
 
     narrow = true
     const app = renderBar({ onApply, panel: PANEL })

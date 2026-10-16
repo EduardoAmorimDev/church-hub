@@ -117,7 +117,7 @@ describe('lamb atoms (lote 1)', () => {
 
 // invariant: the 10 molecules and the atom of `.tasks/lamb-molecules.md`
 // (criterion 96); each one is public API with a spec and a story.
-const LOTE_2 = [
+const BATCH_2 = [
   'atoms/AvatarGroup',
   'molecules/Breadcrumb',
   'molecules/FilterChip',
@@ -139,10 +139,10 @@ const SAMPLE_RANGE = {
   end: null
 } satisfies DateRange
 
-const nameOf = (entry: (typeof LOTE_2)[number]) => entry.split('/')[1] ?? ''
+const nameOf = (entry: (typeof BATCH_2)[number]) => entry.split('/')[1] ?? ''
 
 describe('lamb molecules (lote 2)', () => {
-  it.each(LOTE_2)(
+  it.each(BATCH_2)(
     'lote 2 resolves through the package exports (C98): %s',
     async entry => {
       const exported: Record<string, unknown> = await import(
@@ -162,7 +162,7 @@ describe('lamb molecules (lote 2)', () => {
     expect(SAMPLE_RANGE).toEqual({ start: '2026-10-06', end: null })
   })
 
-  it.each(LOTE_2)('lote 2 is documented (C100): %s', async entry => {
+  it.each(BATCH_2)('lote 2 is documented (C100): %s', async entry => {
     const name = nameOf(entry)
     const dir = path.join(__dirname, 'components', entry)
     const files = [`${name}.tsx`, `${name}.spec.tsx`, `${name}.stories.tsx`]
@@ -198,35 +198,38 @@ describe('lamb molecules (lote 2)', () => {
 
 // invariant: the three organisms of `.tasks/lamb-overlays.md` (criterion
 // 36); each one is public API with a spec and a story.
-const LOTE_3 = ['Dialog', 'Drawer', 'BottomSheet'] as const
+const BATCH_3 = ['Dialog', 'Drawer', 'BottomSheet'] as const
 
 describe('lamb overlays (lote 3)', () => {
-  it.each(LOTE_3)('lote 3 resolves and is documented (C36): %s', async name => {
-    const exported: Record<string, unknown> = await import(
-      `@church/ui/organisms/${name}`
-    )
-    const dir = path.join(__dirname, 'components/organisms', name)
-    const files = [`${name}.tsx`, `${name}.spec.tsx`, `${name}.stories.tsx`]
-    const story: { default: { title?: string } } = await import(
-      `./components/organisms/${name}/${name}.stories`
-    )
-    const doc = fs.readFileSync(
-      path.resolve(__dirname, '../../docs/figma-components.md'),
-      'utf8'
-    )
-
-    expect(typeof exported[name]).toBe('function')
-    files.forEach(file =>
-      expect(fs.existsSync(path.join(dir, file))).toBe(true)
-    )
-    expect(story.default.title).toBe(`organisms/${name}`)
-    expect(doc).toMatch(
-      new RegExp(
-        `^\\| ${name}( \\(|\\s+\\|).*\`@church/ui/organisms/${name}\``,
-        'm'
+  it.each(BATCH_3)(
+    'lote 3 resolves and is documented (C36): %s',
+    async name => {
+      const exported: Record<string, unknown> = await import(
+        `@church/ui/organisms/${name}`
       )
-    )
-  })
+      const dir = path.join(__dirname, 'components/organisms', name)
+      const files = [`${name}.tsx`, `${name}.spec.tsx`, `${name}.stories.tsx`]
+      const story: { default: { title?: string } } = await import(
+        `./components/organisms/${name}/${name}.stories`
+      )
+      const doc = fs.readFileSync(
+        path.resolve(__dirname, '../../docs/figma-components.md'),
+        'utf8'
+      )
+
+      expect(typeof exported[name]).toBe('function')
+      files.forEach(file =>
+        expect(fs.existsSync(path.join(dir, file))).toBe(true)
+      )
+      expect(story.default.title).toBe(`organisms/${name}`)
+      expect(doc).toMatch(
+        new RegExp(
+          `^\\| ${name}( \\(|\\s+\\|).*\`@church/ui/organisms/${name}\``,
+          'm'
+        )
+      )
+    }
+  )
 
   it('lote 3 resolves and is documented (C36): the modal layer from @church/ui/utils', async () => {
     const utils: Record<string, unknown> = await import('@church/ui/utils')
@@ -253,7 +256,7 @@ describe('lamb overlays (lote 3)', () => {
 
 // invariant: the five organisms of `.tasks/lamb-fields-lists.md` (criteria
 // 56–58); each one is public API with a spec and a story.
-const LOTE_4 = ['Select', 'DateField', 'FilterBar', 'List', 'Section'] as const
+const BATCH_4 = ['Select', 'DateField', 'FilterBar', 'List', 'Section'] as const
 
 const readFigmaDoc = () =>
   fs.readFileSync(
@@ -262,7 +265,7 @@ const readFigmaDoc = () =>
   )
 
 describe('lamb fields and lists (lote 4)', () => {
-  it.each(LOTE_4)('lamb batch 4 exports (C56): %s', async name => {
+  it.each(BATCH_4)('lamb batch 4 exports (C56): %s', async name => {
     const exported: Record<string, unknown> = await import(
       `@church/ui/organisms/${name}`
     )
@@ -287,7 +290,7 @@ describe('lamb fields and lists (lote 4)', () => {
     expect(exported.ListSection).toBeDefined()
   })
 
-  it.each(LOTE_4.filter(name => name !== 'Section'))(
+  it.each(BATCH_4.filter(name => name !== 'Section'))(
     'lamb batch 4 has a Figma node only on the Section (C57): %s has none',
     async name => {
       const story: { default: StoryMeta } = await import(
@@ -298,7 +301,7 @@ describe('lamb fields and lists (lote 4)', () => {
     }
   )
 
-  it.each(LOTE_4)('figma-components rows (C58): %s', name => {
+  it.each(BATCH_4)('figma-components rows (C58): %s', name => {
     const rows = readFigmaDoc()
       .split('\n')
       .filter(line => new RegExp(`^\\| ${name}( \\(|\\s+\\|)`).test(line))
@@ -320,18 +323,19 @@ describe('lamb fields and lists (lote 4)', () => {
 
 // invariant: the batch of `.tasks/lamb-page-shell.md` (criteria 35–38):
 // three organisms and the first template, each public API with spec and story.
-const LOTE_5 = [
+const BATCH_5 = [
   'organisms/SideMenu',
   'organisms/MenuDrawer',
   'organisms/PageHeader',
   'templates/Page'
 ] as const
 
-const lote5Name = (entry: (typeof LOTE_5)[number]) => entry.split('/')[1] ?? ''
+const batch5Name = (entry: (typeof BATCH_5)[number]) =>
+  entry.split('/')[1] ?? ''
 
 describe('lamb page shell (lote 5)', () => {
-  it.each(LOTE_5)('lamb batch 5 exports (C35): %s', async entry => {
-    const name = lote5Name(entry)
+  it.each(BATCH_5)('lamb batch 5 exports (C35): %s', async entry => {
+    const name = batch5Name(entry)
     const exported: Record<string, unknown> = await import(
       `@church/ui/${entry}`
     )

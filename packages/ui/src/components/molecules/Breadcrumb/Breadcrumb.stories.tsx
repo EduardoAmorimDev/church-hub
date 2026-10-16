@@ -7,7 +7,7 @@ export default {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13630-19722&m=dev'
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13601-3774&m=dev'
     },
     docs: {
       description: {

@@ -20,6 +20,7 @@ import {
   DIALOG_FOOTER_DENSITY,
   DIALOG_HEADER_DENSITY
 } from './components/organisms/Dialog/data'
+import { DRAWER_SLIDE } from './components/organisms/Drawer/data'
 import {
   CHIP_LIST_DENSITY,
   CHIPS_ROW_DENSITY,
@@ -248,7 +249,8 @@ beforeAll(async () => {
       DIALOG_BODY_DENSITY,
       DIALOG_FOOTER_DENSITY,
       SHEET_FADE,
-      SHEET_SLIDE
+      SHEET_SLIDE,
+      DRAWER_SLIDE
     ].flatMap(classes => classes.split(' ')),
     'pb-2',
     'pt-2',
@@ -446,7 +448,7 @@ describe('styles.css', () => {
     })
 
     it.each([
-      ['apps/web', '../../apps/web/app/layout.tsx'],
+      ['apps/backoffice', '../../apps/backoffice/app/layout.tsx'],
       ['storybook', '.storybook/decorators.tsx']
     ])('loads Inter as --font-inter in %s', (_assembly, file) => {
       const source = fs.readFileSync(path.join(uiRoot, file), 'utf8')
@@ -829,9 +831,10 @@ describe('styles.css', () => {
 
   it.each([
     [SHEET_FADE, 'sheet-fade 200ms ease-out', 'opacity', '0'],
-    [SHEET_SLIDE, 'sheet-in 250ms ease-out', 'translate', '0 100%']
+    [SHEET_SLIDE, 'sheet-in 250ms ease-out', 'translate', '0 100%'],
+    [DRAWER_SLIDE, 'drawer-in 250ms ease-out', 'translate', '100% 0']
   ])(
-    'bottom sheet motion resolves in CSS (C35): %s',
+    'overlay motion resolves in CSS (C35, drawer C14a): %s',
     (utility, animation, prop, from) => {
       const name = animation.split(' ')[0]
       const rule = ruleFor(css, utility)

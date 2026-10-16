@@ -76,8 +76,8 @@ Este é um task de verificação de library; nenhuma tela ou endpoint é exposto
 
 ## Impact
 
-| Front | What changes |
-|---|---|
+| Front  | What changes                                                 |
+| ------ | ------------------------------------------------------------ |
 | nenhum | todos os quatro componentes já existem; nenhum contrato muda |
 
 ## Decided
@@ -96,6 +96,6 @@ None — verificação pura; nenhuma decisão irreversível tomada.
 
 ## Unresolved
 
-| # | Kind | Question | Until answered |
-|---|---|---|---|
-| — | — | None | — |
+| #   | Kind | Question | Until answered |
+| --- | ---- | -------- | -------------- |
+| —   | —    | None     | —              |

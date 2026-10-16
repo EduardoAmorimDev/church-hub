@@ -38,12 +38,12 @@ Toca `packages/ui/src/components/utils` (camada modal nova, exportada por `@chur
 Button, IconButton, Icon, Spinner, `tv`, `twMerge`, `mergeRefs`, `motion/react` (já usado pelo
 NavItem) e o breakpoint `panel`.
 
-| One-way door | Literal shape | Alternative rejected |
-| --- | --- | --- |
-| Camada modal própria (task, Decided) | hook em `@church/ui/utils`: `useModalLayer(open, { ref, onEscape, initialFocus? })`; trava de rolagem com contador global; foco inicial adiado um tick; `keydown` no painel (Esc com `stopPropagation`, Tab em ciclo, ignorando `[inert]` e ocultos); retorno do foco se o elemento ainda está no documento | `@radix-ui/react-dialog` / `focus-trap-react` - dependência nova |
-| Overlay sem portal (task, Decided) | `fixed` + `z-*` no lugar: fundo do Drawer 40, Drawer 41, Dialog 50, BottomSheet 55 | `createPortal` - não existe no primeiro render do servidor |
-| Geometria dinâmica pelo `motion` (task, Decided) | arraste e deslocamento do teclado do BottomSheet como `MotionValue` em `motion.div style={{ y, bottom }}`; o resto do visual em classes | `style` escrito à mão - CSS-in-JS proibido pela constituição IV |
-| `keydown` da camada pelo React (build) | `useModalLayer` devolve `{ onKeyDown }`, que o overlay põe no painel (`<div onKeyDown={layer.onKeyDown}>`); o MenuDropdown chama `event.stopPropagation()` no Esc que trata, e a propagação do React (que segue o DOM, sem portal) para no menu | `addEventListener('keydown')` nativo no painel, como o artefato: dispara antes dos handlers delegados do React na raiz, então o `stopPropagation` do MenuDropdown chegaria tarde; exigiria o contrato `data-esc-scope` do artefato |
+| One-way door                                     | Literal shape                                                                                                                                                                                                                                                                                               | Alternative rejected                                                                                                                                                                                                               |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Camada modal própria (task, Decided)             | hook em `@church/ui/utils`: `useModalLayer(open, { ref, onEscape, initialFocus? })`; trava de rolagem com contador global; foco inicial adiado um tick; `keydown` no painel (Esc com `stopPropagation`, Tab em ciclo, ignorando `[inert]` e ocultos); retorno do foco se o elemento ainda está no documento | `@radix-ui/react-dialog` / `focus-trap-react` - dependência nova                                                                                                                                                                   |
+| Overlay sem portal (task, Decided)               | `fixed` + `z-*` no lugar: fundo do Drawer 40, Drawer 41, Dialog 50, BottomSheet 55                                                                                                                                                                                                                          | `createPortal` - não existe no primeiro render do servidor                                                                                                                                                                         |
+| Geometria dinâmica pelo `motion` (task, Decided) | arraste e deslocamento do teclado do BottomSheet como `MotionValue` em `motion.div style={{ y, bottom }}`; o resto do visual em classes                                                                                                                                                                     | `style` escrito à mão - CSS-in-JS proibido pela constituição IV                                                                                                                                                                    |
+| `keydown` da camada pelo React (build)           | `useModalLayer` devolve `{ onKeyDown }`, que o overlay põe no painel (`<div onKeyDown={layer.onKeyDown}>`); o MenuDropdown chama `event.stopPropagation()` no Esc que trata, e a propagação do React (que segue o DOM, sem portal) para no menu                                                             | `addEventListener('keydown')` nativo no painel, como o artefato: dispara antes dos handlers delegados do React na raiz, então o `stopPropagation` do MenuDropdown chegaria tarde; exigiria o contrato `data-esc-scope` do artefato |
 
 - Nothing else in this change is hard to reverse.
 
@@ -192,16 +192,16 @@ Proof: `npm run verify -- --force`
 
 ## Coverage
 
-| Set (size) | Member -> proof | Unproven |
-| --- | --- | --- |
-| `color` do Dialog (4 + ausente) | neutral, destructive, positive, attention, ausente em C10 (table-driven) | - |
-| cor da primária por `color` (5) | C12 (table-driven) | - |
-| foco inicial do Dialog (5 degraus) | data-autofocus · campo · secundária destrutiva · primária · painel em C14 | - |
-| formas de fechar (Esc, fundo, Fechar, arraste) | C15, C9, C23, C26, C28, C32, C34 | - |
-| `detents` (3) | auto · half · full em C27 | - |
-| `safeArea` (3) | env · mock · none em C31 | - |
-| densidade do Dialog (4 caminhos) | `panel:` · sem prefixo · `data-viewport=mobile` · `data-viewport=desktop` em C17 | - |
-| overlays que usam a camada modal (3) | Dialog C14/C15 · Drawer C23 · BottomSheet C34 | - |
+| Set (size)                                     | Member -> proof                                                                  | Unproven |
+| ---------------------------------------------- | -------------------------------------------------------------------------------- | -------- |
+| `color` do Dialog (4 + ausente)                | neutral, destructive, positive, attention, ausente em C10 (table-driven)         | -        |
+| cor da primária por `color` (5)                | C12 (table-driven)                                                               | -        |
+| foco inicial do Dialog (5 degraus)             | data-autofocus · campo · secundária destrutiva · primária · painel em C14        | -        |
+| formas de fechar (Esc, fundo, Fechar, arraste) | C15, C9, C23, C26, C28, C32, C34                                                 | -        |
+| `detents` (3)                                  | auto · half · full em C27                                                        | -        |
+| `safeArea` (3)                                 | env · mock · none em C31                                                         | -        |
+| densidade do Dialog (4 caminhos)               | `panel:` · sem prefixo · `data-viewport=mobile` · `data-viewport=desktop` em C17 | -        |
+| overlays que usam a camada modal (3)           | Dialog C14/C15 · Drawer C23 · BottomSheet C34                                    | -        |
 
 - Nenhum check afirma status code, rota ou formato de resposta.
 - C17 cruza o limite do CSS compilado; os demais afirmam classes e DOM no jsdom.

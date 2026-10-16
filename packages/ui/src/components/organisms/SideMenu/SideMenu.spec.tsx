@@ -372,4 +372,72 @@ describe('SideMenu', () => {
 
     expect(profile).toHaveAttribute('aria-label', 'Pessoa Exemplo')
   })
+
+  it('profile menu: the profile button opens profileMenuItems above it', () => {
+    const onSelect = jest.fn()
+    render(
+      <SideMenu
+        items={ITEMS}
+        profileMenuItems={[{ iconName: 'logout', label: 'Sair', onSelect }]}
+        user={USER}
+      />
+    )
+    const profile = screen.getByRole('button', { name: /Pessoa Exemplo/ })
+
+    expect(profile).toHaveAttribute('aria-haspopup', 'menu')
+    expect(profile).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+
+    fireEvent.click(profile)
+    const menu = screen.getByRole('menu', { name: 'Menu do perfil' })
+
+    expect(profile).toHaveAttribute('aria-expanded', 'true')
+    expect(menu).toHaveClass('bottom-full', 'mb-1', 'left-0')
+    expect(menu).not.toHaveClass('top-full')
+    expect(within(menu).getAllByRole('menuitem')).toHaveLength(1)
+
+    fireEvent.click(within(menu).getByRole('menuitem', { name: 'Sair' }))
+    expect(onSelect).toHaveBeenCalledTimes(1)
+  })
+
+  it('collapsed profile menu: the avatar-only button opens the same menu', () => {
+    render(
+      <SideMenu
+        collapsed
+        items={ITEMS}
+        profileMenuItems={[{ iconName: 'logout', label: 'Sair' }]}
+        user={USER}
+      />
+    )
+    const profile = screen.getByRole('button', {
+      name: 'Pessoa Exemplo, Função Exemplo'
+    })
+
+    expect(within(profile).queryByText('Pessoa Exemplo')).toBeNull()
+    fireEvent.click(profile)
+    expect(
+      within(screen.getByRole('menu', { name: 'Menu do perfil' })).getByRole(
+        'menuitem',
+        { name: 'Sair' }
+      )
+    ).toBeInTheDocument()
+  })
+
+  it('profile menu closes on Escape and gives focus back to the profile', () => {
+    render(
+      <SideMenu
+        items={ITEMS}
+        profileMenuItems={[{ iconName: 'logout', label: 'Sair' }]}
+        user={USER}
+      />
+    )
+    const profile = screen.getByRole('button', { name: /Pessoa Exemplo/ })
+
+    fireEvent.click(profile)
+    fireEvent.keyDown(screen.getByRole('menu'), { key: 'Escape' })
+
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+    expect(profile).toHaveFocus()
+    expect(profile).toHaveAttribute('aria-expanded', 'false')
+  })
 })

@@ -5,7 +5,9 @@ import { tv } from '@church/ui/lib/tailwind-variants'
 export const paginator = tv({
   slots: {
     root: [
-      'flex flex-wrap items-center justify-between gap-6 p-2',
+      // why: inside a flex footer (Section) the nav must span the row, or
+      // `justify-between` has no room and the controls hug the counter.
+      'flex w-full flex-wrap items-center justify-between gap-6 p-2',
       'font-normal text-secondary text-size-25'
     ],
     start: 'flex items-center gap-2',

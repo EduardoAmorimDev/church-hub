@@ -10,7 +10,7 @@ export default {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=47-338&m=dev'
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13033-3147&m=dev'
     },
     docs: {
       description: {
@@ -49,6 +49,11 @@ export default {
       options: ['start', 'end'],
       table: { defaultValue: { summary: 'start' } }
     },
+    side: {
+      control: 'select',
+      options: ['bottom', 'top'],
+      table: { defaultValue: { summary: 'bottom' } }
+    },
     label: { control: 'text' },
     trigger: { control: false }
   }
@@ -71,4 +76,26 @@ export const MoreOptions: StoryObj<MenuDropdownProps> = {
       </IconButton>
     )
   }
+}
+
+export const OpensAbove: StoryObj<MenuDropdownProps> = {
+  args: { side: 'top' },
+  decorators: [
+    Story => (
+      <div className="flex min-h-80 items-end">
+        <Story />
+      </div>
+    )
+  ]
+}
+
+export const FixedInsideOverflow: StoryObj<MenuDropdownProps> = {
+  args: { align: 'end', strategy: 'fixed' },
+  decorators: [
+    Story => (
+      <div className="border-default h-20 overflow-x-auto rounded-lg border p-2">
+        <Story />
+      </div>
+    )
+  ]
 }

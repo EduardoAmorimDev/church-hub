@@ -2,12 +2,14 @@
 
 import {
   cloneElement,
+  CSSProperties,
   KeyboardEvent,
   MouseEvent,
   MouseEventHandler,
   ReactElement,
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState
 } from 'react'
@@ -18,17 +20,41 @@ const menuDropdown = tv({
   slots: {
     anchor: 'relative inline-flex',
     menu: [
-      'absolute top-full z-30 mt-1 flex min-w-45 flex-col p-2',
+      'z-30 flex min-w-45 flex-col p-2',
       'rounded-2xl border border-default bg-surface shadow-elevation-low-bottom-12'
     ]
   },
   variants: {
-    align: {
-      start: { menu: 'left-0' },
-      end: { menu: 'right-0' }
+    align: { start: {}, end: {} },
+    side: { bottom: {}, top: {} },
+    strategy: {
+      absolute: { menu: 'absolute' },
+      fixed: { menu: 'fixed' }
     }
   },
-  defaultVariants: { align: 'start' }
+  compoundVariants: [
+    { strategy: 'absolute', align: 'start', class: { menu: 'left-0' } },
+    { strategy: 'absolute', align: 'end', class: { menu: 'right-0' } },
+    { strategy: 'absolute', side: 'bottom', class: { menu: 'top-full mt-1' } },
+    { strategy: 'absolute', side: 'top', class: { menu: 'bottom-full mb-1' } }
+  ],
+  defaultVariants: { align: 'start', side: 'bottom', strategy: 'absolute' }
+})
+
+// invariant: the 4px gap of `mt-1`/`mb-1`, applied by hand in `fixed`.
+const FIXED_GAP = 4
+
+const fixedPosition = (
+  trigger: DOMRect,
+  align: 'start' | 'end',
+  side: 'bottom' | 'top'
+): CSSProperties => ({
+  ...(side === 'bottom'
+    ? { top: trigger.bottom + FIXED_GAP }
+    : { bottom: window.innerHeight - trigger.top + FIXED_GAP }),
+  ...(align === 'start'
+    ? { left: trigger.left }
+    : { right: window.innerWidth - trigger.right })
 })
 
 type MenuTriggerProps = {
@@ -44,8 +70,12 @@ export type MenuDropdownProps = {
   trigger: ReactElement<MenuTriggerProps>
   items: MenuItemProps[]
   align?: 'start' | 'end'
+  side?: 'bottom' | 'top'
   /** invariant: names the `role="menu"`; without it the menu is unnamed. */
   label?: string
+  /** why: `fixed` escapes an `overflow` ancestor (a Table row) while the
+   * menu stays in the anchor's DOM, so overlays keep their focus trap. */
+  strategy?: 'absolute' | 'fixed'
 }
 
 const ENABLED_ITEM = '[role="menuitem"]:not(:disabled)'
@@ -54,18 +84,36 @@ export const MenuDropdown = ({
   align = 'start',
   items,
   label,
+  side = 'bottom',
+  strategy = 'absolute',
   trigger
 }: MenuDropdownProps) => {
   const [open, setOpen] = useState(false)
+  const [position, setPosition] = useState<CSSProperties>()
   const anchorRef = useRef<HTMLSpanElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   const menuId = useId()
-  const slots = menuDropdown({ align })
+  const slots = menuDropdown({ align, side, strategy })
 
-  const focusTrigger = () =>
-    anchorRef.current
-      ?.querySelector<HTMLElement>('[aria-haspopup="menu"]')
-      ?.focus()
+  const triggerOf = () =>
+    anchorRef.current?.querySelector<HTMLElement>('[aria-haspopup="menu"]')
+
+  const focusTrigger = () => triggerOf()?.focus()
+
+  useLayoutEffect(() => {
+    if (!open || strategy !== 'fixed') return
+    const place = () => {
+      const rect = triggerOf()?.getBoundingClientRect()
+      if (rect) setPosition(fixedPosition(rect, align, side))
+    }
+    place()
+    window.addEventListener('scroll', place, true)
+    window.addEventListener('resize', place)
+    return () => {
+      window.removeEventListener('scroll', place, true)
+      window.removeEventListener('resize', place)
+    }
+  }, [align, open, side, strategy])
 
   // why: with no enabled item the menu itself takes focus, so Esc still
   // reaches its key handler (task Unresolved 4).
@@ -137,6 +185,8 @@ export const MenuDropdown = ({
           onKeyDown={onKeyDown}
           ref={menuRef}
           role="menu"
+          // why: runtime geometry from the trigger, which no token expresses.
+          style={strategy === 'fixed' ? position : undefined}
           tabIndex={-1}
         >
           {items.map((item, index) => (

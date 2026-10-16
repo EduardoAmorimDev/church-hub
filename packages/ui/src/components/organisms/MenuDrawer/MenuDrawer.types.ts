@@ -1,5 +1,6 @@
 import type { MouseEventHandler } from 'react'
 import type { NavItemProps } from '@church/ui/atoms/NavItem'
+import type { MenuItemProps } from '@church/ui/molecules/MenuDropdown'
 import type { NavUser } from '@church/ui/organisms/SideMenu'
 
 export type MenuDrawerProps = {
@@ -14,6 +15,7 @@ export type MenuDrawerProps = {
   footerItems?: NavItemProps[]
   user?: NavUser
   onProfileClick?: MouseEventHandler<HTMLButtonElement>
+  profileMenuItems?: MenuItemProps[]
   /** invariant: names the dialog and its `<nav>`; "Menu principal" by
    * default. */
   label?: string

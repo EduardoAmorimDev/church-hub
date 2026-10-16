@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react'
 import { AvatarProps } from '../Avatar'
 import { AvatarGroupProps } from '../AvatarGroup'
 import { IconProps } from '../Icon'
+import type { MenuItemProps } from '@church/ui/molecules/MenuDropdown'
 
 export type CellType =
   | 'avatar'
@@ -26,8 +27,7 @@ export type CellAction = {
   'aria-label': string
   disabled?: boolean
   icon: ReactElement<IconProps>
-  onClick: () => void
-}
+} & ({ onClick: () => void } | { menu: MenuItemProps[] })
 
 // `heading` is only combinable with 'check' and 'default': the Figma component
 // set (node 13615:5291) defines no heading counterpart for the other types, so

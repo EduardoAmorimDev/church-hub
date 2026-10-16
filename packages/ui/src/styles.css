@@ -260,6 +260,15 @@
     }
   }
 
+  /* why: the modal Drawer enters from the right edge (Backoffice 289-39940). */
+  --animate-drawer-in: drawer-in 250ms ease-out;
+
+  @keyframes drawer-in {
+    from {
+      translate: 100% 0;
+    }
+  }
+
   /* why: Lamb's `lamb-pulse` (List skeleton); Tailwind's `animate-pulse`
      runs 2s on a different curve. */
   --animate-skeleton-pulse: skeleton-pulse 1.4s ease-in-out infinite;

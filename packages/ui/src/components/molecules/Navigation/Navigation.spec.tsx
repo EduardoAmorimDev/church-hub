@@ -30,9 +30,9 @@ describe('Navigation', () => {
       />
     )
     const nav = screen.getByRole('navigation', { name: 'Navegação principal' })
-    const avisos = within(nav).getByRole('button', { name: 'Avisos 3 novos' })
+    const notices = within(nav).getByRole('button', { name: 'Avisos 3 novos' })
 
-    expect(within(avisos).getByText('3 novos')).toHaveClass('sr-only')
+    expect(within(notices).getByText('3 novos')).toHaveClass('sr-only')
     expect(
       within(nav).getByRole('button', { name: 'Membros' })
     ).toBeInTheDocument()

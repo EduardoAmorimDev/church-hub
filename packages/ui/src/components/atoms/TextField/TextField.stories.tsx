@@ -14,7 +14,7 @@ const meta: Meta<TextFieldProps> = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=47-339&m=dev'
+      url: 'https://www.figma.com/design/7I9GnO3cTPpaJPOUfFsI9t/Lamb-Design-System?node-id=13607-2966&m=dev'
     },
     docs: { description: { component: 'The Lamb TextField component' } }
   },

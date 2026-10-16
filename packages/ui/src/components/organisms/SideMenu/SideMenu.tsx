@@ -55,6 +55,7 @@ export const SideMenu = ({
   logo,
   onCollapsedChange,
   onProfileClick,
+  profileMenuItems,
   user
 }: SideMenuProps) => {
   const [innerCollapsed, setInnerCollapsed] = useState(defaultCollapsed)
@@ -106,6 +107,7 @@ export const SideMenu = ({
         {user && (
           <ProfileButton
             collapsed={collapsed}
+            menuItems={profileMenuItems}
             onClick={onProfileClick}
             user={user}
           />

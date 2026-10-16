@@ -6,13 +6,13 @@ import { Select } from './Select'
 import { SelectOption, SelectProps } from './Select.types'
 
 // invariant: synthetic data only (constitution, Principle V).
-const GCS: SelectOption[] = Array.from({ length: 12 }, (_, index) => ({
+const GROUPS: SelectOption[] = Array.from({ length: 12 }, (_, index) => ({
   value: `gc-${index + 1}`,
   label: `GC Exemplo ${index + 1}`,
   description: `Rede Exemplo ${(index % 3) + 1}`
 }))
 
-const CARGOS: SelectOption[] = [
+const ROLES: SelectOption[] = [
   { value: 'lider', label: 'Líder de GC', iconName: 'groups' },
   {
     value: 'mentor',
@@ -31,11 +31,11 @@ const Render = (args: SelectProps) => {
   return <Select {...args} onChange={next => setValue(next)} value={value} />
 }
 
-type FormValues = { gc: string | null }
+type FormValues = { group: string | null }
 
 const FormRender = (args: SelectProps) => {
   const { control, handleSubmit } = useForm<FormValues>({
-    defaultValues: { gc: null }
+    defaultValues: { group: null }
   })
   return (
     <form
@@ -45,7 +45,7 @@ const FormRender = (args: SelectProps) => {
       <Select
         {...args}
         control={control}
-        name="gc"
+        name="group"
         rules={{ required: 'Escolha um GC.' }}
       />
       <Button type="submit">Salvar</Button>
@@ -71,7 +71,7 @@ export default {
     helperText: 'Só GCs da sua rede.',
     label: 'GC',
     optional: false,
-    options: GCS,
+    options: GROUPS,
     presentation: 'auto',
     searchable: true,
     size: 'medium',
@@ -109,7 +109,7 @@ export const WithIcons: StoryObj<SelectProps> = {
     clearable: true,
     helperText: undefined,
     label: 'Cargo',
-    options: CARGOS,
+    options: ROLES,
     searchable: false
   }
 }

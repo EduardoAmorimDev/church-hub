@@ -254,4 +254,15 @@ describe('Drawer', () => {
     await user.tab()
     expect(document.activeElement).toBe(document.body)
   })
+
+  it('C14a the modal panel slides in from the right; inline does not', () => {
+    const { unmount } = renderDrawer({ onClose: jest.fn() })
+    expect(dialogOf()).toHaveClass('motion-safe:animate-drawer-in')
+    unmount()
+
+    renderDrawer({ mode: 'inline' })
+    expect(screen.getByRole('region', { name: TITLE })).not.toHaveClass(
+      'motion-safe:animate-drawer-in'
+    )
+  })
 })

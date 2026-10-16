@@ -351,4 +351,64 @@ describe('Cell', () => {
     expect(items[3]).toHaveTextContent(/^\+1$/)
     expect(containerOf(group)).toHaveClass('h-12', 'p-2')
   })
+
+  describe('action menu', () => {
+    it('an action with `menu` opens a floating menu with its items', async () => {
+      const user = userEvent.setup()
+      const onEdit = jest.fn()
+      render(
+        <Cell
+          actions={[
+            {
+              'aria-label': 'Mais ações',
+              icon: <Icon name="more_vert" />,
+              menu: [
+                { iconName: 'edit', label: 'Editar', onSelect: onEdit },
+                { iconName: 'person_off', label: 'Inativar' }
+              ]
+            }
+          ]}
+          type="action"
+        />
+      )
+      const trigger = screen.getByRole('button', { name: 'Mais ações' })
+
+      expect(trigger).toHaveAttribute('aria-haspopup', 'menu')
+      await user.click(trigger)
+      const menu = screen.getByRole('menu', { name: 'Mais ações' })
+
+      expect(menu).toHaveClass('fixed')
+      expect(
+        screen.getAllByRole('menuitem').map(item => item.textContent)
+      ).toEqual(['editEditar', 'person_offInativar'])
+      await user.click(screen.getByRole('menuitem', { name: /Editar/ }))
+      expect(onEdit).toHaveBeenCalledTimes(1)
+    })
+
+    it('C19 Esc closes the floating menu and returns focus to its button', async () => {
+      const user = userEvent.setup()
+      render(
+        <Cell
+          actions={[
+            {
+              'aria-label': 'Mais ações',
+              icon: <Icon name="more_vert" />,
+              menu: [{ iconName: 'edit', label: 'Editar' }]
+            }
+          ]}
+          type="action"
+        />
+      )
+      const trigger = screen.getByRole('button', { name: 'Mais ações' })
+
+      await user.click(trigger)
+      expect(screen.getByRole('menu', { name: 'Mais ações' })).toHaveClass(
+        'fixed'
+      )
+      await user.keyboard('{Escape}')
+
+      expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+      expect(trigger).toHaveFocus()
+    })
+  })
 })

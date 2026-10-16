@@ -1,7 +1,9 @@
-import type { MouseEventHandler } from 'react'
+import type { ComponentProps } from 'react'
 import { Avatar } from '@church/ui/atoms/Avatar'
 import { Icon } from '@church/ui/atoms/Icon'
 import { tv } from '@church/ui/lib/tailwind-variants'
+import { MenuDropdown } from '@church/ui/molecules/MenuDropdown'
+import type { MenuItemProps } from '@church/ui/molecules/MenuDropdown'
 import type { NavUser } from '../SideMenu.types'
 
 const profile = tv({
@@ -22,25 +24,33 @@ const profile = tv({
   }
 })
 
-export type ProfileButtonProps = {
+type MenuTriggerAttributes = Pick<
+  ComponentProps<'button'>,
+  'aria-controls' | 'aria-expanded' | 'aria-haspopup' | 'onClick'
+>
+
+export type ProfileButtonProps = MenuTriggerAttributes & {
   user: NavUser
   collapsed?: boolean
-  onClick?: MouseEventHandler<HTMLButtonElement>
+  /** invariant: with items, the button opens them in a menu above it; the
+   * profile sits at the bottom of the screen. */
+  menuItems?: MenuItemProps[]
 }
 
 export const ProfileButton = ({
   collapsed = false,
-  onClick,
-  user
+  menuItems = [],
+  user,
+  ...trigger
 }: ProfileButtonProps) => {
   const slots = profile({ collapsed })
   const collapsedLabel = user.role ? `${user.name}, ${user.role}` : user.name
 
-  return (
+  const button = (
     <button
+      {...trigger}
       aria-label={collapsed ? collapsedLabel : undefined}
       className={slots.root()}
-      onClick={onClick}
       type="button"
     >
       <Avatar alt={user.name} decorative size="small" src={user.src ?? ''} />
@@ -54,5 +64,16 @@ export const ProfileButton = ({
         </>
       )}
     </button>
+  )
+
+  if (menuItems.length === 0) return button
+
+  return (
+    <MenuDropdown
+      items={menuItems}
+      label="Menu do perfil"
+      side="top"
+      trigger={button}
+    />
   )
 }

@@ -9,7 +9,7 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./styles/root.css": "./dist/styles/root.css"
+    "./styles/root.css": "./styles/root.css"
   },
   "scripts": {
     "build": "tsup src/index.ts --target esnext --format esm,cjs --dts --sourcemap --clean --out-dir dist && npm run build:css",

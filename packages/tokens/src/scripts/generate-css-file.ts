@@ -73,7 +73,10 @@ function buildCssFile(
 }
 
 function writeCssFile(contents: string) {
-  const filePath = path.join(__dirname, '../../dist/styles/root.css')
+  // why: CSS resolvers (Turbopack, postcss-import) do not read the package
+  // `exports` field, so the file must live at the path literally imported:
+  // `@church/tokens/styles/root.css` → `<package-root>/styles/root.css`.
+  const filePath = path.join(__dirname, '../../styles/root.css')
 
   fs.mkdirSync(path.dirname(filePath), { recursive: true })
   fs.writeFileSync(filePath, contents, 'utf8')

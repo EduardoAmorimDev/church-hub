@@ -5,6 +5,7 @@ import { Icon } from '@church/ui/atoms/Icon'
 import { IconButton } from '@church/ui/atoms/IconButton'
 import { tv } from '@church/ui/lib/tailwind-variants'
 import { focusableIn, useModalLayer } from '@church/ui/utils'
+import { DRAWER_SLIDE } from './data'
 import { DrawerProps } from './Drawer.types'
 
 const drawer = tv({
@@ -24,7 +25,10 @@ const drawer = tv({
   variants: {
     mode: {
       modal: {
-        panel: 'fixed top-6 right-6 bottom-6 z-41 max-w-drawer-modal'
+        panel: [
+          'fixed top-6 right-6 bottom-6 z-41 max-w-drawer-modal',
+          DRAWER_SLIDE
+        ]
       },
       inline: { panel: 'max-h-full max-w-full' }
     },
